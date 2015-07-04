@@ -1,0 +1,44 @@
+{
+  "images" : [
+    {
+      "idiom" : "universal",
+      "scale" : "1x"
+    },
+    {
+      "resizing" : {
+        "mode" : "3-part-horizontal",
+        "center" : {
+          "mode" : "stretch",
+          "width" : 197
+        },
+        "capInsets" : {
+          "right" : 287,
+          "left" : 253
+        }
+      },
+      "idiom" : "universal",
+      "filename" : "pc_recorder_btn@2.png",
+      "scale" : "2x"
+    },
+    {
+      "resizing" : {
+        "mode" : "3-part-horizontal",
+        "center" : {
+          "mode" : "stretch",
+          "width" : 285
+        },
+        "capInsets" : {
+          "right" : 431,
+          "left" : 382
+        }
+      },
+      "idiom" : "universal",
+      "filename" : "pc_recorder_btn@3.png",
+      "scale" : "3x"
+    }
+  ],
+  "info" : {
+    "version" : 1,
+    "author" : "xcode"
+  }
+}

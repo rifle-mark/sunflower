@@ -1,0 +1,44 @@
+{
+  "images" : [
+    {
+      "idiom" : "universal",
+      "scale" : "1x"
+    },
+    {
+      "resizing" : {
+        "mode" : "3-part-horizontal",
+        "center" : {
+          "mode" : "fill",
+          "width" : 14
+        },
+        "capInsets" : {
+          "right" : 340,
+          "left" : 344
+        }
+      },
+      "idiom" : "universal",
+      "filename" : "used_coupon_bg@2.png",
+      "scale" : "2x"
+    },
+    {
+      "resizing" : {
+        "mode" : "3-part-horizontal",
+        "center" : {
+          "mode" : "fill",
+          "width" : 22
+        },
+        "capInsets" : {
+          "right" : 510,
+          "left" : 515
+        }
+      },
+      "idiom" : "universal",
+      "filename" : "used_coupon_bg@3.png",
+      "scale" : "3x"
+    }
+  ],
+  "info" : {
+    "version" : 1,
+    "author" : "xcode"
+  }
+}

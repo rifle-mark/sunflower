@@ -1,0 +1,44 @@
+{
+  "images" : [
+    {
+      "idiom" : "universal",
+      "scale" : "1x"
+    },
+    {
+      "resizing" : {
+        "mode" : "3-part-horizontal",
+        "center" : {
+          "mode" : "stretch",
+          "width" : 229
+        },
+        "capInsets" : {
+          "right" : 8,
+          "left" : 61
+        }
+      },
+      "idiom" : "universal",
+      "filename" : "pc_register_checkcode_bg.png",
+      "scale" : "2x"
+    },
+    {
+      "resizing" : {
+        "mode" : "3-part-horizontal",
+        "center" : {
+          "mode" : "stretch",
+          "width" : 343
+        },
+        "capInsets" : {
+          "right" : 12,
+          "left" : 92
+        }
+      },
+      "idiom" : "universal",
+      "filename" : "pc_register_checkcode_bg@3.png",
+      "scale" : "3x"
+    }
+  ],
+  "info" : {
+    "version" : 1,
+    "author" : "xcode"
+  }
+}

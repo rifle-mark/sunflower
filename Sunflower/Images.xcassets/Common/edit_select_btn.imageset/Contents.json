@@ -1,0 +1,50 @@
+{
+  "images" : [
+    {
+      "idiom" : "universal",
+      "scale" : "1x"
+    },
+    {
+      "resizing" : {
+        "mode" : "9-part",
+        "center" : {
+          "mode" : "stretch",
+          "width" : 232,
+          "height" : 6
+        },
+        "capInsets" : {
+          "bottom" : 9,
+          "top" : 49,
+          "right" : 55,
+          "left" : 8
+        }
+      },
+      "idiom" : "universal",
+      "filename" : "edit_btn.png",
+      "scale" : "2x"
+    },
+    {
+      "resizing" : {
+        "mode" : "9-part",
+        "center" : {
+          "mode" : "stretch",
+          "width" : 346,
+          "height" : 10
+        },
+        "capInsets" : {
+          "bottom" : 12,
+          "top" : 72,
+          "right" : 83,
+          "left" : 12
+        }
+      },
+      "idiom" : "universal",
+      "filename" : "edit_btn@3.png",
+      "scale" : "3x"
+    }
+  ],
+  "info" : {
+    "version" : 1,
+    "author" : "xcode"
+  }
+}

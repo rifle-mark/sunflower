@@ -1,0 +1,44 @@
+{
+  "images" : [
+    {
+      "idiom" : "universal",
+      "scale" : "1x"
+    },
+    {
+      "resizing" : {
+        "mode" : "3-part-horizontal",
+        "center" : {
+          "mode" : "stretch",
+          "width" : 534
+        },
+        "capInsets" : {
+          "right" : 69,
+          "left" : 75
+        }
+      },
+      "idiom" : "universal",
+      "filename" : "cl_weicomment_location_btn.png",
+      "scale" : "2x"
+    },
+    {
+      "resizing" : {
+        "mode" : "3-part-horizontal",
+        "center" : {
+          "mode" : "stretch",
+          "width" : 798
+        },
+        "capInsets" : {
+          "right" : 104,
+          "left" : 113
+        }
+      },
+      "idiom" : "universal",
+      "filename" : "cl_weicomment_location_btn@3.png",
+      "scale" : "3x"
+    }
+  ],
+  "info" : {
+    "version" : 1,
+    "author" : "xcode"
+  }
+}

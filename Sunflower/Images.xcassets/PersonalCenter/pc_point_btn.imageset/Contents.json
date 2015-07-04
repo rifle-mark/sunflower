@@ -1,0 +1,44 @@
+{
+  "images" : [
+    {
+      "idiom" : "universal",
+      "scale" : "1x"
+    },
+    {
+      "resizing" : {
+        "mode" : "3-part-horizontal",
+        "center" : {
+          "mode" : "stretch",
+          "width" : 343
+        },
+        "capInsets" : {
+          "right" : 68,
+          "left" : 246
+        }
+      },
+      "idiom" : "universal",
+      "filename" : "pc_point_btn@2.png",
+      "scale" : "2x"
+    },
+    {
+      "resizing" : {
+        "mode" : "3-part-horizontal",
+        "center" : {
+          "mode" : "stretch",
+          "width" : 495
+        },
+        "capInsets" : {
+          "right" : 103,
+          "left" : 369
+        }
+      },
+      "idiom" : "universal",
+      "filename" : "pc_point_btn@3.png",
+      "scale" : "3x"
+    }
+  ],
+  "info" : {
+    "version" : 1,
+    "author" : "xcode"
+  }
+}

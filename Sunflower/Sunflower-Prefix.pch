@@ -1,0 +1,125 @@
+//
+//  Sunflower-Prefix.pch
+//  Sunflower
+//
+//  Created by mark on 15/4/26.
+//  Copyright (c) 2015年 MKW. All rights reserved.
+//
+
+#ifndef Sunflower_Sunflower_Prefix_pch
+#define Sunflower_Sunflower_Prefix_pch
+
+// Include any system framework and library headers here that should be included in all compilation units.
+// You will also need to set the Prefix Header build setting of one or more of your targets to reference this file.
+
+#import <UIKit/UIKit.h>
+#import "UIView+FrameOperation.h"
+#import "CALayer+IBAttribute.h"
+#import "NSDictionary+MKWJson.h"
+#import "NSNumber+MKWDate.h"
+#import "UIMenuController+UserInfo.h"
+#import "MKWColorHelper.h"
+#import "MKWStringHelper.h"
+#import "GCExtension.h"
+#import <UIImageView+AFNetworking.h>
+#import <Masonry.h>
+#import <MJRefresh.h>
+#import <MobClick.h>
+#import <SVProgressHUD.h>
+#import "MKWViewController.h"
+#import "UserPointHandler.h"
+#import "MKWTextField.h"
+
+#define _weak(x)    typeof(x) weak__MKW_##x = x
+#define _strong(x)  typeof(x) x = weak__MKW_##x
+
+
+#define V_X0(v) CGRectGetMinX(v.frame)
+#define V_Y0(v) CGRectGetMinY(v.frame)
+#define V_X1(v) CGRectGetMaxX(v.frame)
+#define V_Y1(v) CGRectGetMaxY(v.frame)
+#define V_XM(v) CGRectGetMidX(v.frame)
+#define V_YM(v) CGRectGetMidY(v.frame)
+#define V_W_(v) CGRectGetWidth(v.bounds)
+#define V_WM_(v) CGRectGetMidX(v.bounds)
+#define V_HM_(v) CGRectGetMidY(v.bounds)
+#define V_H_(v) CGRectGetHeight(v.bounds)
+
+// spacings
+#define AUTOV_SCALE(x) (x)
+#define X_SPACING AUTOV_SCALE(6)
+#define Y_SPACING AUTOV_SCALE(6)
+// middle spacings
+#define M_X_SPACING AUTOV_SCALE(12)
+#define M_Y_SPACING AUTOV_SCALE(12)
+// big spacings
+#define B_X_SPACING AUTOV_SCALE(24)
+#define B_Y_SPACING AUTOV_SCALE(24)
+
+// padding
+#define X2_SCALE(x) (x)
+#define X_PADDING X2_SCALE(6)
+#define Y_PADDING X2_SCALE(6)
+// middle padding
+#define M_X_PADDING X2_SCALE(12)
+#define M_Y_PADDING X2_SCALE(12)
+// big padding
+#define B_X_PADDING X2_SCALE(24)
+#define B_Y_PADDING X2_SCALE(24)
+
+#define ccs(w, h) CGSizeMake(w, h)
+#define ccp(x, y) CGPointMake(x, y)
+
+/****************************
+ * User Defaults
+ *
+ ****************************/
+// 用户 Token
+#define k_USERDEFAULTS_TOKEN                        @"User_Token"
+// 物业/商业 Token
+#define k_USERDEFAULTS_ADMIN_TOKEN                  @"Admin_Token"
+
+
+/****************************
+ * NOTIFICATION DEFINE
+ * 通知名, 通知信息键值 定义
+ ****************************/
+// 用户小区更改
+#define k_NOTIFY_NAME_COMMUNITY_CHANGED             @"User_Community_Changed"
+#define k_NOTIFY_KEY_COMMUNITY_CHANGED              @"notification_key_communityId"
+
+#define k_NOTIFY_NAME_CITY_CHANGED                  @"User_City_Changed"
+#define k_NOTIFY_KEY_CITY_CHANGED                   @"notification_key_city"
+
+#define k_NOTIFY_NAME_CURRENT_COMMUNITY_CHANGED     @"Current_Community_Changed"
+
+// 普通用户注册成功
+#define k_NOTIFY_NAME_USER_REGISTER                 @"User_Register_Succeed"
+// 普通用户登录成功
+#define k_NOTIFY_NAME_USER_LOGIN                    @"User_Login_Succeed"
+// 普通用户退出
+#define k_NOTIFY_NAME_USER_LOGOUT_NORMAL            @"User_LogOut_Succeed"
+// 普能用户信息修改
+#define k_NOTIFY_NAME_USER_INFO_UPDATE              @"User_Info_Update"
+
+// 商家用户登录成功
+#define k_NOTIFY_NAME_BUSINESS_USER_LOGIN             @"Business_User_Login_Succeed"
+// 商家用户退出
+#define k_NOTIFY_NAME_BUSINESS_USER_LOGOUT            @"Business_LogOut_Succeed"
+// 商记用户注册成功
+#define k_NOTIFY_NAME_BUSINESS_USER_REGISTER        @"Business_User_register_Succeed"
+
+// 物管用户登录成功
+#define k_NOTIFY_NAME_PROPERTY_USER_LOGIN            @"Property_User_Login_Succeed"
+// 物管用户退出
+#define k_NOTIFY_NAME_PROPERTY_USER_LOGOUT           @"Property_LogOut_Succeed"
+
+// 物业缴费成功
+#define k_NOTIFY_NAME_PROPERTY_CHARGE_SUCCESS       @"Property_Charge_Succeed"
+// 物业缴费失败
+#define k_NOTIFY_NAME_PROPERTY_CHARGE_FAILED        @"Property_Charge_Failed"
+
+// 微信授权
+#define k_NOTIFY_NAME_WXAUTH_SUCCESS                @"WXAuth_Success"
+#define k_NOTIFY_NAME_WXAUTH_FAILED                 @"WXAuth_Failed"
+#endif

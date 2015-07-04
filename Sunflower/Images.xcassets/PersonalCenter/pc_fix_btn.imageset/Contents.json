@@ -1,0 +1,44 @@
+{
+  "images" : [
+    {
+      "idiom" : "universal",
+      "scale" : "1x"
+    },
+    {
+      "resizing" : {
+        "mode" : "3-part-horizontal",
+        "center" : {
+          "mode" : "stretch",
+          "width" : 153
+        },
+        "capInsets" : {
+          "right" : 286,
+          "left" : 246
+        }
+      },
+      "idiom" : "universal",
+      "filename" : "pc_fix_btn.png",
+      "scale" : "2x"
+    },
+    {
+      "resizing" : {
+        "mode" : "3-part-horizontal",
+        "center" : {
+          "mode" : "stretch",
+          "width" : 230
+        },
+        "capInsets" : {
+          "right" : 429,
+          "left" : 370
+        }
+      },
+      "idiom" : "universal",
+      "filename" : "pc_fix_btn@3.png",
+      "scale" : "3x"
+    }
+  ],
+  "info" : {
+    "version" : 1,
+    "author" : "xcode"
+  }
+}
