@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7706" systemVersion="14E46" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="dtT-5x-8e6">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7706" systemVersion="14D136" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="dtT-5x-8e6">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
@@ -206,6 +206,9 @@
                             </connections>
                         </barButtonItem>
                     </navigationItem>
+                    <connections>
+                        <segue destination="676-Z4-sXk" kind="show" identifier="Segue_MyFixRecord_PictureShow" id="zh8-fy-QcA"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="zaA-cd-wBV" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -14300,7 +14303,7 @@
                     </view>
                     <navigationItem key="navigationItem" title="选择小区" id="Ghj-7V-15D">
                         <barButtonItem key="leftBarButtonItem" image="back" id="47U-yW-U8m">
-                            <color key="tintColor" red="0.94901960780000005" green="0.94901960780000005" blue="0.94901960780000005" alpha="1" colorSpace="calibratedRGB"/>
+                            <color key="tintColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                             <connections>
                                 <segue destination="J0u-DW-1Ih" kind="unwind" identifier="Back_ChooseCommunity" unwindAction="unwindSegue:" id="E36-zw-8Qs"/>
                             </connections>
@@ -14351,22 +14354,84 @@
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="5L4-UN-kyC">
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                                <subviews>
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="xlb" translatesAutoresizingMaskIntoConstraints="NO" id="eQR-ma-ieU">
+                                        <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="24" id="QzI-TV-2IK">
+                                                <variation key="heightClass=regular-widthClass=compact" constant="18"/>
+                                            </constraint>
+                                        </constraints>
+                                        <variation key="default">
+                                            <mask key="constraints">
+                                                <exclude reference="QzI-TV-2IK"/>
+                                            </mask>
+                                        </variation>
+                                        <variation key="heightClass=regular-widthClass=compact">
+                                            <mask key="constraints">
+                                                <include reference="QzI-TV-2IK"/>
+                                            </mask>
+                                        </variation>
+                                    </imageView>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="AzN-Sw-0EC">
+                                        <rect key="frame" x="-23" y="-15" width="46" height="30"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                        <state key="normal" title="暂无最新公告">
+                                            <color key="titleColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="latestNotifyButtonOnClick:" destination="fXH-ZX-oH2" eventType="touchUpInside" id="wm2-fK-5Qx"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
                                 <color key="backgroundColor" red="0.88235294117647056" green="0.88235294117647056" blue="0.88235294117647056" alpha="1" colorSpace="calibratedRGB"/>
                                 <gestureRecognizers/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="50" id="2lK-ZE-S96">
                                         <variation key="heightClass=regular-widthClass=compact" constant="40"/>
                                     </constraint>
+                                    <constraint firstAttribute="trailing" secondItem="AzN-Sw-0EC" secondAttribute="trailing" constant="8" id="5Js-6H-e2k"/>
+                                    <constraint firstAttribute="bottom" secondItem="AzN-Sw-0EC" secondAttribute="bottom" id="9fc-ql-yU8"/>
+                                    <constraint firstItem="eQR-ma-ieU" firstAttribute="leading" secondItem="5L4-UN-kyC" secondAttribute="leading" constant="15" id="BHI-VB-YQO"/>
+                                    <constraint firstItem="eQR-ma-ieU" firstAttribute="top" secondItem="5L4-UN-kyC" secondAttribute="top" id="INE-wA-kbL"/>
+                                    <constraint firstItem="AzN-Sw-0EC" firstAttribute="leading" secondItem="eQR-ma-ieU" secondAttribute="trailing" constant="8" id="Vbo-0M-iko">
+                                        <variation key="heightClass=regular-widthClass=compact" constant="8"/>
+                                    </constraint>
+                                    <constraint firstAttribute="bottom" secondItem="eQR-ma-ieU" secondAttribute="bottom" id="ahg-HF-PO1"/>
+                                    <constraint firstItem="AzN-Sw-0EC" firstAttribute="top" secondItem="5L4-UN-kyC" secondAttribute="top" id="yud-ds-cej"/>
                                 </constraints>
                                 <variation key="default">
+                                    <mask key="subviews">
+                                        <exclude reference="eQR-ma-ieU"/>
+                                        <exclude reference="AzN-Sw-0EC"/>
+                                    </mask>
                                     <mask key="constraints">
                                         <exclude reference="2lK-ZE-S96"/>
+                                        <exclude reference="5Js-6H-e2k"/>
+                                        <exclude reference="9fc-ql-yU8"/>
+                                        <exclude reference="Vbo-0M-iko"/>
+                                        <exclude reference="yud-ds-cej"/>
+                                        <exclude reference="BHI-VB-YQO"/>
+                                        <exclude reference="INE-wA-kbL"/>
+                                        <exclude reference="ahg-HF-PO1"/>
                                     </mask>
                                 </variation>
                                 <variation key="heightClass=regular-widthClass=compact" misplaced="YES">
                                     <rect key="frame" x="0.0" y="419" width="400" height="40"/>
+                                    <mask key="subviews">
+                                        <include reference="eQR-ma-ieU"/>
+                                        <include reference="AzN-Sw-0EC"/>
+                                    </mask>
                                     <mask key="constraints">
                                         <include reference="2lK-ZE-S96"/>
+                                        <include reference="5Js-6H-e2k"/>
+                                        <include reference="9fc-ql-yU8"/>
+                                        <include reference="Vbo-0M-iko"/>
+                                        <include reference="yud-ds-cej"/>
+                                        <include reference="BHI-VB-YQO"/>
+                                        <include reference="INE-wA-kbL"/>
+                                        <include reference="ahg-HF-PO1"/>
                                     </mask>
                                 </variation>
                                 <connections>
@@ -15301,7 +15366,9 @@
                     <navigationItem key="navigationItem" id="5HT-Vr-xpj"/>
                     <connections>
                         <outlet property="communityBgV" destination="d89-io-D61" id="Hwd-Jh-Obs"/>
+                        <outlet property="latestNotifyB" destination="AzN-Sw-0EC" id="qGx-3u-n3H"/>
                         <outlet property="noteV" destination="5L4-UN-kyC" id="43T-pU-WoL"/>
+                        <segue destination="3Rb-Zu-gKx" kind="show" identifier="Segue_MainPage_NotifyInfo" id="6ua-yP-pr3"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="YJQ-VJ-J2R" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -15793,7 +15860,14 @@
                             </mask>
                         </variation>
                     </view>
-                    <navigationItem key="navigationItem" title="智慧小区" id="3NS-Bx-hRS"/>
+                    <navigationItem key="navigationItem" title="智慧小区" id="3NS-Bx-hRS">
+                        <barButtonItem key="leftBarButtonItem" image="back" id="sha-wD-4BH">
+                            <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            <connections>
+                                <action selector="back:" destination="w0N-cr-d0I" id="Mul-th-iYg"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                     <connections>
                         <outlet property="areaBtn" destination="Bxb-Kh-SkY" id="dOs-Q9-zRh"/>
                         <outlet property="cityBtn" destination="3Va-fJ-zoC" id="3gs-cU-YUP"/>
@@ -16037,26 +16111,28 @@
         <image name="wx_title" width="66" height="66"/>
         <image name="wxbx" width="40" height="40"/>
         <image name="wyjs" width="40" height="41"/>
+        <image name="xlb" width="35" height="31"/>
         <image name="zbyh" width="40" height="39"/>
         <image name="znmj" width="40" height="40"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="JvK-HF-8Js"/>
-        <segue reference="qb1-be-3If"/>
-        <segue reference="tvY-dW-G3D"/>
-        <segue reference="2uU-mn-vfd"/>
-        <segue reference="vKk-6R-1Xp"/>
-        <segue reference="9zu-t1-uZZ"/>
         <segue reference="yli-Jp-NAd"/>
-        <segue reference="eZI-At-RQh"/>
-        <segue reference="H5L-QS-jcp"/>
-        <segue reference="YRR-in-NRb"/>
-        <segue reference="aQf-9T-5bW"/>
+        <segue reference="JvK-HF-8Js"/>
         <segue reference="MP3-vb-YSL"/>
-        <segue reference="XTG-gT-Jbr"/>
+        <segue reference="YRR-in-NRb"/>
         <segue reference="Orh-cn-QTw"/>
-        <segue reference="ESf-nn-0d6"/>
+        <segue reference="XTG-gT-Jbr"/>
         <segue reference="1Se-RM-Pj9"/>
         <segue reference="KDL-iw-rz2"/>
+        <segue reference="gSS-48-SZG"/>
+        <segue reference="6ua-yP-pr3"/>
+        <segue reference="Kev-8d-YJN"/>
+        <segue reference="H5L-QS-jcp"/>
+        <segue reference="wqP-zY-FUh"/>
+        <segue reference="t3E-K7-JpC"/>
+        <segue reference="FMP-zl-Y9S"/>
+        <segue reference="eZI-At-RQh"/>
+        <segue reference="ESf-nn-0d6"/>
+        <segue reference="5u4-Y1-2li"/>
     </inferredMetricsTieBreakers>
 </document>

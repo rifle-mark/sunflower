@@ -47,7 +47,7 @@
 }
 
 + (BOOL)isVAlidatePhoneNumber:(NSString *)str {
-    NSString *phoneNumRegex = @"(13[0-9]|15[012356789]|18[0236789]|14[57])[0-9]{8}";
+    NSString *phoneNumRegex = @"(13[0-9]|15[012356789]|17[678]|18[0-9]|14[57])[0-9]{8}";
     NSPredicate *phoneNumTest = [NSPredicate predicateWithFormat:@"SELF MATCHES %@", phoneNumRegex];
     
     return [phoneNumTest evaluateWithObject:str];

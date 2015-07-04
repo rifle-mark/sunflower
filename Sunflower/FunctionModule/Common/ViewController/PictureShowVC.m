@@ -54,6 +54,7 @@
 @interface PictureShowVC ()
 
 @property(nonatomic,strong)GCDefaultPageView    *picView;
+@property(nonatomic,assign)BOOL                 isDidAppear;
 
 @end
 
@@ -97,6 +98,7 @@
     
     [self.picView reloadData];
     [self.picView showPageAtIndex:self.currentIndex animation:NO];
+    self.isDidAppear = YES;
 }
 
 #pragma mark - Navigation
@@ -135,7 +137,8 @@
         }];
         [p withBlockForPageViewCellDidEndDisplay:^(GCPageView *pageView, NSUInteger index, GCPageViewCell *cell) {
             _strong(self);
-            self.currentIndex = pageView.currentPageIndex;
+            if (self.isDidAppear)
+                self.currentIndex = pageView.currentPageIndex;
         }];
         p;
     });

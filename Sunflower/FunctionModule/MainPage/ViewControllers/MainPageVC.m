@@ -15,23 +15,25 @@
 #import "MKWWebVC.h"
 #import "WeCommentListVC.h"
 #import "ServerProxy.h"
+#import "PropertyNotifyVC.h"
 
 @interface MainPageVC ()
 
 @property(nonatomic,weak)IBOutlet UIImageView   *communityBgV;
 @property(nonatomic,weak)IBOutlet UIView        *noteV;
+@property(nonatomic,weak)IBOutlet UIButton      *latestNotifyB;
 
 @property(nonatomic,strong)UIImageView          *avatarV;
 @property(nonatomic,strong)UIView               *communityNameV;
 @property(nonatomic,strong)UIImageView          *gpsImgeV;
 @property(nonatomic,strong)UILabel              *communityNameL;
-@property(nonatomic,strong)UILabel              *latestNoteL;
 @property(nonatomic,strong)UILabel              *checkInL;
 @property(nonatomic,strong)UILabel              *weatherL;
 @property(nonatomic,strong)UILabel              *LimitedL;
 
 
 @property(nonatomic,strong)CommunityInfo        *community;
+@property(nonatomic,strong)CommunityNoteInfo    *latestNoteInfo;
 
 @end
 
@@ -49,6 +51,8 @@
     
     self.tabBarController.tabBar.selectedImageTintColor = k_COLOR_BLUE;
     
+    self.latestNoteInfo = nil;
+    
     if (![[CommonModel sharedModel] currentCommunityId]) {
         [self _showCommunitySettingVC];
     }
@@ -56,6 +60,7 @@
     [self _setupObserver];
     if ([[CommonModel sharedModel] currentCommunityId]) {
         [self _refreshCommunityInfo];
+        [self _refreshLatestNotify];
     }
 }
 
@@ -93,17 +98,27 @@
     if ([segue.identifier isEqualToString:@"Segue_MainPage_Payment"]) {
         ((PropertyPayListVC *)[segue destinationViewController]).type = ChargeProperty;
     }
-    if ([segue.identifier isEqualToString:@"Segue_MainPage_Web"]) {
+    else if ([segue.identifier isEqualToString:@"Segue_MainPage_Web"]) {
         ((MKWWebVC*)segue.destinationViewController).naviTitle = @"周边游";
         ((MKWWebVC*)segue.destinationViewController).url = [NSURL URLWithString:k_URL_ZHOUBIANYOU];
     }
-    if ([segue.identifier isEqualToString:@"Segue_MainPage_WeiComment"]) {
+    else if ([segue.identifier isEqualToString:@"Segue_MainPage_WeiComment"]) {
         
+    }
+    else if ([segue.identifier isEqualToString:@"Segue_MainPage_NotifyInfo"]) {
+        PropertyNotifyVC *vc = [segue destinationViewController];
+        vc.note = sender;
     }
 }
 
 - (void)unwindSegue:(UIStoryboardSegue *)segue {
     self.navigationController.navigationBarHidden = YES;
+}
+
+- (IBAction)latestNotifyButtonOnClick:(UIButton *)sender {
+    if (self.latestNoteInfo) {
+        [self performSegueWithIdentifier:@"Segue_MainPage_NotifyInfo" sender:self.latestNoteInfo];
+    }
 }
 
 #pragma mark - coding Views
@@ -121,13 +136,7 @@
         v.clipsToBounds = YES;
         _weak(self);
         UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithActionBlock:^(UIGestureRecognizer *gesture) {
-            GCAlertView *alert = [[GCAlertView alloc] initWithTitle:@"切换小区" andMessage:@"确定要切换小区吗？"];
-            [alert setCancelButtonWithTitle:@"取消" actionBlock:nil];
-            [alert addOtherButtonWithTitle:@"切换" actionBlock:^{
-                _strong(self);
-                [self _showCommunitySettingVC];
-            }];
-            [alert show];
+            [self _showCommunitySettingVC];
         }];
         [v addGestureRecognizer:tap];
         v;
@@ -146,11 +155,6 @@
     self.communityNameL.backgroundColor = k_COLOR_CLEAR;
     self.communityNameL.font = [UIFont boldSystemFontOfSize:16];
     
-    self.latestNoteL = [[UILabel alloc] init];
-    self.latestNoteL.textColor = k_COLOR_COUPON_TEXT;
-    self.latestNoteL.font = [UIFont systemFontOfSize:14];
-    self.latestNoteL.backgroundColor = k_COLOR_CLEAR;
-    
     self.checkInL = [[UILabel alloc] init];
     self.checkInL.textColor = k_COLOR_WHITE;
     self.checkInL.font = [UIFont boldSystemFontOfSize:12];
@@ -166,6 +170,8 @@
     self.LimitedL.textColor = k_COLOR_WHITE;
     self.LimitedL.font = [UIFont systemFontOfSize:12];
     self.LimitedL.backgroundColor = k_COLOR_CLEAR;
+    
+    [self.latestNotifyB setTitleColor:k_COLOR_COUPON_TEXT forState:UIControlStateNormal];
 }
 
 - (void)_layoutCodingViews {
@@ -200,8 +206,9 @@
         [self.communityNameV addSubview:self.gpsImgeV];
         [self.gpsImgeV mas_makeConstraints:^(MASConstraintMaker *make) {
             _strong(self);
-            make.top.left.bottom.equalTo(self.communityNameV);
-            make.width.equalTo(self.communityNameV.mas_height);
+            make.left.centerY.equalTo(self.communityNameV);
+            make.width.equalTo(@(self.gpsImgeV.image.size.width));
+            make.height.equalTo(@(self.gpsImgeV.image.size.height));
         }];
     }
     
@@ -234,11 +241,13 @@
         if ([[CommonModel sharedModel] currentCommunityId]) {
             if (!self.community) {
                 [self _refreshCommunityInfo];
+                [self _refreshLatestNotify];
                 return;
             }
             
             if (self.community && [self.community.communityId integerValue] != [[[CommonModel sharedModel] currentCommunityId] integerValue]) {
                 [self _refreshCommunityInfo];
+                [self _refreshLatestNotify];
                 return;
             }
         }
@@ -263,6 +272,12 @@
         
         self.checkInL.text = [NSString stringWithFormat:@"已有%@人入住", self.community.checkInUserCount];
     }];
+    
+    [self startObserveObject:self forKeyPath:@"latestNoteInfo" usingBlock:^(NSObject *target, NSString *keyPath, NSDictionary *change) {
+        _strong(self);
+        NSString *title = self.latestNoteInfo ? self.latestNoteInfo.title : @"暂无最新公告";
+        [self.latestNotifyB setTitle:title forState:UIControlStateNormal];
+    }];
 }
 
 - (void)_refreshCommunityInfo {
@@ -275,4 +290,13 @@
         self.community = community;
     }];
 }
+
+- (void)_refreshLatestNotify {
+    _weak(self);
+    [[PropertyServiceModel sharedModel] asyncCommunityNoteListWithCommunityId:[[CommonModel sharedModel] currentCommunityId] pageIndex:@1 pageSize:@1 cacheBlock:nil remoteBlock:^(NSArray *list, NSNumber *cPage, NSError *error) {
+        _strong(self);
+        self.latestNoteInfo = !error && [list count] > 0 ? list[0] : nil;
+    }];
+}
+
 @end
