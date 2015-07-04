@@ -837,7 +837,7 @@
                     return;
                 }
                 [UserPointHandler addUserPointWithType:FixAdd showInfo:NO];
-                [SVProgressHUD showErrorWithStatus:@"提交成功,可到个人中心查看"];
+                [SVProgressHUD showSuccessWithStatus:@"提交成功,可到个人中心查看"];
                 [self _cleanContent];
             }];
         }];
