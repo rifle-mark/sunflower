@@ -469,7 +469,7 @@
         if (![[responseJSON objectForKey:@"isSuc"] boolValue]) {
             GCBlockInvoke(remote, nil, [NSError errorWithDomain:[responseJSON objectForKey:@"message"] code:[[responseJSON objectForKey:@"code"] integerValue] userInfo:nil]);
         }
-        GCBlockInvoke(remote, [responseJSON objectForKey:@"result"], nil);
+        GCBlockInvoke(remote, [PointRulerInfo infoArrayWithJSONArray:[responseJSON objectForKey:@"result"]], nil);
     } failed:^(NSError *error) {
         GCBlockInvoke(remote, nil, error);
     }];

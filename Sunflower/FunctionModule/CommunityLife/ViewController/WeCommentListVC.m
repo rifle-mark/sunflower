@@ -196,7 +196,7 @@
             }];
             
             [v withBlockForFooterHeight:^CGFloat(UITableView *view, NSInteger section) {
-                return (CGFloat)40;
+                return (CGFloat)55;
             }];
             
             [v withBlockForFooterView:^UIView *(UITableView *view, NSInteger section) {
@@ -221,8 +221,8 @@
                 _weak(footer);
                 [addBtn mas_makeConstraints:^(MASConstraintMaker *make) {
                     _strong(footer);
-                    make.top.equalTo(footer).with.offset(5);
-                    make.bottom.equalTo(footer).with.offset(-5);
+                    make.top.equalTo(footer).with.offset(10);
+                    make.bottom.equalTo(footer).with.offset(-15);
                     make.centerX.equalTo(footer);
                     make.width.equalTo(@180);
                 }];

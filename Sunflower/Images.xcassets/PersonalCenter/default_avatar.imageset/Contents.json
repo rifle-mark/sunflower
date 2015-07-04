@@ -7,12 +7,12 @@
     {
       "idiom" : "universal",
       "scale" : "2x",
-      "filename" : "头像-1.png"
+      "filename" : "default_avatar.png"
     },
     {
       "idiom" : "universal",
       "scale" : "3x",
-      "filename" : "头像.png"
+      "filename" : "default_avatar@3.png"
     }
   ],
   "info" : {

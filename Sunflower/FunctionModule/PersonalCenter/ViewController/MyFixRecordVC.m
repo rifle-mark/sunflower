@@ -11,6 +11,8 @@
 #import "UserModel.h"
 #import "FixIssue.h"
 #import "WeiCommentCell.h"
+#import "CommonModel.h"
+#import "PictureShowVC.h"
 
 @interface MyFixIssueCell : UITableViewCell
 
@@ -165,7 +167,7 @@
                 cell = [[WeiCommentPicCell alloc] init];
             }
             _weak(cell);
-            [cell.imgV setImageWithURLRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:self.picUrlVArray[path.row]]] placeholderImage:[UIImage imageNamed:@"default_placeholder"] success:^(NSURLRequest *request, NSHTTPURLResponse *response, UIImage *image) {
+            [cell.imgV setImageWithURLRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:self.picUrlVArray[path.row]]] placeholderImage:[UIImage imageNamed:@"default_avatar"] success:^(NSURLRequest *request, NSHTTPURLResponse *response, UIImage *image) {
                 _strong(cell);
                 cell.imgV.contentMode = UIViewContentModeScaleToFill;
                 cell.imgV.image = image;
@@ -383,6 +385,11 @@
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     // Get the new view controller using [segue destinationViewController].
     // Pass the selected object to the new view controller.
+    if ([segue.identifier isEqualToString:@"Segue_MyFixRecord_PictureShow"]) {
+        PictureShowVC *vc = segue.destinationViewController;
+        vc.picUrlArray = [sender objectAtIndex:0];
+        vc.currentIndex = [[sender objectAtIndex:1] unsignedIntegerValue];
+    }
 }
 
 #pragma mark - Coding Views
@@ -426,6 +433,10 @@
             
             cell.issue = self.fixList[path.row];
             [cell setIsIssueEdit:self.isEdit];
+            cell.picShowBlock = ^(NSArray *picUrlArray, NSInteger index){
+                if (picUrlArray)
+                    [self performSegueWithIdentifier:@"Segue_MyFixRecord_PictureShow" sender:@[picUrlArray, @(index)]];
+            };
             cell.issueDeleteBlock = ^(FixIssueInfo *issue){
                 _strong(self);
                 [[UserModel sharedModel] asyncFixRecordDeleteWithIdArray:@[issue.issueId] remoteBlock:^(BOOL isSuccess, NSError *error) {
@@ -559,7 +570,7 @@
     if (![UserModel sharedModel].isNormalLogined) {
         return;
     }
-    [[UserModel sharedModel] asyncFixRecordListWithCommunityId:[UserModel sharedModel].currentNormalUser.communityId page:page pageSize:pageSize remoteBlock:^(NSArray *list, NSNumber *cPage, NSError *error) {
+    [[UserModel sharedModel] asyncFixRecordListWithCommunityId:[CommonModel sharedModel].currentCommunityId page:page pageSize:pageSize remoteBlock:^(NSArray *list, NSNumber *cPage, NSError *error) {
         if ([self.fixTableV.header isRefreshing]) {
             [self.fixTableV.header endRefreshing];
         }

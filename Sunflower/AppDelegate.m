@@ -216,6 +216,20 @@
             [[NSNotificationCenter defaultCenter] postNotificationName:k_NOTIFY_NAME_WXAUTH_FAILED object:nil userInfo:nil];
         }
     }
+    
+    if ([resp isKindOfClass:[SendMessageToWXResp class]]) {
+        SendMessageToWXResp *mresp = (SendMessageToWXResp *)resp;
+        if (mresp.errCode == 0) {
+            GCAlertView *alert = [[GCAlertView alloc] initWithTitle:@"分享成功" andMessage:@"微信分享成功"];
+            [alert setCancelButtonWithTitle:@"好的" actionBlock:nil];
+            [alert show];
+        }
+        else {
+            GCAlertView *alert = [[GCAlertView alloc] initWithTitle:@"分享失败" andMessage:@"微信分享失败"];
+            [alert setCancelButtonWithTitle:@"好的" actionBlock:nil];
+            [alert show];
+        }
+    }
 }
 
 @end

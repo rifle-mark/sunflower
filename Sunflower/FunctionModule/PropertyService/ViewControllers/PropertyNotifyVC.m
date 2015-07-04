@@ -94,7 +94,7 @@
         _strong(self);
         self.titleL.text = self.note.title;
         self.timeL.text = [self.note.createDate dateSplitByChinese];
-        [self.coverImgV setImageWithURL:[NSURL URLWithString:self.note.image] placeholderImage:nil];
+        [self.coverImgV setImageWithURL:[NSURL URLWithString:self.note.image] placeholderImage:[UIImage imageNamed:@"default_top_width"]];
         self.contentT.text = self.note.content;
         [self.note readNote];
     }];
@@ -105,9 +105,7 @@
     if (self.note) {
         self.titleL.text = self.note.title;
         self.timeL.text = [self.note.createDate dateSplitByChinese];
-        // TODO:MAKEWEI FUCK TODO
-        // replace placeholder image
-        [self.coverImgV setImageWithURL:[NSURL URLWithString:self.note.image] placeholderImage:nil];
+        [self.coverImgV setImageWithURL:[NSURL URLWithString:self.note.image] placeholderImage:[UIImage imageNamed:@"default_top_width"]];
         self.contentT.text = self.note.content;
         [self.note readNote];
     }

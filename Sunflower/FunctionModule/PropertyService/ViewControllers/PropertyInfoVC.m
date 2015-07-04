@@ -101,7 +101,7 @@
     [self startObserveObject:self forKeyPath:@"community" usingBlock:^(NSObject *target, NSString *keyPath, NSDictionary *change) {
         _strong(self);
         if (self.community) {
-            [self.communityImageV setImageWithURL:[NSURL URLWithString:self.community.images] placeholderImage:nil];
+            [self.communityImageV setImageWithURL:[NSURL URLWithString:self.community.images] placeholderImage:[UIImage imageNamed:@"default_top_width"]];
             self.propertyNameL.text = self.community.name;
             self.propertyInfoT.text = self.community.communityDesc;
         }

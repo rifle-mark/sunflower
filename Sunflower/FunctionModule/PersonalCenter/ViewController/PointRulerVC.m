@@ -14,7 +14,7 @@
 @property(nonatomic,strong)UILabel *titleL;
 @property(nonatomic,strong)UILabel *pointL;
 
-@property(nonatomic,strong)NSDictionary *ruler;
+@property(nonatomic,strong)PointRulerInfo *ruler;
 
 + (NSString *)reuseIdentify;
 @end
@@ -75,8 +75,8 @@
     _weak(self);
     [self startObserveObject:self forKeyPath:@"ruler" usingBlock:^(NSObject *target, NSString *keyPath, NSDictionary *change) {
         _strong(self);
-        self.titleL.text = [self.ruler objectForKey:@"Title"];
-        self.pointL.text = [NSString stringWithFormat:@"+%@积分", [self.ruler objectForKey:@"Points"]];
+        self.titleL.text = self.ruler.title;
+        self.pointL.text = [NSString stringWithFormat:@"+%@积分", self.ruler.points];
     }];
 }
 @end

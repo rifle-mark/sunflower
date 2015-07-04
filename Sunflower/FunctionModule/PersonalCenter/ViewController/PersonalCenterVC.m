@@ -316,7 +316,7 @@
         _strong(self);
         self.normalUser = [[UserModel sharedModel] currentNormalUser];
         self.nickNameL.text = self.normalUser.nickName;
-        [self.avatarV setImageWithURL:[NSURL URLWithString:self.normalUser.avatar] placeholderImage:nil];
+        [self.avatarV setImageWithURL:[NSURL URLWithString:self.normalUser.avatar] placeholderImage:[UIImage imageNamed:@"default_avatar"]];
         self.couponCountL.text = [self.normalUser.couponCount stringValue];
         self.userPointsL.text = [self.normalUser.points stringValue];
     }];

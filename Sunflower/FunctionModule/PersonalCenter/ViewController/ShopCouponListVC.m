@@ -60,6 +60,7 @@
             l.backgroundColor = [k_COLOR_GALLERY_F colorWithAlphaComponent:0.5];
             l.font = [UIFont boldSystemFontOfSize:16];
             l.textColor = k_COLOR_GALLERY_F;
+            l.text = @"已过期";
             l;});
         [self.contentView addSubview:self.coverL];
         [self.coverL mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -142,11 +143,21 @@
     _weak(self);
     [self startObserveObject:self forKeyPath:@"coupon" usingBlock:^(NSObject *target, NSString *keyPath, NSDictionary *change) {
         _strong(self);
-        [self.couponImgV setImageWithURL:[NSURL URLWithString:self.coupon.image] placeholderImage:nil];
+        [self.couponImgV setImageWithURL:[NSURL URLWithString:self.coupon.image] placeholderImage:[UIImage imageNamed:@"default_top_width"]];
         self.nameL.text = self.coupon.name;
         self.timeL.text = [NSString stringWithFormat:@"有效期:%@", [self.coupon.endDate dateSplitByChinese]];
         self.usedL.text = [NSString stringWithFormat:@"已有%@人领取", self.coupon.useCount];
+        if ([self.coupon.endDate doubleValue] < [[NSDate date] timeIntervalSince1970]) {
+            [self.coverL setHidden:NO];
+        }
+        else {
+            [self.coverL setHidden:YES];
+        }
     }];
+}
+
+- (void)prepareForReuse {
+    [self.coverL setHidden:YES];
 }
 
 @end

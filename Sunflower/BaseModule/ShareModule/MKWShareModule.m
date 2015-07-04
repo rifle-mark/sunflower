@@ -65,16 +65,13 @@ static NSString *url_weibo;
                 [MKWShareModule _connectQQSpace];
                 break;
             case ShareTypeWeixiSession:
-                [MKWShareModule _connectWeixi];
+                [MKWShareModule _connectWeixiSession];
                 break;
             case ShareTypeWeixiTimeline:
-                [MKWShareModule _connectWeixi];
+                [MKWShareModule _connectWeiXinTimeline];
                 break;
             case ShareTypeQQ:
                 [MKWShareModule _connectQQ];
-                break;
-            case ShareTypeWeixiFav:
-                [MKWShareModule _connectWeixi];
                 break;
             default:
                 break;
@@ -126,10 +123,12 @@ static NSString *url_weibo;
  *
  *  微信分享配置信息
  */
-+ (void)_connectWeixi {
++ (void)_connectWeixiSession {
+    [ShareSDK connectWeChatSessionWithAppId:@"wx9d7542e3d90fd680" appSecret:@"65794a56b94ac0ff176c609f4103068e" wechatCls:[WXApi class]];
+}
 
-    [ShareSDK connectWeChatSessionWithAppId:@"wx9d7542e3d90fd680"
-                                  wechatCls:[WXApi class]];
++ (void)_connectWeiXinTimeline {
+    [ShareSDK connectWeChatTimelineWithAppId:@"wx9d7542e3d90fd680" appSecret:@"65794a56b94ac0ff176c609f4103068e" wechatCls:[WXApi class]];
 }
 
 /**

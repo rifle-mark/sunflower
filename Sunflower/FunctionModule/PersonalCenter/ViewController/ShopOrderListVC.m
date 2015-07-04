@@ -279,7 +279,7 @@
                 cell = [[ShopOrderCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:[ShopOrderCell reuseIdentify]];
             }
             CouponUserInfo *info = (CouponUserInfo *)self.orderList[path.row];
-            [cell.avatarV setImageWithURL:[NSURL URLWithString:info.avatar] placeholderImage:nil];
+            [cell.avatarV setImageWithURL:[NSURL URLWithString:info.avatar] placeholderImage:[UIImage imageNamed:@"default_avatar"]];
             cell.nameL.text = [NSString stringWithFormat:@"昵称：%@", info.nickName];
             cell.productL.text = [NSString stringWithFormat:@"优惠产品：%@", info.couponName];
             cell.endDateL.text = [NSString stringWithFormat:@"优惠截止日期：%@", [info.endDate dateSplitBySplash]];

@@ -98,7 +98,7 @@
     _weak(self);
     [self startObserveObject:self forKeyPath:@"coupon" usingBlock:^(NSObject *target, NSString *keyPath, NSDictionary *change) {
         _strong(self);
-        [self.imageV setImageWithURL:[NSURL URLWithString:self.coupon.image] placeholderImage:nil];
+        [self.imageV setImageWithURL:[NSURL URLWithString:self.coupon.image] placeholderImage:[UIImage imageNamed:@"default_top_width"]];
         self.nameT.text = self.coupon.name;
         self.themT.text = self.coupon.subTitle;
         self.detailT.text = self.coupon.couponDesc;

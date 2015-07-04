@@ -195,7 +195,7 @@
         if (!self.coupon) {
             return;
         }
-        [self.imageV setImageWithURL:[NSURL URLWithString:self.coupon.image] placeholderImage:nil];
+        [self.imageV setImageWithURL:[NSURL URLWithString:self.coupon.image] placeholderImage:[UIImage imageNamed:@"default_top_width"]];
         self.nameL.text = self.coupon.subTitle;
         self.gotL.text = [NSString stringWithFormat:@"已有%@人领取", self.coupon.useCount];
         self.endDateL.text = [NSString stringWithFormat:@"有效期：%@", [self.coupon.endDate dateSplitByChinese]];

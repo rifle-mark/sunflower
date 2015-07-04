@@ -213,7 +213,7 @@ static NSInteger    c_PageSize = 10;
     _weak(self);
     [self startObserveObject:self forKeyPath:@"house" usingBlock:^(NSObject *target, NSString *keyPath, NSDictionary *change) {
         _strong(self);
-        [self.imageV setImageWithURL:[NSURL URLWithString:self.house.image] placeholderImage:nil];
+        [self.imageV setImageWithURL:[NSURL URLWithString:self.house.image] placeholderImage:[UIImage imageNamed:@"default_avatar"]];
         self.titleL.text = self.house.title;
         self.roomL.text = [NSString stringWithFormat:@"%@室%@厅%@卫", self.house.room, self.house.hall, self.house.toilet];
         NSString *price = @"";
