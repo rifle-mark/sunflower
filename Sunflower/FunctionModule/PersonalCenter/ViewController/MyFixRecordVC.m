@@ -167,7 +167,7 @@
                 cell = [[WeiCommentPicCell alloc] init];
             }
             _weak(cell);
-            [cell.imgV setImageWithURLRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:self.picUrlVArray[path.row]]] placeholderImage:[UIImage imageNamed:@"default_placeholder"] success:^(NSURLRequest *request, NSHTTPURLResponse *response, UIImage *image) {
+            [cell.imgV setImageWithURLRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:self.picUrlVArray[path.row]]] placeholderImage:[UIImage imageNamed:@"default_avatar"] success:^(NSURLRequest *request, NSHTTPURLResponse *response, UIImage *image) {
                 _strong(cell);
                 cell.imgV.contentMode = UIViewContentModeScaleToFill;
                 cell.imgV.image = image;

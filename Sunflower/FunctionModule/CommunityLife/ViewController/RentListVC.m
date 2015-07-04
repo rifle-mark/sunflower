@@ -189,7 +189,7 @@ static NSArray *hilightImages;
     if (self.type == Rent_Sale || self.type == Rent_Out) {
         RentOutSaleTableCell *cell = [self.rentHouseTableView dequeueReusableCellWithIdentifier:[RentOutSaleTableCell reuseIdentify] forIndexPath:indexPath];
         RentListInfo *house = self.rentHouseArray[indexPath.row];
-        [cell.imageV setImageWithURL:[NSURL URLWithString:house.image] placeholderImage:nil];
+        [cell.imageV setImageWithURL:[NSURL URLWithString:house.image] placeholderImage:[UIImage imageNamed:@"default_avatar"]];
         cell.titleL.text = house.title;
         cell.roomFixL.text = [NSString stringWithFormat:@"%@室%@厅%@卫 %@", house.room, house.hall, house.toilet, house.fix];
         NSString *price = nil;

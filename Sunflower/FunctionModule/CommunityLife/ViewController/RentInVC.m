@@ -93,7 +93,8 @@
     [self startObserveObject:self forKeyPath:@"house" usingBlock:^(NSObject *target, NSString *keyPath, NSDictionary *change) {
         _strong(self);
         self.titleL.text = self.house.title;
-        [self.avataV setImageWithURL:[NSURL URLWithString:self.house.userAvatar] placeholderImage:nil];
+        self.avataV.clipsToBounds = YES;
+        [self.avataV setImageWithURL:[NSURL URLWithString:self.house.userAvatar] placeholderImage:[UIImage imageNamed:@"default_avatar"]];
         self.nameL.text = self.house.userName;
         self.timeL.text = [self.house.crateDate dateSplitBySplash];
         [self _setupDetailView];

@@ -54,7 +54,7 @@
     
     [super viewWillAppear:animated];
     
-    [self.serviceImageV setImageWithURL:[NSURL URLWithString:self.lifeServer.image] placeholderImage:nil];
+    [self.serviceImageV setImageWithURL:[NSURL URLWithString:self.lifeServer.image] placeholderImage:[UIImage imageNamed:@"default_top_width"]];
     self.serviceNameL.text = self.lifeServer.title;
     self.serviceSubTitleL.text = self.lifeServer.subTitle;
     self.serviceDesTitleL.text = [NSString stringWithFormat:@"%@服务介绍", self.lifeServer.title];
@@ -79,7 +79,7 @@
     _weak(self);
     [self startObserveObject:self forKeyPath:@"lifeServer" usingBlock:^(NSObject *target, NSString *keyPath, NSDictionary *change) {
         _strong(self);
-        [self.serviceImageV setImageWithURL:[NSURL URLWithString:self.lifeServer.image] placeholderImage:nil];
+        [self.serviceImageV setImageWithURL:[NSURL URLWithString:self.lifeServer.image] placeholderImage:[UIImage imageNamed:@"default_top_width"]];
         self.serviceNameL.text = self.lifeServer.title;
         self.serviceSubTitleL.text = self.lifeServer.subTitle;
         NSMutableParagraphStyle *ps = [[NSMutableParagraphStyle alloc] init];

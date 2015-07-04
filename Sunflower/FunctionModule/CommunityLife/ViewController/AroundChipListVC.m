@@ -158,7 +158,7 @@ typedef NS_ENUM(NSUInteger, CouponState) {
     _weak(self);
     [self startObserveObject:self forKeyPath:@"coupon" usingBlock:^(NSObject *target, NSString *keyPath, NSDictionary *change) {
         _strong(self);
-        [self.logoV setImageWithURL:[NSURL URLWithString:self.coupon.logo] placeholderImage:nil];
+        [self.logoV setImageWithURL:[NSURL URLWithString:self.coupon.logo] placeholderImage:[UIImage imageNamed:@"default_avatar"]];
         self.titleL.text = self.coupon.name;
         self.nameL.text = self.coupon.subTitle;
         self.endDateL.text = [NSString stringWithFormat:@"有效期:%@",[self.coupon.endDate dateSplitByChinese]];

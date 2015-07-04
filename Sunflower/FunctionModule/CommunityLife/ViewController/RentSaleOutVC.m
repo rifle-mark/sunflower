@@ -124,7 +124,7 @@
         else {
             self.priceL.text = [NSString stringWithFormat:@"%@万元", self.house.price];
         }
-        [self.avatarV setImageWithURL:[NSURL URLWithString:self.house.adminAvatar] placeholderImage:nil];
+        [self.avatarV setImageWithURL:[NSURL URLWithString:self.house.adminAvatar] placeholderImage:[UIImage imageNamed:@"default_avatar"]];
         self.nickNameL.text = self.house.userName;
         self.timeL.text = [self.house.crateDate dateSplitBySplash];
         [self _setupDetailView];
@@ -165,13 +165,13 @@
             return retV;
         }
         if (idx >= 0 && idx < [self.imageArray count]) {
-            [retV setImageWithURL:[NSURL URLWithString:((HouseImageInfo *)self.imageArray[idx]).image] placeholderImage:nil];
+            [retV setImageWithURL:[NSURL URLWithString:((HouseImageInfo *)self.imageArray[idx]).image] placeholderImage:[UIImage imageNamed:@"default_top_width"]];
         }
         else if (idx < 0) {
-            [retV setImageWithURL:[NSURL URLWithString:((HouseImageInfo *)self.imageArray[self.imageArray.count - 1]).image] placeholderImage:nil];
+            [retV setImageWithURL:[NSURL URLWithString:((HouseImageInfo *)self.imageArray[self.imageArray.count - 1]).image] placeholderImage:[UIImage imageNamed:@"default_top_width"]];
         }
         else {
-            [retV setImageWithURL:[NSURL URLWithString:((HouseImageInfo *)self.imageArray[0]).image] placeholderImage:nil];
+            [retV setImageWithURL:[NSURL URLWithString:((HouseImageInfo *)self.imageArray[0]).image] placeholderImage:[UIImage imageNamed:@"default_top_width"]];
         }
         return retV;
     };

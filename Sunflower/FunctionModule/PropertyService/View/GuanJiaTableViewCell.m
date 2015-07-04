@@ -125,7 +125,7 @@
 
 - (void)_setupObserver {
     [self startObserveObject:self forKeyPath:@"guanjia" usingBlock:^(NSObject *target, NSString *keyPath, NSDictionary *change) {
-        [self.imageV setImageWithURL:[NSURL URLWithString:self.guanjia.image] placeholderImage:[UIImage imageNamed:@"default_placeholder"]];
+        [self.imageV setImageWithURL:[NSURL URLWithString:self.guanjia.image] placeholderImage:[UIImage imageNamed:@"default_left_height"]];
         self.nameL.text = self.guanjia.name;
         self.titleL.text = self.guanjia.title;
         self.phoneL.text = self.guanjia.phone;

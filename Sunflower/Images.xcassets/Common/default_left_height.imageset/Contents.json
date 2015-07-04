@@ -7,12 +7,12 @@
     {
       "idiom" : "universal",
       "scale" : "2x",
-      "filename" : "default_avatar.png"
+      "filename" : "default_left_height.png"
     },
     {
       "idiom" : "universal",
       "scale" : "3x",
-      "filename" : "default_avatar@3.png"
+      "filename" : "default_left_height@3.png"
     }
   ],
   "info" : {

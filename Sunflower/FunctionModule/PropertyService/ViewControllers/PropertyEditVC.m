@@ -91,7 +91,7 @@
         v;
     });
     if (self.community) {
-        [self.imageV setImageWithURL:[NSURL URLWithString:self.community.images] placeholderImage:nil];
+        [self.imageV setImageWithURL:[NSURL URLWithString:self.community.images] placeholderImage:[UIImage imageNamed:@"default_top_width"]];
     }
     
     UILabel *(^titleLabelBlock)(NSString *str) = ^(NSString *str){

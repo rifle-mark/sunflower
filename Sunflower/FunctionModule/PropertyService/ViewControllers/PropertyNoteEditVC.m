@@ -89,7 +89,7 @@
         v;
     });
     if (self.note) {
-        [self.imageV setImageWithURL:[NSURL URLWithString:self.note.image] placeholderImage:nil];
+        [self.imageV setImageWithURL:[NSURL URLWithString:self.note.image] placeholderImage:[UIImage imageNamed:@"default_top_width"]];
     }
     
     UILabel *(^titleLabelBlock)(NSString *str) = ^(NSString *str){

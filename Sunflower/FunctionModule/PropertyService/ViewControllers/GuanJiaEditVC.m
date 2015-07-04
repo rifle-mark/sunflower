@@ -461,7 +461,7 @@
 
 - (void)_loadData {
     if (self.guanjia) {
-        [self.imageV setImageWithURL:[NSURL URLWithString:self.guanjia.image] placeholderImage:nil];
+        [self.imageV setImageWithURL:[NSURL URLWithString:self.guanjia.image] placeholderImage:[UIImage imageNamed:@"default_left_height"]];
         self.nameT.text = self.guanjia.name;
         self.titleT.text = self.guanjia.title;
         self.telT.text = self.guanjia.phone;

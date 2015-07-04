@@ -112,7 +112,7 @@
     _weak(self);
     [self startObserveObject:self forKeyPath:@"shop" usingBlock:^(NSObject *target, NSString *keyPath, NSDictionary *change) {
         _strong(self);
-        [self.imageV setImageWithURL:[NSURL URLWithString:self.shop.logo] placeholderImage:[UIImage imageNamed:@"default_placeholder"]];
+        [self.imageV setImageWithURL:[NSURL URLWithString:self.shop.logo] placeholderImage:[UIImage imageNamed:@"default_avatar"]];
         self.nameL.text = self.shop.name;
         self.subTitleL.text = self.shop.summary;
         self.telL.text = self.shop.tel;
