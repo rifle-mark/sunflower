@@ -16,6 +16,7 @@
 #import "CouponUser.h"
 #import "RentList.h"
 #import "UserPoint.h"
+#import "PointRuler.h"
 #import <ShareSDK/ShareSDK.h>
 
 typedef NS_ENUM(NSUInteger, UserRegisterType) {

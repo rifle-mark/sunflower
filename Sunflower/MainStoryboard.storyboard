@@ -15381,6 +15381,7 @@
                         <viewControllerLayoutGuide type="bottom" id="DdB-Vn-85S"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="RD5-dF-4E8">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
@@ -16040,22 +16041,22 @@
         <image name="znmj" width="40" height="40"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="YRR-in-NRb"/>
-        <segue reference="H5L-QS-jcp"/>
-        <segue reference="eZI-At-RQh"/>
-        <segue reference="yli-Jp-NAd"/>
-        <segue reference="qb1-be-3If"/>
-        <segue reference="2uU-mn-vfd"/>
-        <segue reference="tvY-dW-G3D"/>
-        <segue reference="vKk-6R-1Xp"/>
-        <segue reference="5u4-Y1-2li"/>
-        <segue reference="MP3-vb-YSL"/>
-        <segue reference="aQf-9T-5bW"/>
         <segue reference="JvK-HF-8Js"/>
-        <segue reference="1Se-RM-Pj9"/>
-        <segue reference="KDL-iw-rz2"/>
-        <segue reference="ESf-nn-0d6"/>
+        <segue reference="qb1-be-3If"/>
+        <segue reference="tvY-dW-G3D"/>
+        <segue reference="2uU-mn-vfd"/>
+        <segue reference="vKk-6R-1Xp"/>
+        <segue reference="9zu-t1-uZZ"/>
+        <segue reference="yli-Jp-NAd"/>
+        <segue reference="eZI-At-RQh"/>
+        <segue reference="H5L-QS-jcp"/>
+        <segue reference="YRR-in-NRb"/>
+        <segue reference="aQf-9T-5bW"/>
+        <segue reference="MP3-vb-YSL"/>
         <segue reference="XTG-gT-Jbr"/>
         <segue reference="Orh-cn-QTw"/>
+        <segue reference="ESf-nn-0d6"/>
+        <segue reference="1Se-RM-Pj9"/>
+        <segue reference="KDL-iw-rz2"/>
     </inferredMetricsTieBreakers>
 </document>
