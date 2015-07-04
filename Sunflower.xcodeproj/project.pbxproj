@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		24FBC6311B47C3A2006A2601 /* UIImage+AdjustmentSize.m in Sources */ = {isa = PBXBuildFile; fileRef = 24FBC6301B47C3A2006A2601 /* UIImage+AdjustmentSize.m */; };
 		4D092D1E1B3160010083DC9F /* MKWViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4D092D1D1B3160010083DC9F /* MKWViewController.m */; };
 		4D092D211B3168020083DC9F /* GuanJiaEditVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 4D092D201B3168020083DC9F /* GuanJiaEditVC.m */; };
 		4D092D331B331CB60083DC9F /* UserPoint.m in Sources */ = {isa = PBXBuildFile; fileRef = 4D092D321B331CB60083DC9F /* UserPoint.m */; };
@@ -290,6 +291,8 @@
 
 /* Begin PBXFileReference section */
 		0F0907FFB0DC5B57820A255D /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		24FBC62F1B47C3A2006A2601 /* UIImage+AdjustmentSize.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+AdjustmentSize.h"; sourceTree = "<group>"; };
+		24FBC6301B47C3A2006A2601 /* UIImage+AdjustmentSize.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+AdjustmentSize.m"; sourceTree = "<group>"; };
 		444B2CEDD4F7ABBB0B37B757 /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
 		4D092D1C1B3160010083DC9F /* MKWViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MKWViewController.h; sourceTree = "<group>"; };
 		4D092D1D1B3160010083DC9F /* MKWViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MKWViewController.m; sourceTree = "<group>"; };
@@ -1788,6 +1791,8 @@
 				FA3594991AF76F9C007F700B /* NSNumber+MKWDate.m */,
 				4D092D581B3BA4AE0083DC9F /* UIMenuController+UserInfo.h */,
 				4D092D591B3BA4AE0083DC9F /* UIMenuController+UserInfo.m */,
+				24FBC62F1B47C3A2006A2601 /* UIImage+AdjustmentSize.h */,
+				24FBC6301B47C3A2006A2601 /* UIImage+AdjustmentSize.m */,
 			);
 			path = CategoryClass;
 			sourceTree = "<group>";
@@ -2565,6 +2570,7 @@
 				4D092DD61B3D69270083DC9F /* base64.m in Sources */,
 				4DCBCAC51B1D82E1003E9676 /* LifeInfoListVC.m in Sources */,
 				4D092D4E1B3A48B20083DC9F /* MyFixRecordVC.m in Sources */,
+				24FBC6311B47C3A2006A2601 /* UIImage+AdjustmentSize.m in Sources */,
 				FA5801021AEC9976002FD43C /* MKWStringHelper.m in Sources */,
 				FA2C19A91AF5DCC0007B7D16 /* GuanJiaListVC.m in Sources */,
 				4DBE7E511B14D3D300D11C27 /* MyPaymentRecorderVC.m in Sources */,

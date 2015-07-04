@@ -132,10 +132,11 @@
                 [self dismissViewControllerAnimated:NO completion:^{
                     _strong(self);
                     [SVProgressHUD showWithStatus:@"正在上传图片" maskType:SVProgressHUDMaskTypeClear];
-                    [[CommonModel sharedModel] uploadImage:thumbnail path:filePath progress:nil remoteBlock:^(NSString *url, NSError *error) {
+                    UIImage *newImage = [thumbnail adjustedToStandardSize];
+                    [[CommonModel sharedModel] uploadImage:newImage path:filePath progress:nil remoteBlock:^(NSString *url, NSError *error) {
                         if (!error) {
                             [SVProgressHUD showSuccessWithStatus:@"上传成功"];
-                            [self.imageV setImage:thumbnail];
+                            [self.imageV setImage:newImage];
                             self.imageUrl = url;
                         }
                         else {
@@ -170,10 +171,11 @@
                 [self dismissViewControllerAnimated:NO completion:^{
                     _strong(self);
                     [SVProgressHUD showWithStatus:@"正在上传图片" maskType:SVProgressHUDMaskTypeClear];
-                    [[CommonModel sharedModel] uploadImage:thumbnail path:filePath progress:nil remoteBlock:^(NSString *url, NSError *error) {
+                    UIImage *newImage = [thumbnail adjustedToStandardSize];
+                    [[CommonModel sharedModel] uploadImage:newImage path:filePath progress:nil remoteBlock:^(NSString *url, NSError *error) {
                         if (!error) {
                             [SVProgressHUD showSuccessWithStatus:@"上传成功"];
-                            [self.imageV setImage:thumbnail];
+                            [self.imageV setImage:newImage];
                             self.imageUrl = url;
                         }
                         else {

@@ -112,12 +112,13 @@
                 _strong(self);
                 [self dismissViewControllerAnimated:NO completion:^{
                     [SVProgressHUD showWithStatus:@"正在上传图片" maskType:SVProgressHUDMaskTypeClear];
-                    [[CommonModel sharedModel] uploadImage:thumbnail path:filePath progress:nil remoteBlock:^(NSString *url, NSError *error) {
+                    UIImage *newImage = [thumbnail adjustedToStandardSize];
+                    [[CommonModel sharedModel] uploadImage:newImage path:filePath progress:nil remoteBlock:^(NSString *url, NSError *error) {
                         _strong(self);
                         if (!error) {
                             [SVProgressHUD showSuccessWithStatus:@"上传成功"];
                             self.avatarUrl = url;
-                            self.avatarV.image = thumbnail;
+                            self.avatarV.image = newImage;
                             [[UserModel sharedModel] updateUserInfoWithNickName:[UserModel sharedModel].currentNormalUser.nickName avatar:url remoteBlock:nil];
                         }
                         else {

@@ -748,7 +748,8 @@
                         _strong(self);
                         [self.vc dismissViewControllerAnimated:NO completion:^{
                             [SVProgressHUD showWithStatus:@"正在上传图片" maskType:SVProgressHUDMaskTypeClear];
-                            [[CommonModel sharedModel] uploadImage:thumbnail path:filePath progress:nil remoteBlock:^(NSString *url, NSError *error) {
+                            UIImage *newImage = [thumbnail adjustedToStandardSize];
+                            [[CommonModel sharedModel] uploadImage:newImage path:filePath progress:nil remoteBlock:^(NSString *url, NSError *error) {
                                 _strong(self);
                                 if (!error) {
                                     [SVProgressHUD showSuccessWithStatus:@"上传成功"];
@@ -773,14 +774,14 @@
                 
                 if ([EYImagePickerViewController isCameraPhotoAvailable]) {
                     [as addOtherButtonTitle:@"拍照" actionBlock:^{
-                        EYImagePickerViewController* picker = [EYImagePickerViewController imagePickerForCameraPhotoEditable:YES];
+                        EYImagePickerViewController* picker = [EYImagePickerViewController imagePickerForCameraPhotoEditable:NO];
                         SetupEYImagePicker(picker);
                     }];
                 }
                 
                 if ([EYImagePickerViewController isLibraryPhotoAvailable]) {
                     [as addOtherButtonTitle:@"手机相册" actionBlock:^{
-                        EYImagePickerViewController* picker = [EYImagePickerViewController imagePickerForLibraryPhotoEditable:YES];
+                        EYImagePickerViewController* picker = [EYImagePickerViewController imagePickerForLibraryPhotoEditable:NO];
                         SetupEYImagePicker(picker);
                     }];
                 }

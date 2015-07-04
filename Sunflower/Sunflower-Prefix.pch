@@ -17,6 +17,7 @@
 #import "CALayer+IBAttribute.h"
 #import "NSDictionary+MKWJson.h"
 #import "NSNumber+MKWDate.h"
+#import "UIImage+AdjustmentSize.h"
 #import "UIMenuController+UserInfo.h"
 #import "MKWColorHelper.h"
 #import "MKWStringHelper.h"

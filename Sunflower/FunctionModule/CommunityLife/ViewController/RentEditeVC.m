@@ -455,11 +455,12 @@
                 _strong(btn);
 //                [SVProgressHUD showInfoWithStatus:@"正在上传图片" maskType:SVProgressHUDMaskTypeClear];
                 [SVProgressHUD showWithStatus:@"正在上传图片" maskType:SVProgressHUDMaskTypeClear];
-                [[CommonModel sharedModel] uploadImage:thumbnail path:filePath progress:nil remoteBlock:^(NSString *url, NSError *error) {
+                UIImage *newImage = [thumbnail adjustedToStandardSize];
+                [[CommonModel sharedModel] uploadImage:newImage path:filePath progress:nil remoteBlock:^(NSString *url, NSError *error) {
                     if (!error) {
                         [SVProgressHUD showSuccessWithStatus:@"上传成功"];
-                        [btn setBackgroundImage:thumbnail forState:UIControlStateNormal];
-                        [btn setBackgroundImage:thumbnail forState:UIControlStateHighlighted];
+                        [btn setBackgroundImage:newImage forState:UIControlStateNormal];
+                        [btn setBackgroundImage:newImage forState:UIControlStateHighlighted];
                         NSInteger idx = btn.tag - 1020101;
                         if (idx > 4) {
                             [self.soutImageArray setObject:url atIndexedSubscript:idx-4];
