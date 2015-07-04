@@ -16,6 +16,7 @@
 #import "CommonModel.h"
 #import "Community.h"
 #import "WeiCommentCell.h"
+#import "PictureShowVC.h"
 
 
 #pragma mark - FixEditPicCell
@@ -892,6 +893,7 @@
 @property(nonatomic,strong)FixIssueInfo *fixIssue;
 @property(nonatomic,strong)NSArray      *picUrlVArray;
 @property(nonatomic,copy)void(^actionBlock)(FixIssueCell *cell);
+@property(nonatomic,copy)void(^picShowBlock)(NSArray *picUrlArray, NSInteger index);
 
 + (NSString *)reuseIdentify;
 + (CGFloat)heightOfSelf;
@@ -997,6 +999,10 @@
             } failure:nil];
             
             return cell;
+        }];
+        [self.picsV withBlockForItemDidSelect:^(UICollectionView *view, NSIndexPath *path) {
+            _strong(self);
+            GCBlockInvoke(self.picShowBlock, self.picUrlVArray, path.item);
         }];
         [self.contentV addSubview:self.picsV];
         
@@ -1276,7 +1282,7 @@
         [v registerClass:[FixTelEditCell class] forCellReuseIdentifier:[FixTelEditCell reuseIdentify]];
         [v registerClass:[FixIssueCell class] forCellReuseIdentifier:[FixIssueCell reuseIdentify]];
         [v registerClass:[FixOtherSuggestCell class] forCellReuseIdentifier:[FixOtherSuggestCell reuseIdentify]];
-
+        
         v.header = [MJRefreshNormalHeader headerWithRefreshingBlock:^{
             _strong(self);
             if ([UserModel sharedModel].isPropertyAdminLogined) {
@@ -1433,6 +1439,10 @@
                     }
                     
                     cell.fixIssue = self.fixIssueList[path.row];
+                    cell.picShowBlock = ^(NSArray *picUrlArray, NSInteger index){
+                        if (picUrlArray)
+                            [self performSegueWithIdentifier:@"Segue_PropertyFix_PictureShow" sender:@[picUrlArray, @(index)]];
+                    };
                     cell.actionBlock = ^(FixIssueCell *cell){
                         if ([UserModel sharedModel].isPropertyAdminLogined) {
                             _strong(self);
@@ -1516,7 +1526,7 @@
     self.actionV = [[UIImageView alloc] init];
     self.actionV.userInteractionEnabled = YES;
     self.actionV.image = [UIImage imageNamed:@"p_weicomment_action_btn"];
-
+    
     UIButton *deleteBtn = [[UIButton alloc] init];
     deleteBtn.titleLabel.font = [UIFont boldSystemFontOfSize:14];
     [deleteBtn setTitleColor:k_COLOR_WHITE forState:UIControlStateNormal];
@@ -1683,6 +1693,11 @@
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     // Get the new view controller using [segue destinationViewController].
     // Pass the selected object to the new view controller.
+    if ([segue.identifier isEqualToString:@"Segue_PropertyFix_PictureShow"]) {
+        PictureShowVC *vc = segue.destinationViewController;
+        vc.picUrlArray = [sender objectAtIndex:0];
+        vc.currentIndex = [[sender objectAtIndex:1] unsignedIntegerValue];
+    }
 }
 
 

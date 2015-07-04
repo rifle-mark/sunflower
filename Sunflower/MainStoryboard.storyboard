@@ -6306,6 +6306,7 @@
                     </navigationItem>
                     <connections>
                         <outlet property="contentV" destination="vfo-cn-YUn" id="cJI-eP-JWR"/>
+                        <segue destination="676-Z4-sXk" kind="show" identifier="Segue_PropertyFix_PictureShow" id="Zam-LA-Mfg"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Lpa-Ya-qsX" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -16116,7 +16117,17 @@
         <image name="znmj" width="40" height="40"/>
     </resources>
     <inferredMetricsTieBreakers>
+        <segue reference="gSS-48-SZG"/>
         <segue reference="yli-Jp-NAd"/>
+        <segue reference="eZI-At-RQh"/>
+        <segue reference="wqP-zY-FUh"/>
+        <segue reference="H5L-QS-jcp"/>
+        <segue reference="6ua-yP-pr3"/>
+        <segue reference="t3E-K7-JpC"/>
+        <segue reference="Kev-8d-YJN"/>
+        <segue reference="FMP-zl-Y9S"/>
+        <segue reference="5u4-Y1-2li"/>
+        <segue reference="Zam-LA-Mfg"/>
         <segue reference="JvK-HF-8Js"/>
         <segue reference="MP3-vb-YSL"/>
         <segue reference="YRR-in-NRb"/>
@@ -16124,15 +16135,5 @@
         <segue reference="XTG-gT-Jbr"/>
         <segue reference="1Se-RM-Pj9"/>
         <segue reference="KDL-iw-rz2"/>
-        <segue reference="gSS-48-SZG"/>
-        <segue reference="6ua-yP-pr3"/>
-        <segue reference="Kev-8d-YJN"/>
-        <segue reference="H5L-QS-jcp"/>
-        <segue reference="wqP-zY-FUh"/>
-        <segue reference="t3E-K7-JpC"/>
-        <segue reference="FMP-zl-Y9S"/>
-        <segue reference="eZI-At-RQh"/>
-        <segue reference="ESf-nn-0d6"/>
-        <segue reference="5u4-Y1-2li"/>
     </inferredMetricsTieBreakers>
 </document>
