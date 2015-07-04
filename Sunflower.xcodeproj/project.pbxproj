@@ -69,6 +69,7 @@
 		4D535E8B1B1057EA0011650A /* ShopCouponEditVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 4D535E8A1B1057EA0011650A /* ShopCouponEditVC.m */; };
 		4D6F0A0F1B1DBB0400227308 /* PropertyPayListVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 4D6F0A0E1B1DBB0400227308 /* PropertyPayListVC.m */; };
 		4D6F0A121B1DFE0000227308 /* PropertyShop.m in Sources */ = {isa = PBXBuildFile; fileRef = 4D6F0A111B1DFE0000227308 /* PropertyShop.m */; };
+		4D854DCF1B476694008A7F39 /* PointRuler.m in Sources */ = {isa = PBXBuildFile; fileRef = 4D854DCE1B476694008A7F39 /* PointRuler.m */; };
 		4D8D199E1B0AE2FE00D7411A /* BusinessInfoVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 4D8D199D1B0AE2FE00D7411A /* BusinessInfoVC.m */; };
 		4D9E25E31B11840600074AE2 /* ShopOrderListVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 4D9E25E21B11840600074AE2 /* ShopOrderListVC.m */; };
 		4D9E25E61B119D7800074AE2 /* CouponUser.m in Sources */ = {isa = PBXBuildFile; fileRef = 4D9E25E51B119D7800074AE2 /* CouponUser.m */; };
@@ -472,6 +473,8 @@
 		4D6F0A0E1B1DBB0400227308 /* PropertyPayListVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PropertyPayListVC.m; sourceTree = "<group>"; };
 		4D6F0A101B1DFE0000227308 /* PropertyShop.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PropertyShop.h; sourceTree = "<group>"; };
 		4D6F0A111B1DFE0000227308 /* PropertyShop.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PropertyShop.m; sourceTree = "<group>"; };
+		4D854DCD1B476694008A7F39 /* PointRuler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PointRuler.h; sourceTree = "<group>"; };
+		4D854DCE1B476694008A7F39 /* PointRuler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PointRuler.m; sourceTree = "<group>"; };
 		4D8D199C1B0AE2FE00D7411A /* BusinessInfoVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BusinessInfoVC.h; sourceTree = "<group>"; };
 		4D8D199D1B0AE2FE00D7411A /* BusinessInfoVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BusinessInfoVC.m; sourceTree = "<group>"; };
 		4D9E25E11B11840600074AE2 /* ShopOrderListVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShopOrderListVC.h; sourceTree = "<group>"; };
@@ -1868,6 +1871,8 @@
 				4D9E25E51B119D7800074AE2 /* CouponUser.m */,
 				4D092D311B331CB60083DC9F /* UserPoint.h */,
 				4D092D321B331CB60083DC9F /* UserPoint.m */,
+				4D854DCD1B476694008A7F39 /* PointRuler.h */,
+				4D854DCE1B476694008A7F39 /* PointRuler.m */,
 			);
 			path = ManagedObject;
 			sourceTree = "<group>";
@@ -2510,6 +2515,7 @@
 				4DCBCAC21B1D82BC003E9676 /* WeiCommentEditVC.m in Sources */,
 				FA2C19861AF4E06D007B7D16 /* LifeServiceInfoVC.m in Sources */,
 				4DCFEE791B089F460097CA19 /* MKWWebVC.m in Sources */,
+				4D854DCF1B476694008A7F39 /* PointRuler.m in Sources */,
 				FADB6B561AE6B02000D0D3C8 /* UITextField+GCDelegate.m in Sources */,
 				4DBE7E4E1B14D3B800D11C27 /* MyRentVC.m in Sources */,
 				4DFF54EB1B1FEA15009126E4 /* WeiCommentCell.m in Sources */,
@@ -2741,8 +2747,8 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				CODE_SIGN_IDENTITY = "iPhone Distribution: Chengdu Mobile Connection Incorporated Technology Co., Ltd.";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Chengdu Mobile Connection Incorporated Technology Co., Ltd.";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Sunflower/ThirdParty/ShareSDK/Connection",
@@ -2774,7 +2780,7 @@
 					"$(PROJECT_DIR)/Sunflower/ThirdParty/AliPay/lib",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "abf20ead-d8ce-4936-93a6-adcdac3e1d00";
+				PROVISIONING_PROFILE = "";
 			};
 			name = Debug;
 		};
@@ -2784,8 +2790,8 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				CODE_SIGN_IDENTITY = "iPhone Distribution: Chengdu Mobile Connection Incorporated Technology Co., Ltd.";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Chengdu Mobile Connection Incorporated Technology Co., Ltd.";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Sunflower/ThirdParty/ShareSDK/Connection",
@@ -2817,7 +2823,7 @@
 					"$(PROJECT_DIR)/Sunflower/ThirdParty/AliPay/lib",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "abf20ead-d8ce-4936-93a6-adcdac3e1d00";
+				PROVISIONING_PROFILE = "";
 			};
 			name = Release;
 		};

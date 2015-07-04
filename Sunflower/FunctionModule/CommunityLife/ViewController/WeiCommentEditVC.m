@@ -13,6 +13,8 @@
 
 #import "CommonModel.h"
 #import "CommunityLifeModel.h"
+#import <ShareSDK/ShareSDK.h>
+#import <AGCommon/UIImage+Common.h>
 
 @interface WeiCommentEditPicCell : UICollectionViewCell
 
@@ -116,7 +118,9 @@
 @property(nonatomic,strong)UICollectionView *picsV;
 @property(nonatomic,strong)UIView           *splitV;
 @property(nonatomic,strong)UIButton         *locationBtn;
-@property(nonatomic,strong)UIButton         *shareV;
+@property(nonatomic,strong)UIImageView         *shareV;
+@property(nonatomic,strong)UIButton         *weiXinBtn;
+@property(nonatomic,strong)UIButton         *qqBtn;
 
 @property(nonatomic,strong)NSMutableArray   *picUrlArray;
 @property(nonatomic,strong)NSMutableArray   *picArray;
@@ -313,20 +317,57 @@
     }
     
     if (!self.shareV) {
-        self.shareV = [[UIButton alloc] init];
-        [self.shareV setBackgroundImage:[UIImage imageNamed:@"cl_weicomment_share_btn"] forState:UIControlStateNormal];
-        [self.shareV setBackgroundImage:[UIImage imageNamed:@"cl_weicomment_share_btn"] forState:UIControlStateHighlighted];
-        [self.shareV setTitle:@"分享" forState:UIControlStateNormal];
-        [self.shareV setTitleColor:k_COLOR_GALLERY_F forState:UIControlStateNormal];
-        [self.shareV setTitleColor:k_COLOR_GRAY forState:UIControlStateHighlighted];
-        self.shareV.titleLabel.font = [UIFont boldSystemFontOfSize:15];
-        self.shareV.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
-        self.shareV.titleEdgeInsets = UIEdgeInsetsMake(0, 50, 0, 0);
-        _weak(self);
-        [self.shareV addControlEvents:UIControlEventTouchUpInside action:^(UIControl *control, NSSet *touches) {
+        self.shareV = [[UIImageView alloc] init];
+        self.shareV.image = [UIImage imageNamed:@"cl_weicomment_share_btn"];
+        self.shareV.userInteractionEnabled = YES;
+        UILabel *titleL = [[UILabel alloc] init];
+        titleL.text = @"分享";
+        titleL.font = [UIFont boldSystemFontOfSize:15];
+        titleL.textColor = k_COLOR_GALLERY_F;
+        
+        [self.shareV addSubview:titleL];
+        [titleL mas_makeConstraints:^(MASConstraintMaker *make) {
             _strong(self);
-            // TODO:
-            // open share select view
+            make.centerY.equalTo(self.shareV);
+            make.left.equalTo(self.shareV).with.offset(50);
+            make.height.equalTo(@15);
+        }];
+        
+        self.weiXinBtn = [[UIButton alloc] init];
+        [self.weiXinBtn setBackgroundImage:[UIImage imageNamed:@"share_wx_n"] forState:UIControlStateNormal];
+        [self.weiXinBtn setBackgroundImage:[UIImage imageNamed:@"share_wx_s"] forState:UIControlStateHighlighted];
+        [self.weiXinBtn setBackgroundImage:[UIImage imageNamed:@"share_wx_s"] forState:UIControlStateSelected];
+        
+        [self.weiXinBtn addControlEvents:UIControlEventTouchUpInside action:^(UIControl *control, NSSet *touches) {
+            _strong(self);
+            self.weiXinBtn.selected = !self.weiXinBtn.selected;
+            [self.weiXinBtn setBackgroundImage:[UIImage imageNamed:self.weiXinBtn.selected?@"share_wx_n":@"share_wx_s"] forState:UIControlStateHighlighted];
+        }];
+        
+        self.qqBtn = [[UIButton alloc] init];
+        [self.qqBtn setBackgroundImage:[UIImage imageNamed:@"share_qq_n"] forState:UIControlStateNormal];
+        [self.qqBtn setBackgroundImage:[UIImage imageNamed:@"share_qq_s"] forState:UIControlStateHighlighted];
+        [self.qqBtn setBackgroundImage:[UIImage imageNamed:@"share_qq_s"] forState:UIControlStateSelected];
+        
+        [self.qqBtn addControlEvents:UIControlEventTouchUpInside action:^(UIControl *control, NSSet *touches) {
+            _strong(self);
+            self.qqBtn.selected = !self.qqBtn.selected;
+            [self.qqBtn setBackgroundImage:[UIImage imageNamed:self.qqBtn.selected?@"share_qq_n":@"share_qq_s"] forState:UIControlStateHighlighted];
+        }];
+        
+        [self.shareV addSubview:self.qqBtn];
+        [self.qqBtn mas_makeConstraints:^(MASConstraintMaker *make) {
+            _strong(self);
+            make.right.equalTo(self.shareV).with.offset(-22);
+            make.centerY.equalTo(self.shareV);
+            make.width.height.equalTo(@25);
+        }];
+        [self.shareV addSubview:self.weiXinBtn];
+        [self.weiXinBtn mas_makeConstraints:^(MASConstraintMaker *make) {
+            _strong(self);
+            make.right.equalTo(self.qqBtn.mas_left).with.offset(-6);
+            make.centerY.equalTo(self.shareV);
+            make.width.height.equalTo(@25);
         }];
     }
     
@@ -443,6 +484,135 @@
         [imgStr appendString:@","];
     }
     NSString *imgs = [imgStr stringByTrimmingCharactersInSet:[NSCharacterSet characterSetWithCharactersInString:@","]];
+    
+    
+    id<ISSCAttachment> sharedImage = nil;
+    id<ISSCAttachment> thumbImage = nil;
+    if ([self.picArray count] > 0) {
+        UIImage *shareImage = self.picArray[0];
+        if(shareImage)
+        {
+            sharedImage = [ShareSDK pngImageWithImage:shareImage];
+            thumbImage = [ShareSDK pngImageWithImage:[shareImage scaleImageWithSize:CGSizeMake(240, 240)]];
+        }
+    }
+    if ([self.qqBtn isSelected]) {
+        id<ISSContent> retVal = [ShareSDK content:content
+                                   defaultContent:@""
+                                            image:sharedImage
+                                            title:content
+                                              url:@"www.isunflowet.net.cn"          //必须填写
+                                      description:nil
+                                        mediaType:SSPublishContentMediaTypeText];
+
+        [retVal addQQSpaceUnitWithTitle:content
+                                    url:INHERIT_VALUE
+                                           site:nil
+                                        fromUrl:nil
+                                        comment:INHERIT_VALUE
+                                        summary:INHERIT_VALUE
+                                          image:INHERIT_VALUE
+                                           type:INHERIT_VALUE
+                                        playUrl:nil
+                                           nswb:nil];
+        _weak(self);
+        [ShareSDK shareContent:retVal type:ShareTypeQQSpace authOptions:nil statusBarTips:NO result:^(ShareType type, SSResponseState state, id<ISSPlatformShareInfo> statusInfo, id<ICMErrorInfo> error, BOOL end) {
+            
+            _strong(self);
+            NSString *title;
+            NSString *msg;
+            NSString *cancelTitle;
+            if (state == SSResponseStateSuccess) {
+                title = @"分享成功";
+                msg = @"QQ空间分享成功";
+                cancelTitle = self.weiXinBtn.isSelected?@"继续分享到微信":@"好的";
+                GCAlertView *alert = [[GCAlertView alloc] initWithTitle:title andMessage:msg];
+                [alert setCancelButtonWithTitle:cancelTitle actionBlock:^{
+                    _strong(self);
+                    if ([self.weiXinBtn isSelected]) {
+                        id<ISSContent> retVal = [ShareSDK content:content
+                                                   defaultContent:content
+                                                            image:sharedImage
+                                                            title:content
+                                                              url:nil          //必须填写
+                                                      description:content
+                                                        mediaType:sharedImage?SSPublishContentMediaTypeImage:SSPublishContentMediaTypeText];
+                        [retVal addWeixinTimelineUnitWithType:INHERIT_VALUE
+                                                      content:INHERIT_VALUE
+                                                        title:INHERIT_VALUE
+                                                          url:INHERIT_VALUE
+                                                   thumbImage:thumbImage
+                                                        image:INHERIT_VALUE
+                                                 musicFileUrl:INHERIT_VALUE
+                                                      extInfo:INHERIT_VALUE
+                                                     fileData:INHERIT_VALUE
+                                                 emoticonData:INHERIT_VALUE];
+                        [ShareSDK shareContent:retVal type:ShareTypeWeixiTimeline authOptions:nil statusBarTips:NO result:^(ShareType type, SSResponseState state, id<ISSPlatformShareInfo> statusInfo, id<ICMErrorInfo> error, BOOL end) {
+                        }];
+                    }
+                }];
+                [alert show];
+                
+            }
+            else if (state == SSResponseStateFail) {
+                title = @"分享失败";
+                msg = @"QQ空间分享失败";
+                cancelTitle = self.weiXinBtn.isSelected?@"继续分享到微信":@"好的";
+                GCAlertView *alert = [[GCAlertView alloc] initWithTitle:title andMessage:msg];
+                [alert setCancelButtonWithTitle:cancelTitle actionBlock:^{
+                    _strong(self);
+                    if ([self.weiXinBtn isSelected]) {
+                        id<ISSContent> retVal = [ShareSDK content:content
+                                                   defaultContent:content
+                                                            image:sharedImage
+                                                            title:content
+                                                              url:nil
+                                                      description:content
+                                                        mediaType:sharedImage?SSPublishContentMediaTypeImage:SSPublishContentMediaTypeText];
+                        [retVal addWeixinTimelineUnitWithType:INHERIT_VALUE
+                                                      content:INHERIT_VALUE
+                                                        title:INHERIT_VALUE
+                                                          url:INHERIT_VALUE
+                                                   thumbImage:thumbImage
+                                                        image:INHERIT_VALUE
+                                                 musicFileUrl:INHERIT_VALUE
+                                                      extInfo:INHERIT_VALUE
+                                                     fileData:INHERIT_VALUE
+                                                 emoticonData:INHERIT_VALUE];
+                        [ShareSDK shareContent:retVal type:ShareTypeWeixiTimeline authOptions:nil statusBarTips:NO result:^(ShareType type, SSResponseState state, id<ISSPlatformShareInfo> statusInfo, id<ICMErrorInfo> error, BOOL end) {
+                        }];
+                    }
+                }];
+                [alert show];
+            }
+            
+            
+
+        }];
+        
+    }
+    else if (self.weiXinBtn.isSelected) {
+        id<ISSContent> retVal = [ShareSDK content:content
+                                   defaultContent:content
+                                            image:sharedImage
+                                            title:content
+                                              url:nil
+                                      description:content
+                                        mediaType:sharedImage?SSPublishContentMediaTypeImage:SSPublishContentMediaTypeText];
+        [retVal addWeixinTimelineUnitWithType:INHERIT_VALUE
+                                      content:INHERIT_VALUE
+                                        title:INHERIT_VALUE
+                                          url:INHERIT_VALUE
+                                   thumbImage:thumbImage
+                                        image:INHERIT_VALUE
+                                 musicFileUrl:INHERIT_VALUE
+                                      extInfo:INHERIT_VALUE
+                                     fileData:INHERIT_VALUE
+                                 emoticonData:INHERIT_VALUE];
+        [ShareSDK shareContent:retVal type:ShareTypeWeixiTimeline authOptions:nil statusBarTips:NO result:^(ShareType type, SSResponseState state, id<ISSPlatformShareInfo> statusInfo, id<ICMErrorInfo> error, BOOL end) {
+        }];
+    }
+    
     [[CommunityLifeModel sharedModel] asyncWeiAddWithCommuntiyId:[CommonModel sharedModel].currentCommunityId parentId:@0 content:self.contentEidtV.text images:imgs address:self.locationName remoteBlock:^(BOOL isSuccess, NSError *error){
         _strong(self);
         [self.navigationItem.rightBarButtonItem setEnabled:YES];

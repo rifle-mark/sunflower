@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="7701" systemVersion="14D136" minimumToolsVersion="Xcode 4.3" macOSVersion="Automatic" iOSVersion="Automatic">
+<model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="7701" systemVersion="14E46" minimumToolsVersion="Xcode 4.3" macOSVersion="Automatic" iOSVersion="Automatic">
     <entity name="AdminUser" representedClassName="AdminUser" syncable="YES">
         <attribute name="adminId" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
         <attribute name="adminToken" optional="YES" attributeType="String" syncable="YES"/>
@@ -191,6 +191,12 @@
         <attribute name="createDate" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
         <attribute name="phoneNum" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="state" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
+        <attribute name="type" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
+    </entity>
+    <entity name="PointRuler" representedClassName="PointRuler" syncable="YES">
+        <attribute name="points" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
+        <attribute name="rulerId" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
+        <attribute name="title" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="type" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
     </entity>
     <entity name="PropertyShop" representedClassName="PropertyShop" syncable="YES">
@@ -387,5 +393,6 @@
         <element name="UserPoint" positionX="-9" positionY="135" width="128" height="135"/>
         <element name="WeiComment" positionX="-9" positionY="135" width="128" height="240"/>
         <element name="WeiCommentAction" positionX="0" positionY="144" width="128" height="105"/>
+        <element name="PointRuler" positionX="-9" positionY="135" width="128" height="105"/>
     </elements>
 </model>

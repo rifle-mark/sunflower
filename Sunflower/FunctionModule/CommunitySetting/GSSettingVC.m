@@ -13,6 +13,7 @@
 #import "CityChooseVC.h"
 #import "AreaChooseVC.h"
 #import "CommunityChooseVC.h"
+#import "CommonModel.h"
 
 @interface GSSettingVC ()
 
@@ -28,6 +29,11 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
 
+    
+    if (![[CommonModel sharedModel] currentCommunityId]) {
+        self.navigationItem.leftBarButtonItem = nil;
+    }
+    
     self.nextBtn.enabled = NO;
     self.areaBtn.enabled = NO;
     self.communityBtn.enabled = NO;
@@ -114,6 +120,10 @@
 - (IBAction)Done:(id)sender {
     [[NSNotificationCenter defaultCenter] postNotificationName:k_NOTIFY_NAME_COMMUNITY_CHANGED object:nil userInfo:@{k_NOTIFY_KEY_COMMUNITY_CHANGED:self.community.communityId}];
     [[NSNotificationCenter defaultCenter] postNotificationName:k_NOTIFY_NAME_CITY_CHANGED object:nil userInfo:@{k_NOTIFY_KEY_CITY_CHANGED:self.community.city}];
+    [self dismissViewControllerAnimated:YES completion:nil];
+}
+
+- (IBAction)back:(UIBarButtonItem *)sender {
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 

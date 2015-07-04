@@ -8,7 +8,7 @@
 
 #import "StartUpVC.h"
 
-@interface StartUpVC ()<UIWebViewDelegate>
+@interface StartUpVC ()<UIWebViewDelegate, UIScrollViewDelegate>
 
 @property(nonatomic,strong)UIWebView        *webV;
 
@@ -69,6 +69,7 @@
     self.webV.scrollView.showsVerticalScrollIndicator = NO;
     self.webV.scrollView.showsHorizontalScrollIndicator = NO;
     self.webV.delegate = self;
+    self.webV.scrollView.delegate = self;
 }
 
 - (void)_layoutCodingViews {
@@ -105,6 +106,11 @@
         make.top.equalTo(topTmp.mas_bottom);
         make.bottom.equalTo(botTmp.mas_top);
     }];
+}
+
+#pragma mark - UIScrollViewDelegate
+- (UIView *)viewForZoomingInScrollView:(UIScrollView *)scrollView {
+    return nil;
 }
 
 #pragma mark - UIWebViewDelegate

@@ -13,6 +13,7 @@
 #import "FindPasswdVC.h"
 #import <ShareSDK/ShareSDK.h>
 #import "WXApi.h"
+#import <TencentOpenAPI/QQApi.h>
 
 @interface NormalLoginVC () <UITextFieldDelegate, WXApiDelegate>
 
@@ -121,6 +122,11 @@
 }
 
 - (IBAction)qqBtnTap:(id)sender {
+    if (![QQApi isQQInstalled]) {
+        [SVProgressHUD showErrorWithStatus:@"请安装QQ或选择其它登录方式"];
+        return;
+    }
+    
     [SVProgressHUD showWithStatus:@"正在登录" maskType:SVProgressHUDMaskTypeClear];
     [[UserModel sharedModel] asyncThirdPartyLoginWithShareType:ShareTypeQQSpace remoteBlock:^(UserInfo *user, NSError *error) {
         if (!error) {
