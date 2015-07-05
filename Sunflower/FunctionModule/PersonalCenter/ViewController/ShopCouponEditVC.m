@@ -169,7 +169,7 @@
                     [self dismissViewControllerAnimated:NO completion:^{
                         _strong(self);
                         [SVProgressHUD showWithStatus:@"正在上传图片" maskType:SVProgressHUDMaskTypeClear];
-                        UIImage *newImage = [thumbnail adjustedToStandardSize];
+                        UIImage *newImage = [thumbnail adjustmentWithNewSize:CGSizeMake(750, 375)];
                         [[CommonModel sharedModel] uploadImage:newImage path:filePath progress:nil remoteBlock:^(NSString *url, NSError *error) {
                             if (!error) {
                                 [SVProgressHUD showSuccessWithStatus:@"上传成功"];
