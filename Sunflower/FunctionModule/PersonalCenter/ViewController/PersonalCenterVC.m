@@ -235,7 +235,7 @@
     }
     
     if ([[UserModel sharedModel] isPropertyAdminLogined]) {
-        [SVProgressHUD showErrorWithStatus:@"请先退出商家用户"];
+        [SVProgressHUD showErrorWithStatus:@"请先退出物业用户"];
         return;
     }
     
@@ -267,7 +267,7 @@
     }
     
     if ([[UserModel sharedModel] isBusinessAdminLogined]) {
-        [SVProgressHUD showErrorWithStatus:@"请先退出物业用户"];
+        [SVProgressHUD showErrorWithStatus:@"请先退出商家用户"];
         return;
     }
 

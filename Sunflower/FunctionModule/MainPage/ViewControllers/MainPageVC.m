@@ -136,6 +136,7 @@
         v.clipsToBounds = YES;
         _weak(self);
         UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithActionBlock:^(UIGestureRecognizer *gesture) {
+            _strong(self);
             [self _showCommunitySettingVC];
         }];
         [v addGestureRecognizer:tap];
