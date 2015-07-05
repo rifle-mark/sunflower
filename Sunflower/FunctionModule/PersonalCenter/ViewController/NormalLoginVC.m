@@ -17,6 +17,8 @@
 
 @interface NormalLoginVC () <UITextFieldDelegate, WXApiDelegate>
 
+@property(nonatomic,weak)IBOutlet UIScrollView      *scrollV;
+@property(nonatomic,weak)IBOutlet UIView            *contentV;
 @property(nonatomic,weak)IBOutlet UITextField       *phoneNumbT;
 @property(nonatomic,weak)IBOutlet UITextField       *passwordT;
 
@@ -36,12 +38,19 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    // Do any additional setup after loading the view.
+    
+    [self.scrollV handleKeyboard];
 }
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+- (void)viewDidLayoutSubviews {
+    [super viewDidLayoutSubviews];
+    
+    [self _layoutCodingViews];
 }
 
 #pragma mark - Navigation
@@ -65,6 +74,12 @@
 }
 
 #pragma mark - Business Logic
+- (void)_layoutCodingViews {
+    [self.contentV mas_updateConstraints:^(MASConstraintMaker *make) {
+        make.width.equalTo(self.view);
+    }];
+}
+
 - (void)_login {
     NSString *phoneNum = [self.phoneNumbT.text stringByReplacingOccurrencesOfString:@" " withString:@""];
     if (![MKWStringHelper isVAlidatePhoneNumber:phoneNum]) {
