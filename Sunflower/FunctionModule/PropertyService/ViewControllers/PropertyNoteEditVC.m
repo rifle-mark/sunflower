@@ -18,21 +18,22 @@
 
 @interface PropertyNoteEditVC ()
 
-@property(nonatomic,weak)IBOutlet UIView    *contentV;
-@property(nonatomic,strong)UIImageView      *imageV;
-@property(nonatomic,strong)UILabel          *imageTitleL;
-@property(nonatomic,strong)UIButton         *uploadBtn;
-@property(nonatomic,strong)UIButton         *camareBtn;
-@property(nonatomic,strong)UIView           *separateV;
-@property(nonatomic,strong)UILabel          *nameTitleL;
-@property(nonatomic,strong)UITextField      *nameT;
-@property(nonatomic,strong)UILabel          *detailTitleL;
-@property(nonatomic,strong)UITextView       *detailT;
-@property(nonatomic,strong)UIButton         *delBtn;
-@property(nonatomic,strong)UIButton         *publicBtn;
+@property(nonatomic,weak)IBOutlet UIScrollView  *scrollV;
+@property(nonatomic,weak)IBOutlet UIView        *contentV;
+@property(nonatomic,strong)UIImageView          *imageV;
+@property(nonatomic,strong)UILabel              *imageTitleL;
+@property(nonatomic,strong)UIButton             *uploadBtn;
+@property(nonatomic,strong)UIButton             *camareBtn;
+@property(nonatomic,strong)UIView               *separateV;
+@property(nonatomic,strong)UILabel              *nameTitleL;
+@property(nonatomic,strong)UITextField          *nameT;
+@property(nonatomic,strong)UILabel              *detailTitleL;
+@property(nonatomic,strong)UITextView           *detailT;
+@property(nonatomic,strong)UIButton             *delBtn;
+@property(nonatomic,strong)UIButton             *publicBtn;
 
-@property(nonatomic,weak)UIView             *focusedV;
-@property(nonatomic,strong)NSString         *imageUrl;
+@property(nonatomic,weak)UIView                 *focusedV;
+@property(nonatomic,strong)NSString             *imageUrl;
 
 @end
 
@@ -53,6 +54,7 @@
     if (self.note) {
         self.imageUrl = self.note.image;
     }
+    [self.scrollV handleKeyboard];
 }
 
 - (void)didReceiveMemoryWarning {

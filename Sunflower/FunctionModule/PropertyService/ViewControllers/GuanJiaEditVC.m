@@ -36,7 +36,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
-    
+    [self.editScrolV handleKeyboard];
     [self _setupTapGesture];
     [self _loadData];
 }

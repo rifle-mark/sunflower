@@ -19,6 +19,7 @@
 
 @interface PropertyEditVC ()
 
+@property(nonatomic,weak)IBOutlet UIScrollView  *scrollV;
 @property(nonatomic,weak)IBOutlet UIView        *contentV;
 
 @property(nonatomic,strong)UIImageView      *imageV;
@@ -53,6 +54,7 @@
     if (self.community) {
         self.imageUrl = self.community.images;
     }
+    [self.scrollV handleKeyboard];
 }
 
 - (void)didReceiveMemoryWarning {

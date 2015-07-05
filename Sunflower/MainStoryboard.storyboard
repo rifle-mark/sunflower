@@ -5984,6 +5984,7 @@
                     </navigationItem>
                     <connections>
                         <outlet property="contentV" destination="gJt-Cn-gli" id="zrO-ZC-04U"/>
+                        <outlet property="scrollV" destination="uPS-7e-FcB" id="sd9-ie-n1C"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="lSI-Bt-xGS" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -6614,6 +6615,7 @@
                     </navigationItem>
                     <connections>
                         <outlet property="contentV" destination="x56-aT-bqd" id="FdK-Oj-TGN"/>
+                        <outlet property="scrollV" destination="wmO-H9-7E3" id="vst-p5-gTU"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="6G6-GY-XGR" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -16070,7 +16072,7 @@
         <image name="coming_soon_icon" width="83" height="83"/>
         <image name="communityBg" width="375" height="278"/>
         <image name="cyjf" width="40" height="36"/>
-        <image name="default_avatar" width="80" height="80"/>
+        <image name="default_avatar" width="52" height="52"/>
         <image name="edit_filed_bg" width="8" height="34"/>
         <image name="edit_select_btn" width="147" height="32"/>
         <image name="gg_title" width="66" height="66"/>
@@ -16117,22 +16119,22 @@
         <image name="znmj" width="40" height="40"/>
     </resources>
     <inferredMetricsTieBreakers>
+        <segue reference="eZI-At-RQh"/>
         <segue reference="gSS-48-SZG"/>
         <segue reference="yli-Jp-NAd"/>
-        <segue reference="eZI-At-RQh"/>
-        <segue reference="wqP-zY-FUh"/>
         <segue reference="H5L-QS-jcp"/>
-        <segue reference="6ua-yP-pr3"/>
-        <segue reference="t3E-K7-JpC"/>
-        <segue reference="Kev-8d-YJN"/>
-        <segue reference="FMP-zl-Y9S"/>
-        <segue reference="5u4-Y1-2li"/>
+        <segue reference="2uU-mn-vfd"/>
+        <segue reference="qb1-be-3If"/>
+        <segue reference="vKk-6R-1Xp"/>
+        <segue reference="tvY-dW-G3D"/>
         <segue reference="Zam-LA-Mfg"/>
-        <segue reference="JvK-HF-8Js"/>
+        <segue reference="OVy-Pr-4D6"/>
+        <segue reference="5u4-Y1-2li"/>
         <segue reference="MP3-vb-YSL"/>
         <segue reference="YRR-in-NRb"/>
-        <segue reference="Orh-cn-QTw"/>
+        <segue reference="JvK-HF-8Js"/>
         <segue reference="XTG-gT-Jbr"/>
+        <segue reference="Orh-cn-QTw"/>
         <segue reference="1Se-RM-Pj9"/>
         <segue reference="KDL-iw-rz2"/>
     </inferredMetricsTieBreakers>

@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		2409AE881B48EF2C00506D0A /* UIScrollView+Keyboard.m in Sources */ = {isa = PBXBuildFile; fileRef = 2409AE871B48EF2C00506D0A /* UIScrollView+Keyboard.m */; };
 		24FBC6311B47C3A2006A2601 /* UIImage+AdjustmentSize.m in Sources */ = {isa = PBXBuildFile; fileRef = 24FBC6301B47C3A2006A2601 /* UIImage+AdjustmentSize.m */; };
 		4D092D1E1B3160010083DC9F /* MKWViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4D092D1D1B3160010083DC9F /* MKWViewController.m */; };
 		4D092D211B3168020083DC9F /* GuanJiaEditVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 4D092D201B3168020083DC9F /* GuanJiaEditVC.m */; };
@@ -291,6 +292,8 @@
 
 /* Begin PBXFileReference section */
 		0F0907FFB0DC5B57820A255D /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		2409AE861B48EF2C00506D0A /* UIScrollView+Keyboard.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIScrollView+Keyboard.h"; sourceTree = "<group>"; };
+		2409AE871B48EF2C00506D0A /* UIScrollView+Keyboard.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIScrollView+Keyboard.m"; sourceTree = "<group>"; };
 		24FBC62F1B47C3A2006A2601 /* UIImage+AdjustmentSize.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+AdjustmentSize.h"; sourceTree = "<group>"; };
 		24FBC6301B47C3A2006A2601 /* UIImage+AdjustmentSize.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+AdjustmentSize.m"; sourceTree = "<group>"; };
 		444B2CEDD4F7ABBB0B37B757 /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
@@ -1793,6 +1796,8 @@
 				4D092D591B3BA4AE0083DC9F /* UIMenuController+UserInfo.m */,
 				24FBC62F1B47C3A2006A2601 /* UIImage+AdjustmentSize.h */,
 				24FBC6301B47C3A2006A2601 /* UIImage+AdjustmentSize.m */,
+				2409AE861B48EF2C00506D0A /* UIScrollView+Keyboard.h */,
+				2409AE871B48EF2C00506D0A /* UIScrollView+Keyboard.m */,
 			);
 			path = CategoryClass;
 			sourceTree = "<group>";
@@ -2544,6 +2549,7 @@
 				FAC7D1AC1AFA60CA004BB38F /* GCPageViewCell.m in Sources */,
 				4D9E25E31B11840600074AE2 /* ShopOrderListVC.m in Sources */,
 				FA2C19831AF4E057007B7D16 /* LifeServiceListVC.m in Sources */,
+				2409AE881B48EF2C00506D0A /* UIScrollView+Keyboard.m in Sources */,
 				FA3594B11AF7DA91007F700B /* LifeServerTableCell.m in Sources */,
 				FAFD6E901ADFFC78007BD17D /* AppDelegate.m in Sources */,
 				FA5801151AECE33F002FD43C /* JSONServerProxy.m in Sources */,

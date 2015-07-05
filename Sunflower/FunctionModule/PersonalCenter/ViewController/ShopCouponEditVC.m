@@ -96,6 +96,7 @@
 */
 - (void)_setupObserver {
     _weak(self);
+    [self.scrollV handleKeyboard];
     [self startObserveObject:self forKeyPath:@"coupon" usingBlock:^(NSObject *target, NSString *keyPath, NSDictionary *change) {
         _strong(self);
         [self.imageV setImageWithURL:[NSURL URLWithString:self.coupon.image] placeholderImage:[UIImage imageNamed:@"default_top_width"]];
@@ -330,7 +331,7 @@
                 return;
             }
             
-            NSString *endDateStr = [NSString stringWithFormat:@"/Date(%ld000)/", (NSUInteger)[self.endDate timeIntervalSince1970]];
+            NSString *endDateStr = [NSString stringWithFormat:@"/Date(%ld000)/", (unsigned long)[self.endDate timeIntervalSince1970]];
             
             NSString *desc = [MKWStringHelper trimWithStr:self.detailT.text];
             if ([MKWStringHelper isNilEmptyOrBlankString:desc]) {

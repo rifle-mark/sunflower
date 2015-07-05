@@ -18,6 +18,7 @@
 #import "NSDictionary+MKWJson.h"
 #import "NSNumber+MKWDate.h"
 #import "UIImage+AdjustmentSize.h"
+#import "UIScrollView+Keyboard.h"
 #import "UIMenuController+UserInfo.h"
 #import "MKWColorHelper.h"
 #import "MKWStringHelper.h"

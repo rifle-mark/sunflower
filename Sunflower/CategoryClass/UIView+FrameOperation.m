@@ -44,4 +44,51 @@
     [array makeObjectsPerformSelector:@selector(removeFromSuperview)];
 }
 
+- (instancetype)findFirstResponder
+{
+    if (self.isFirstResponder) {
+        return self;
+    }
+    for (UIView *subView in self.subviews) {
+        id view = [subView findFirstResponder];
+        if (view) {
+            return view;
+        }
+    }
+    return nil;
+}
+
+- (BOOL)containsTheView:(UIView *)view {
+    if (self == view) {
+        return YES;
+    }
+    for (UIView *subView in self.subviews) {
+        if ([subView containsTheView:view]) {
+            return YES;
+        }
+    }
+    return NO;
+}
+
+- (UIViewController *)parentViewController {
+    UIResponder *responder = self;
+    while ([responder isKindOfClass:[UIView class]])
+        responder = [responder nextResponder];
+    if ([responder isKindOfClass:[UIViewController class]]) {
+        return (UIViewController *)responder;
+    }
+    return nil;
+}
+
+- (CGRect)frameWithSubview:(UIView *)subview {
+    if (self == subview)
+        return CGRectMake(0, 0, subview.frame.size.width, subview.frame.size.height);
+    CGPoint origin = CGPointZero;
+    for (UIView *view = subview; view != self; view = view.superview) {
+        origin.x += view.frame.origin.x;
+        origin.y += view.frame.origin.y;
+    }
+    return CGRectMake(origin.x, origin.y, subview.frame.size.width, subview.frame.size.height);
+}
+
 @end
