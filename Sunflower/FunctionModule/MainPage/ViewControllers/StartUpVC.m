@@ -66,6 +66,7 @@
     self.webV = [[UIWebView alloc] init];
     self.webV.backgroundColor = k_COLOR_WHITE;
     self.webV.scalesPageToFit = YES;
+    self.webV.scrollView.scrollEnabled = NO;
     self.webV.scrollView.showsVerticalScrollIndicator = NO;
     self.webV.scrollView.showsHorizontalScrollIndicator = NO;
     self.webV.delegate = self;
