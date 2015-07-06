@@ -54,17 +54,43 @@
         if (![MKWStringHelper isNilEmptyOrBlankString:self.city.city]) {
             self.areaBtn.enabled = YES;
         }
+        
+        if ([change objectForKey:@"new"] && [change objectForKey:@"old"] && ![[change objectForKey:@"old"] isEqual:[NSNull null]]) {
+            if (![((OpendCityInfo*)[change objectForKey:@"new"]).city isEqualToString:((OpendCityInfo*)[change objectForKey:@"old"]).city]) {
+                [self.areaBtn setTitle:@"选择您所在的区域" forState:UIControlStateNormal];
+                self.area = nil;
+                [self.communityBtn setTitle:@"选择您所在的小区" forState:UIControlStateNormal];
+                [self.communityBtn setEnabled:NO];
+                self.community = nil;
+            }
+        }
     }];
     
     [self startObserveObject:self forKeyPath:@"area" usingBlock:^(NSObject *target, NSString *keyPath, NSDictionary *change) {
+        _strong(self);
+        if (!self.area) {
+            return;
+        }
+        
         [self.areaBtn setTitle:self.area.area forState:UIControlStateNormal];
         
         if (![MKWStringHelper isNilEmptyOrBlankString:self.area.area]) {
             self.communityBtn.enabled = YES;
         }
+        
+        if ([change objectForKey:@"new"] && [change objectForKey:@"old"] && ![[change objectForKey:@"old"] isEqual:[NSNull null]]) {
+            if (![((OpendAreaInfo*)[change objectForKey:@"new"]).area isEqualToString:((OpendAreaInfo*)[change objectForKey:@"old"]).area]) {
+                [self.communityBtn setTitle:@"选择您所在的小区" forState:UIControlStateNormal];
+                self.community = nil;
+            }
+        }
     }];
     
     [self startObserveObject:self forKeyPath:@"community" usingBlock:^(NSObject *target, NSString *keyPath, NSDictionary *change) {
+        _strong(self);
+        if (!self.community) {
+            return;
+        }
         [self.communityBtn setTitle:self.community.name forState:UIControlStateNormal];
         
         if (![MKWStringHelper isNilEmptyOrBlankString:self.community.name]) {
@@ -132,6 +158,7 @@
             [SVProgressHUD showErrorWithStatus:@"获取小区信息失败，请重试"];
             return;
         }
+        [SVProgressHUD dismiss];
         [[NSNotificationCenter defaultCenter] postNotificationName:k_NOTIFY_NAME_COMMUNITY_CHANGED object:nil userInfo:@{k_NOTIFY_KEY_COMMUNITY_CHANGED:self.community.communityId}];
         [[NSNotificationCenter defaultCenter] postNotificationName:k_NOTIFY_NAME_CITY_CHANGED object:nil userInfo:@{k_NOTIFY_KEY_CITY_CHANGED:self.community.city}];
         [self dismissViewControllerAnimated:YES completion:nil];

@@ -23,4 +23,6 @@ typedef NS_ENUM(NSUInteger, GSTableCellType) {
 @property(nonatomic,weak)IBOutlet UILabel        *titleL;
 @property(nonatomic,weak)IBOutlet UIImageView    *selectedImgV;
 
+- (void)selectedStyleWithSelected:(BOOL)selected;
+
 @end
