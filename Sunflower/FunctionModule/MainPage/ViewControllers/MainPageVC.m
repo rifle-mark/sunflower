@@ -145,7 +145,7 @@
     
     self.gpsImgeV = ({
         UIImageView *locationV = [[UIImageView alloc] init];
-        locationV.image = [UIImage imageNamed:@"GPSIcon"];
+        locationV.image = [UIImage imageNamed:@"main_db"];
         locationV.contentMode = UIViewContentModeScaleToFill;
         locationV.clipsToBounds = YES;
         locationV;
@@ -198,8 +198,7 @@
             _strong(self);
             make.top.equalTo(self.communityBgV).with.offset(33);
             make.centerX.equalTo(self.communityBgV);
-            make.height.equalTo(@30);
-            make.width.equalTo(@30);
+            make.size.mas_equalTo(CGSizeMake(24, 30));
         }];
     }
     
@@ -208,7 +207,7 @@
         [self.gpsImgeV mas_makeConstraints:^(MASConstraintMaker *make) {
             _strong(self);
             make.left.centerY.equalTo(self.communityNameV);
-            make.size.mas_equalTo(self.gpsImgeV.image.size);
+            make.size.mas_equalTo(CGSizeMake(24, 30));
         }];
     }
     
@@ -263,7 +262,7 @@
         if (self.communityNameV.superview) {
             CGRect nameRect = [self.community.name boundingRectWithSize:ccs(1000, 30) options:NSStringDrawingUsesLineFragmentOrigin attributes:att context:nil];
             [self.communityNameV mas_updateConstraints:^(MASConstraintMaker *make) {
-                make.width.equalTo(@(nameRect.size.width+30));
+                make.width.equalTo(@(nameRect.size.width + 24));
             }];
         }
         self.communityNameL.text = self.community.name;
