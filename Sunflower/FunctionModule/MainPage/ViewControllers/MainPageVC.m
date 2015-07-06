@@ -194,12 +194,22 @@
     
     if (![self.communityNameV superview]) {
         [self.communityBgV addSubview:self.communityNameV];
+        
+        CGRect nameRect = CGRectZero;
+        if (self.community) {
+            NSMutableParagraphStyle *ps = [[NSMutableParagraphStyle alloc] init];
+            NSDictionary *att = @{NSFontAttributeName:self.communityNameL.font,
+                                  NSForegroundColorAttributeName:self.communityNameL.textColor,
+                                  NSBackgroundColorAttributeName:k_COLOR_CLEAR,
+                                  NSParagraphStyleAttributeName:ps,};
+            nameRect = [self.community.name boundingRectWithSize:ccs(1000, 30) options:NSStringDrawingUsesLineFragmentOrigin attributes:att context:nil];
+        }
         [self.communityNameV mas_makeConstraints:^(MASConstraintMaker *make) {
             _strong(self);
             make.top.equalTo(self.communityBgV).with.offset(33);
+            make.width.equalTo(@(nameRect.size.width+30));
             make.centerX.equalTo(self.communityBgV);
             make.height.equalTo(@30);
-            make.width.equalTo(@30);
         }];
     }
     
@@ -256,19 +266,21 @@
     
     [self startObserveObject:self forKeyPath:@"community" usingBlock:^(NSObject *target, NSString *keyPath, NSDictionary *change) {
         _strong(self);
-        NSMutableParagraphStyle *ps = [[NSMutableParagraphStyle alloc] init];
-        NSDictionary *att = @{NSFontAttributeName:self.communityNameL.font,
-                              NSForegroundColorAttributeName:self.communityNameL.textColor,
-                              NSBackgroundColorAttributeName:k_COLOR_CLEAR,
-                              NSParagraphStyleAttributeName:ps,};
-        CGRect nameRect = [self.community.name boundingRectWithSize:ccs(1000, 30) options:NSStringDrawingUsesLineFragmentOrigin attributes:att context:nil];
-        [self.communityNameV mas_remakeConstraints:^(MASConstraintMaker *make) {
-            _strong(self);
-            make.top.equalTo(self.communityBgV).with.offset(33);
-            make.width.equalTo(@(nameRect.size.width+30));
-            make.centerX.equalTo(self.communityBgV);
-            make.height.equalTo(@30);
-        }];
+        if ([self.communityNameV superview]) {
+            NSMutableParagraphStyle *ps = [[NSMutableParagraphStyle alloc] init];
+            NSDictionary *att = @{NSFontAttributeName:self.communityNameL.font,
+                                  NSForegroundColorAttributeName:self.communityNameL.textColor,
+                                  NSBackgroundColorAttributeName:k_COLOR_CLEAR,
+                                  NSParagraphStyleAttributeName:ps,};
+            CGRect nameRect = [self.community.name boundingRectWithSize:ccs(1000, 30) options:NSStringDrawingUsesLineFragmentOrigin attributes:att context:nil];
+            [self.communityNameV mas_remakeConstraints:^(MASConstraintMaker *make) {
+                _strong(self);
+                make.top.equalTo(self.communityBgV).with.offset(33);
+                make.width.equalTo(@(nameRect.size.width+30));
+                make.centerX.equalTo(self.communityBgV);
+                make.height.equalTo(@30);
+            }];
+        }
         self.communityNameL.text = self.community.name;
         
         self.checkInL.text = [NSString stringWithFormat:@"已有%@人入住", self.community.checkInUserCount];
@@ -288,7 +300,9 @@
         self.community = community;
     } remoteBlock:^(CommunityInfo *community, NSArray *buildList, NSError *error) {
         _strong(self);
-        self.community = community;
+        if (!error) {
+            self.community = community;
+        }
     }];
 }
 

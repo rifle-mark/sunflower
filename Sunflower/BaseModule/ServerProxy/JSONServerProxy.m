@@ -38,6 +38,9 @@
     [manager POST:[APIGenerator apiAddressWithSuffix:urlStr] parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
         GCBlockInvoke(success, responseObject);
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        GCAlertView *alert = [[GCAlertView alloc] initWithTitle:@"网络异常" andMessage:@"请检查网络连接"];
+        [alert setCancelButtonWithTitle:@"好的" actionBlock:nil];
+        [alert show];
         GCBlockInvoke(failed, error);
     }];
     
@@ -61,6 +64,9 @@
         }
         GCBlockInvoke(failed, [[NSError alloc] initWithDomain:@"数据错误" code:1000001 userInfo:nil]);
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        GCAlertView *alert = [[GCAlertView alloc] initWithTitle:@"网络异常" andMessage:@"请检查网络连接"];
+        [alert setCancelButtonWithTitle:@"好的" actionBlock:nil];
+        [alert show];
         GCBlockInvoke(failed, error);
     }];
 }
@@ -74,6 +80,9 @@
     [manager GET:[APIGenerator apiAddressWithSuffix:urlStr] parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
         GCBlockInvoke(success, responseObject);
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        GCAlertView *alert = [[GCAlertView alloc] initWithTitle:@"网络异常" andMessage:@"请检查网络连接"];
+        [alert setCancelButtonWithTitle:@"好的" actionBlock:nil];
+        [alert show];
         GCBlockInvoke(failed, error);
     }];
 }
