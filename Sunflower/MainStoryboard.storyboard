@@ -4764,11 +4764,11 @@
                                 <exclude reference="tVA-Yn-adv"/>
                             </mask>
                             <mask key="constraints">
+                                <exclude reference="P2d-SJ-ith"/>
                                 <exclude reference="0hY-Zq-616"/>
                                 <exclude reference="fu3-NK-ktb"/>
                                 <exclude reference="joI-t7-tKg"/>
                                 <exclude reference="BNj-pG-N75"/>
-                                <exclude reference="P2d-SJ-ith"/>
                             </mask>
                         </variation>
                         <variation key="heightClass=regular-widthClass=compact">
@@ -4777,11 +4777,11 @@
                                 <include reference="tVA-Yn-adv"/>
                             </mask>
                             <mask key="constraints">
+                                <include reference="P2d-SJ-ith"/>
                                 <include reference="0hY-Zq-616"/>
                                 <include reference="fu3-NK-ktb"/>
                                 <include reference="joI-t7-tKg"/>
                                 <include reference="BNj-pG-N75"/>
-                                <include reference="P2d-SJ-ith"/>
                             </mask>
                         </variation>
                     </view>
@@ -15594,11 +15594,12 @@
                         <barButtonItem key="leftBarButtonItem" image="back" id="71e-wE-U32">
                             <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             <connections>
-                                <segue destination="t0I-Xr-AHV" kind="unwind" identifier="UnSegue_Web" unwindAction="unwindSegue:" id="MJJ-eW-e33"/>
+                                <action selector="backAction:" destination="42b-qR-KPV" id="Qwp-mI-UtK"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
                     <connections>
+                        <outlet property="backItem" destination="71e-wE-U32" id="C2d-qm-5GH"/>
                         <outlet property="contentV" destination="Fuq-F5-zUW" id="mG8-gh-3we"/>
                     </connections>
                 </viewController>

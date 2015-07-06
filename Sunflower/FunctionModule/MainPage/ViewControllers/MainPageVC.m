@@ -100,6 +100,7 @@
     }
     else if ([segue.identifier isEqualToString:@"Segue_MainPage_Web"]) {
         ((MKWWebVC*)segue.destinationViewController).naviTitle = @"周边游";
+        ((MKWWebVC*)segue.destinationViewController).showControl = YES;
         ((MKWWebVC*)segue.destinationViewController).url = [NSURL URLWithString:k_URL_ZHOUBIANYOU];
     }
     else if ([segue.identifier isEqualToString:@"Segue_MainPage_WeiComment"]) {
