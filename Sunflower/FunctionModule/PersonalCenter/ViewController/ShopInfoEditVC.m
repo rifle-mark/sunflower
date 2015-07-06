@@ -460,7 +460,8 @@
             UIView *footerV = [[UIView alloc] init];
             footerV.backgroundColor = RGB(218, 218, 218);
             UIImageView *v = [[UIImageView alloc] init];
-            v.image = [UIImage imageNamed:@"edit_clear_btn"];
+            v.image = [UIImage imageNamed:@"edit_add_btn"];
+            v.contentMode = UIViewContentModeCenter;
             [footerV addSubview:v];
             _weak(footerV);
             [v mas_makeConstraints:^(MASConstraintMaker *make) {
