@@ -208,8 +208,7 @@
         [self.gpsImgeV mas_makeConstraints:^(MASConstraintMaker *make) {
             _strong(self);
             make.left.centerY.equalTo(self.communityNameV);
-            make.width.equalTo(@(self.gpsImgeV.image.size.width));
-            make.height.equalTo(@(self.gpsImgeV.image.size.height));
+            make.size.mas_equalTo(self.gpsImgeV.image.size);
         }];
     }
     
@@ -261,14 +260,12 @@
                               NSForegroundColorAttributeName:self.communityNameL.textColor,
                               NSBackgroundColorAttributeName:k_COLOR_CLEAR,
                               NSParagraphStyleAttributeName:ps,};
-        CGRect nameRect = [self.community.name boundingRectWithSize:ccs(1000, 30) options:NSStringDrawingUsesLineFragmentOrigin attributes:att context:nil];
-        [self.communityNameV mas_remakeConstraints:^(MASConstraintMaker *make) {
-            _strong(self);
-            make.top.equalTo(self.communityBgV).with.offset(33);
-            make.width.equalTo(@(nameRect.size.width+30));
-            make.centerX.equalTo(self.communityBgV);
-            make.height.equalTo(@30);
-        }];
+        if (self.communityNameV.superview) {
+            CGRect nameRect = [self.community.name boundingRectWithSize:ccs(1000, 30) options:NSStringDrawingUsesLineFragmentOrigin attributes:att context:nil];
+            [self.communityNameV mas_updateConstraints:^(MASConstraintMaker *make) {
+                make.width.equalTo(@(nameRect.size.width+30));
+            }];
+        }
         self.communityNameL.text = self.community.name;
         
         self.checkInL.text = [NSString stringWithFormat:@"已有%@人入住", self.community.checkInUserCount];
