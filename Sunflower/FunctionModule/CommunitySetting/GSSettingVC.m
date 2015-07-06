@@ -14,6 +14,7 @@
 #import "AreaChooseVC.h"
 #import "CommunityChooseVC.h"
 #import "CommonModel.h"
+#import "MainModel.h"
 
 @interface GSSettingVC ()
 
@@ -118,9 +119,25 @@
 }
 
 - (IBAction)Done:(id)sender {
-    [[NSNotificationCenter defaultCenter] postNotificationName:k_NOTIFY_NAME_COMMUNITY_CHANGED object:nil userInfo:@{k_NOTIFY_KEY_COMMUNITY_CHANGED:self.community.communityId}];
-    [[NSNotificationCenter defaultCenter] postNotificationName:k_NOTIFY_NAME_CITY_CHANGED object:nil userInfo:@{k_NOTIFY_KEY_CITY_CHANGED:self.community.city}];
-    [self dismissViewControllerAnimated:YES completion:nil];
+    
+    if (!self.community) {
+        [SVProgressHUD showErrorWithStatus:@"请选择完整的小区信息"];
+        return;
+    }
+    [SVProgressHUD showWithStatus:@"正在获取小区信息" maskType:SVProgressHUDMaskTypeClear];
+    [MainModel asyncGetCommunityInfoWithId:self.community.communityId cacheBlock:^(CommunityInfo *community, NSArray *buildList) {
+        
+    } remoteBlock:^(CommunityInfo *community, NSArray *buildList, NSError *error) {
+        if (error) {
+            [SVProgressHUD showErrorWithStatus:@"获取小区信息失败，请重试"];
+            return;
+        }
+        [[NSNotificationCenter defaultCenter] postNotificationName:k_NOTIFY_NAME_COMMUNITY_CHANGED object:nil userInfo:@{k_NOTIFY_KEY_COMMUNITY_CHANGED:self.community.communityId}];
+        [[NSNotificationCenter defaultCenter] postNotificationName:k_NOTIFY_NAME_CITY_CHANGED object:nil userInfo:@{k_NOTIFY_KEY_CITY_CHANGED:self.community.city}];
+        [self dismissViewControllerAnimated:YES completion:nil];
+    }];
+    
+    
 }
 
 - (IBAction)back:(UIBarButtonItem *)sender {
