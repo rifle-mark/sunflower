@@ -119,10 +119,10 @@
         // update UI
         self.titleL.text = self.house.title;
         if ([self.house.type integerValue] == 1) {
-            self.priceL.text = [NSString stringWithFormat:@"%@元/月", self.house.price];
+            self.priceL.text = [NSString stringWithFormat:@"%@元/月", self.house.price ?: @(0)];
         }
         else {
-            self.priceL.text = [NSString stringWithFormat:@"%@万元", self.house.price];
+            self.priceL.text = [NSString stringWithFormat:@"%@万元", self.house.price ?: @(0)];
         }
         [self.avatarV setImageWithURL:[NSURL URLWithString:self.house.adminAvatar] placeholderImage:[UIImage imageNamed:@"default_avatar"]];
         self.nickNameL.text = self.house.userName;

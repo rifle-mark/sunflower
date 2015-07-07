@@ -194,10 +194,10 @@ static NSArray *hilightImages;
         cell.roomFixL.text = [NSString stringWithFormat:@"%@室%@厅%@卫 %@", house.room, house.hall, house.toilet, house.fix];
         NSString *price = nil;
         if (self.type == Rent_Sale) {
-            price = [NSString stringWithFormat:@"%@万元", house.price];
+            price = [NSString stringWithFormat:@"%@万元", house.price ?: @(0)];
         }
         else {
-            price = [NSString stringWithFormat:@"%@元/月", house.price];
+            price = [NSString stringWithFormat:@"%@元/月", house.price ?: @(0)];
         }
         cell.priceL.text = price;
         cell.houseId = house.houseId;
