@@ -16,6 +16,8 @@
 
 @interface PropertyApplyVC () <UITextFieldDelegate>
 
+@property(nonatomic,weak)IBOutlet UIScrollView  *scrollV;
+@property(nonatomic,weak)IBOutlet UIView        *contentV;
 @property(nonatomic,weak)IBOutlet UIButton      *provinceB;
 @property(nonatomic,weak)IBOutlet UIButton      *cityB;
 @property(nonatomic,weak)IBOutlet UITextField   *addressT;
@@ -46,6 +48,13 @@
     
     [self _setupSelectionV];
     [self _setupObserver];
+}
+
+- (void)viewDidLayoutSubviews {
+    [super viewDidLayoutSubviews];
+    [self.contentV mas_updateConstraints:^(MASConstraintMaker *make) {
+        make.width.equalTo(self.view);
+    }];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -181,6 +190,7 @@
      });
 }
 - (void)_setupObserver {
+    [self.scrollV handleKeyboard];
     _weak(self);
     [self startObserveObject:self forKeyPath:@"selectionA" usingBlock:^(NSObject *target, NSString *keyPath, NSDictionary *change) {
         _strong(self);

@@ -54,6 +54,7 @@
     // Do any additional setup after loading the view.
     self.businessType = @(-1);
     self.navigationItem.title = (self.naviTitle?self.naviTitle:@"注册");
+    [self.contentScrollV handleKeyboard];
 }
 
 - (void)loadView {
