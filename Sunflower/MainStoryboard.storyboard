@@ -8383,7 +8383,9 @@
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="397" id="612-5J-Lxi"/>
-                                            <constraint firstAttribute="height" constant="10" id="bXB-8G-Ssq"/>
+                                            <constraint firstAttribute="height" constant="10" id="bXB-8G-Ssq">
+                                                <variation key="heightClass=regular-widthClass=compact" constant="220"/>
+                                            </constraint>
                                         </constraints>
                                         <variation key="default">
                                             <mask key="constraints">

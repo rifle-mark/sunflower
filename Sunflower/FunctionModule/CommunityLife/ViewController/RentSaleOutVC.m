@@ -226,7 +226,9 @@
     CGRect rect = [str boundingRectWithSize:CGSizeMake(V_W_(self.view)-30, 1000) options:NSStringDrawingUsesLineFragmentOrigin context:nil];
     [self.detailT setSize:CGSizeMake(V_W_(self.view)-30, rect.size.height+15) position:ccp(15, 15) anchor:ccp(0, 0)];
     self.detailT.attributedText = str;
-    [self.detailContainerV setFrameHeight:rect.size.height + 30];
+    [self.detailContainerV mas_updateConstraints:^(MASConstraintMaker *make) {
+        make.height.equalTo(@(rect.size.height + 30));
+    }];
     [self.detailContainerV addSubview:self.detailT];
 }
 
