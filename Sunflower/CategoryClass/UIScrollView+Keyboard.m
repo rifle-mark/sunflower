@@ -14,7 +14,7 @@
 - (void)handleKeyboard {
     _weak(self);
     __block BOOL handled = NO;
-    [self addObserverForNotificationName:UIKeyboardDidShowNotification usingBlock:^(NSNotification *notification) {
+    [self addObserverForNotificationName:UIKeyboardWillShowNotification usingBlock:^(NSNotification *notification) {
         _strong(self);
         UIView *activeField = [self findFirstResponder];
         if (activeField) {
@@ -26,7 +26,7 @@
                 tabBarHeight = vc.tabBarController.tabBar.frame.size.height;
             
             NSDictionary* info = [notification userInfo];
-            CGSize kbSize = [[info objectForKey:UIKeyboardFrameBeginUserInfoKey] CGRectValue].size;
+            CGSize kbSize = [[info objectForKey:UIKeyboardFrameEndUserInfoKey] CGRectValue].size;
             kbSize.height -= tabBarHeight;
             
             UIEdgeInsets contentInsets = UIEdgeInsetsMake(0.0, 0.0, kbSize.height, 0.0);
