@@ -9440,14 +9440,16 @@
                                 <constraints>
                                     <constraint firstItem="cNZ-uO-Hqh" firstAttribute="top" secondItem="xXJ-eN-hNO" secondAttribute="bottom" id="7gz-rG-DGK"/>
                                     <constraint firstAttribute="height" constant="60" id="E8d-r8-Gcg">
-                                        <variation key="heightClass=regular-widthClass=compact" constant="140"/>
+                                        <variation key="heightClass=regular-widthClass=compact" constant="120"/>
                                     </constraint>
                                     <constraint firstItem="3a4-v7-rvg" firstAttribute="top" secondItem="cNZ-uO-Hqh" secondAttribute="bottom" id="NKO-Ed-PZm"/>
                                     <constraint firstItem="xXJ-eN-hNO" firstAttribute="leading" secondItem="xMc-qZ-Ls4" secondAttribute="leading" id="WrP-VK-NU3"/>
                                     <constraint firstItem="cNZ-uO-Hqh" firstAttribute="leading" secondItem="xMc-qZ-Ls4" secondAttribute="leading" id="Xno-6Q-cvW"/>
                                     <constraint firstAttribute="trailing" secondItem="cNZ-uO-Hqh" secondAttribute="trailing" id="bIO-Gs-FkL"/>
                                     <constraint firstItem="3a4-v7-rvg" firstAttribute="leading" secondItem="xMc-qZ-Ls4" secondAttribute="leading" id="etf-Vv-2nZ"/>
-                                    <constraint firstItem="xXJ-eN-hNO" firstAttribute="top" secondItem="xMc-qZ-Ls4" secondAttribute="top" constant="10" id="gtA-tK-eNa"/>
+                                    <constraint firstItem="xXJ-eN-hNO" firstAttribute="top" secondItem="xMc-qZ-Ls4" secondAttribute="top" constant="10" id="gtA-tK-eNa">
+                                        <variation key="heightClass=regular-widthClass=compact" constant="0.0"/>
+                                    </constraint>
                                     <constraint firstAttribute="trailing" secondItem="xXJ-eN-hNO" secondAttribute="trailing" id="vbL-YE-iFY"/>
                                     <constraint firstAttribute="trailing" secondItem="3a4-v7-rvg" secondAttribute="trailing" id="zWl-YW-b3G"/>
                                 </constraints>
@@ -16284,17 +16286,10 @@
         <image name="znmj" width="40" height="40"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="gSS-48-SZG"/>
-        <segue reference="YRR-in-NRb"/>
-        <segue reference="Fgf-l2-77f"/>
-        <segue reference="gt6-KE-Nk0"/>
-        <segue reference="XTG-gT-Jbr"/>
-        <segue reference="Orh-cn-QTw"/>
         <segue reference="1Se-RM-Pj9"/>
-        <segue reference="KDL-iw-rz2"/>
-        <segue reference="tvY-dW-G3D"/>
         <segue reference="2uU-mn-vfd"/>
         <segue reference="vKk-6R-1Xp"/>
+        <segue reference="tvY-dW-G3D"/>
         <segue reference="qb1-be-3If"/>
         <segue reference="OVy-Pr-4D6"/>
         <segue reference="5u4-Y1-2li"/>
@@ -16302,5 +16297,12 @@
         <segue reference="yli-Jp-NAd"/>
         <segue reference="H5L-QS-jcp"/>
         <segue reference="eZI-At-RQh"/>
+        <segue reference="JhC-Jm-NcA"/>
+        <segue reference="9Qn-Ef-wx3"/>
+        <segue reference="C0G-o1-knm"/>
+        <segue reference="YRR-in-NRb"/>
+        <segue reference="Fgf-l2-77f"/>
+        <segue reference="gt6-KE-Nk0"/>
+        <segue reference="KDL-iw-rz2"/>
     </inferredMetricsTieBreakers>
 </document>
