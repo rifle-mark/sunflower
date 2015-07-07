@@ -201,6 +201,12 @@
                 self.contentEidtV.text = @"";
             }
         }];
+        
+        UIBarButtonItem *fixItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil];
+        UIBarButtonItem *doneItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(_inputViewDone)];
+        UIToolbar *toolBar = [[UIToolbar alloc] initWithFrame:CGRectMake(0, 0, 0, 35)];
+        toolBar.items = @[fixItem, doneItem];
+        self.contentEidtV.inputAccessoryView = toolBar;
     }
     
     if (!self.picsV) {
@@ -626,4 +632,9 @@
         [SVProgressHUD showErrorWithStatus:error.domain];
     }];
 }
+
+- (void)_inputViewDone {
+    [self.contentEidtV resignFirstResponder];
+}
+
 @end
