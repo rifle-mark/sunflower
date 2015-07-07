@@ -80,15 +80,4 @@
     return nil;
 }
 
-- (CGRect)frameWithSubview:(UIView *)subview {
-    if (self == subview)
-        return CGRectMake(0, 0, subview.frame.size.width, subview.frame.size.height);
-    CGPoint origin = CGPointZero;
-    for (UIView *view = subview; view != self; view = view.superview) {
-        origin.x += view.frame.origin.x;
-        origin.y += view.frame.origin.y;
-    }
-    return CGRectMake(origin.x, origin.y, subview.frame.size.width, subview.frame.size.height);
-}
-
 @end

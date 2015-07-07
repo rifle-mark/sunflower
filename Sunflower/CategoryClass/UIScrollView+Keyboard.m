@@ -35,8 +35,7 @@
             
             CGRect rect = self.bounds;
             rect.size.height -= kbSize.height;
-            
-            CGRect activeFieldFrame = [self frameWithSubview:activeField];
+            CGRect activeFieldFrame = [self convertRect:activeField.bounds fromView:activeField];
             if (!CGRectContainsPoint(rect, activeFieldFrame.origin)) {
                 CGPoint point = CGPointMake(0, activeFieldFrame.origin.y);
                 [self setContentOffset:point animated:YES];
