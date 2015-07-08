@@ -353,6 +353,10 @@
         clearBtn.frame = CGRectMake(0, 0, 30, 30);
         self.telT.rightView = clearBtn;
         self.telT.rightViewMode = UITextFieldViewModeAlways;
+        [self.telT withBlockForShouldReturn:^BOOL(UITextField *view) {
+            [view resignFirstResponder];
+            return NO;
+        }];
         [self.contentView addSubview:self.telT];
         _weak(editTitleL);
         [self.telT mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -388,13 +392,18 @@
         [self.saveBtn setEnabled:NO];
         [self.saveBtn addControlEvents:UIControlEventTouchUpInside action:^(UIControl *control, NSSet *touches) {
             _strong(self);
+            [self.telT resignFirstResponder];
             CommunityInfo *c = [CommonModel sharedModel].currentCommunity;
             [[PropertyServiceModel sharedModel] asyncUpdateCommunityInfoWithCommunityID:c.communityId name:c.name detail:c.communityDesc image:c.images tel:self.telT.text remoteBlock:^(BOOL isSuccess, NSString *msg, NSError *error) {
                 _strong(self);
                 if (!error) {
                     [SVProgressHUD showSuccessWithStatus:@"修改成功"];
-                    self.telL.text = [CommonModel sharedModel].currentCommunity.tel;
-                    self.telT.text = [CommonModel sharedModel].currentCommunity.tel;
+                    
+                    CommunityInfo *c = [CommonModel sharedModel].currentCommunity;
+                    c.tel = self.telT.text;
+                    [c saveToDb];
+                    
+                    self.telL.text = self.telT.text;
                     [self.contentView bringSubviewToFront:self.telL];
                     [self.telL setHidden:NO];
                     [self.telT setHidden:YES];
@@ -428,6 +437,7 @@
                 [self.telL setHidden:YES];
                 self.telT.text = [CommonModel sharedModel].currentCommunity.tel;
                 [self.contentView bringSubviewToFront:self.telT];
+                [self.telT becomeFirstResponder];
                 [self.editBtn setTitle:@"取消" forState:UIControlStateNormal];
                 [self.saveBtn setEnabled:YES];
             }
@@ -435,7 +445,7 @@
             {
                 [self.telT setHidden:YES];
                 [self.telL setHidden:NO];
-                [self.contentView bringSubviewToFront:self.telL];
+                [self.telT resignFirstResponder];
                 [self.editBtn setTitle:@"编辑" forState:UIControlStateNormal];
                 [self.saveBtn setEnabled:NO];
             }
