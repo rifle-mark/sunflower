@@ -15,6 +15,8 @@
 
 @interface FindPasswdVC () <UITextFieldDelegate>
 
+@property(nonatomic,weak)IBOutlet UIScrollView          *scrollV;
+@property(nonatomic,weak)IBOutlet UIView                *contentV;
 @property(nonatomic,weak)IBOutlet UITextField           *phoneNumbT;
 @property(nonatomic,weak)IBOutlet UITextField           *checkCodeT;
 @property(nonatomic,weak)IBOutlet UITextField           *passwordT;
@@ -40,6 +42,14 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
+    [self.scrollV handleKeyboard];
+}
+
+- (void)viewDidLayoutSubviews {
+    [super viewDidLayoutSubviews];
+    [self.contentV mas_updateConstraints:^(MASConstraintMaker *make) {
+        make.width.equalTo(self.view);
+    }];
 }
 
 - (void)didReceiveMemoryWarning {

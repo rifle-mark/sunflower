@@ -45,13 +45,4 @@
  */
 - (UIViewController *)parentViewController;
 
-/**
- *  返回subview在当前view中的frame，支持多级subview
- *
- *  @param subview 需要取得frame的subview
- *
- *  @return subview在当前view中的frame
- */
-- (CGRect)frameWithSubview:(UIView *)subview;
-
 @end

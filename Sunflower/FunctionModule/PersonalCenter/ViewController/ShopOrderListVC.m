@@ -212,12 +212,10 @@
             UIView *ret = [[UIView alloc] init];
             ret.backgroundColor = RGB(243, 243, 243);
             
+            UIImageView *bgImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"search_bg"]];
+            
             UITextField *t = [[UITextField alloc] init];
-//            t.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"search_bg"]];
             t.backgroundColor = k_COLOR_CLEAR;
-            t.layer.borderColor = [k_COLOR_GALLERY_F CGColor];
-            t.layer.borderWidth = 1;
-            t.layer.cornerRadius = 19;
             t.textColor = k_COLOR_GALLERY_F;
             t.font = [UIFont systemFontOfSize:14];
             t.placeholder = @"搜索预约用户";
@@ -234,7 +232,7 @@
             
             UIButton *searchBtn = [[UIButton alloc] init];
             
-            [searchBtn setBackgroundImage:[UIImage imageNamed:@"search_btn"] forState:UIControlStateNormal];
+            [searchBtn setImage:[UIImage imageNamed:@"search_btn"] forState:UIControlStateNormal];
             [searchBtn addControlEvents:UIControlEventTouchUpInside action:^(UIControl *control, NSSet *touches) {
                 _strong(t);
                 [t resignFirstResponder];
@@ -248,20 +246,23 @@
                 [self _getCouponUserListAtPage:@1];
             }];
             
-            _weak(ret);
+            [ret addSubview:bgImageView];
             [ret addSubview:t];
-            [t mas_makeConstraints:^(MASConstraintMaker *make) {
-                _strong(ret);
+            [ret addSubview:searchBtn];
+            [bgImageView mas_makeConstraints:^(MASConstraintMaker *make) {
                 make.centerY.equalTo(ret);
                 make.left.equalTo(ret).with.offset(16);
                 make.right.equalTo(ret).with.offset(-16);
-                make.height.equalTo(@38);
             }];
-            [ret addSubview:searchBtn];
+            [t mas_makeConstraints:^(MASConstraintMaker *make) {
+                make.centerY.equalTo(bgImageView);
+                make.left.equalTo(bgImageView).with.offset(16);
+                make.right.equalTo(searchBtn.mas_left);
+                make.height.equalTo(bgImageView);
+            }];
             [searchBtn mas_makeConstraints:^(MASConstraintMaker *make) {
-                _strong(t);
-                make.top.bottom.right.equalTo(t);
-                make.width.equalTo(@44);
+                make.top.bottom.right.equalTo(bgImageView);
+                make.width.equalTo(@40);
             }];
             
             return ret;

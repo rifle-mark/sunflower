@@ -29,7 +29,7 @@
 
 + (NSAttributedString *)shopDescAttributeStringWithDesc:(NSString *)desc {
     
-    NSAttributedString *str = [[NSAttributedString alloc] initWithString:[NSString stringWithFormat:@"%@", desc] attributes:[ShopInfoCell shopDescAttributes]];
+    NSAttributedString *str = [[NSAttributedString alloc] initWithString:[NSString stringWithFormat:@"%@", desc ?: @""] attributes:[ShopInfoCell shopDescAttributes]];
     return str;
 }
 + (CGFloat)shopDescCellHeighWithDescStr:(NSString *)desc width:(CGFloat)width {

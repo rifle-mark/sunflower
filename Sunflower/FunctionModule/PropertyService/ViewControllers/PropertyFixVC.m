@@ -1608,6 +1608,7 @@
 
 #pragma mark - Data
 - (void)_setupObserver {
+    [self.fixTableV handleKeyboard];
     _weak(self);
     [self startObserveObject:self forKeyPath:@"fixIssueList" usingBlock:^(NSObject *target, NSString *keyPath, NSDictionary *change) {
         _strong(self);
@@ -1701,5 +1702,8 @@
     }
 }
 
+- (void)unwindSegue:(UIStoryboardSegue *)segue {
+    
+}
 
 @end

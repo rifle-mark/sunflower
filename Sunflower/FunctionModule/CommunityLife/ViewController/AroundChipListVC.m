@@ -167,33 +167,39 @@ typedef NS_ENUM(NSUInteger, CouponState) {
     
     [self startObserveObject:self forKeyPath:@"couponState" usingBlock:^(NSObject *target, NSString *keyPath, NSDictionary *change) {
         _strong(self);
-        if (self.couponState == ValidForAdd) {
-            self.topBgV.image = [UIImage imageNamed:@"valid_coupon_bg"];
-            [self.stateBtn setBackgroundImage:[UIImage imageNamed:@"valid_coupon_btn"] forState:UIControlStateNormal];
-        }
-        
-        if (self.couponState == AlreadyAdd) {
-            self.topBgV.image = [UIImage imageNamed:@"valid_coupon_bg"];
-            [self.stateBtn setBackgroundImage:[UIImage imageNamed:@"got_coupon_btn"] forState:UIControlStateDisabled];
-            [self.stateBtn setEnabled:NO];
-        }
-        
-        if (self.couponState == NotStart) {
-            self.topBgV.image = [UIImage imageNamed:@"notstart_coupon_bg"];
-            [self.stateBtn setBackgroundImage:[UIImage imageNamed:@"notstart_coupon_btn"] forState:UIControlStateDisabled];
-            [self.stateBtn setEnabled:NO];
-        }
-        
-        if (self.couponState == HasFinished) {
-            self.topBgV.image = [UIImage imageNamed:@"finished_coupon_bg"];
-            [self.stateBtn setBackgroundImage:[UIImage imageNamed:@"finished_coupon_btn"] forState:UIControlStateDisabled];
-            [self.stateBtn setEnabled:NO];
-        }
-        
-        if (self.couponState == HasUsed) {
-            self.topBgV.image = [UIImage imageNamed:@"used_coupon_bg"];
-            [self.stateBtn setBackgroundImage:[UIImage imageNamed:@"used_coupon_btn"] forState:UIControlStateDisabled];
-            [self.stateBtn setEnabled:NO];
+        switch (self.couponState) {
+            case ValidForAdd: {
+                self.topBgV.image = [UIImage imageNamed:@"valid_coupon_bg"];
+                [self.stateBtn setBackgroundImage:[UIImage imageNamed:@"valid_coupon_btn"] forState:UIControlStateNormal];
+                [self.stateBtn setEnabled:YES];
+                break;
+            }
+            case AlreadyAdd: {
+                self.topBgV.image = [UIImage imageNamed:@"valid_coupon_bg"];
+                [self.stateBtn setBackgroundImage:[UIImage imageNamed:@"got_coupon_btn"] forState:UIControlStateDisabled];
+                [self.stateBtn setEnabled:NO];
+                break;
+            }
+            case NotStart: {
+                self.topBgV.image = [UIImage imageNamed:@"notstart_coupon_bg"];
+                [self.stateBtn setBackgroundImage:[UIImage imageNamed:@"notstart_coupon_btn"] forState:UIControlStateDisabled];
+                [self.stateBtn setEnabled:NO];
+                break;
+            }
+            case HasFinished: {
+                self.topBgV.image = [UIImage imageNamed:@"finished_coupon_bg"];
+                [self.stateBtn setBackgroundImage:[UIImage imageNamed:@"finished_coupon_btn"] forState:UIControlStateDisabled];
+                [self.stateBtn setEnabled:NO];
+                break;
+            }
+            case HasUsed: {
+                self.topBgV.image = [UIImage imageNamed:@"used_coupon_bg"];
+                [self.stateBtn setBackgroundImage:[UIImage imageNamed:@"used_coupon_btn"] forState:UIControlStateDisabled];
+                [self.stateBtn setEnabled:NO];
+                break;
+            }
+            default:
+                break;
         }
     }];
 }

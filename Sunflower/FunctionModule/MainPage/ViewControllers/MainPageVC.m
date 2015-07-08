@@ -100,6 +100,7 @@
     }
     else if ([segue.identifier isEqualToString:@"Segue_MainPage_Web"]) {
         ((MKWWebVC*)segue.destinationViewController).naviTitle = @"周边游";
+        ((MKWWebVC*)segue.destinationViewController).showControl = YES;
         ((MKWWebVC*)segue.destinationViewController).url = [NSURL URLWithString:k_URL_ZHOUBIANYOU];
     }
     else if ([segue.identifier isEqualToString:@"Segue_MainPage_WeiComment"]) {
@@ -145,7 +146,7 @@
     
     self.gpsImgeV = ({
         UIImageView *locationV = [[UIImageView alloc] init];
-        locationV.image = [UIImage imageNamed:@"GPSIcon"];
+        locationV.image = [UIImage imageNamed:@"main_db"];
         locationV.contentMode = UIViewContentModeScaleToFill;
         locationV.clipsToBounds = YES;
         locationV;
@@ -218,8 +219,7 @@
         [self.gpsImgeV mas_makeConstraints:^(MASConstraintMaker *make) {
             _strong(self);
             make.left.centerY.equalTo(self.communityNameV);
-            make.width.equalTo(@(self.gpsImgeV.image.size.width));
-            make.height.equalTo(@(self.gpsImgeV.image.size.height));
+            make.size.mas_equalTo(CGSizeMake(24, 30));
         }];
     }
     
@@ -266,19 +266,15 @@
     
     [self startObserveObject:self forKeyPath:@"community" usingBlock:^(NSObject *target, NSString *keyPath, NSDictionary *change) {
         _strong(self);
-        if ([self.communityNameV superview]) {
+        if (self.communityNameV.superview) {
             NSMutableParagraphStyle *ps = [[NSMutableParagraphStyle alloc] init];
             NSDictionary *att = @{NSFontAttributeName:self.communityNameL.font,
                                   NSForegroundColorAttributeName:self.communityNameL.textColor,
                                   NSBackgroundColorAttributeName:k_COLOR_CLEAR,
                                   NSParagraphStyleAttributeName:ps,};
             CGRect nameRect = [self.community.name boundingRectWithSize:ccs(1000, 30) options:NSStringDrawingUsesLineFragmentOrigin attributes:att context:nil];
-            [self.communityNameV mas_remakeConstraints:^(MASConstraintMaker *make) {
-                _strong(self);
-                make.top.equalTo(self.communityBgV).with.offset(33);
-                make.width.equalTo(@(nameRect.size.width+30));
-                make.centerX.equalTo(self.communityBgV);
-                make.height.equalTo(@30);
+            [self.communityNameV mas_updateConstraints:^(MASConstraintMaker *make) {
+                make.width.equalTo(@(nameRect.size.width + 24));
             }];
         }
         self.communityNameL.text = self.community.name;

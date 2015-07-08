@@ -81,6 +81,7 @@
     
     if ([segue.identifier isEqualToString:@"Segue_CL_TravelWeb"]) {
         ((MKWWebVC*)segue.destinationViewController).naviTitle = @"周边游";
+        ((MKWWebVC*)segue.destinationViewController).showControl = YES;
         ((MKWWebVC*)segue.destinationViewController).url = [NSURL URLWithString:k_URL_ZHOUBIANYOU];
     }
 }

@@ -8,32 +8,32 @@
       "resizing" : {
         "mode" : "3-part-horizontal",
         "center" : {
-          "mode" : "stretch",
-          "width" : 330
+          "mode" : "fill",
+          "width" : 1
         },
         "capInsets" : {
-          "right" : 37,
-          "left" : 36
+          "right" : 40,
+          "left" : 39
         }
       },
       "idiom" : "universal",
-      "filename" : "search@2.png",
+      "filename" : "sousuokuang_1.png",
       "scale" : "2x"
     },
     {
       "resizing" : {
         "mode" : "3-part-horizontal",
         "center" : {
-          "mode" : "stretch",
-          "width" : 476
+          "mode" : "fill",
+          "width" : 1
         },
         "capInsets" : {
-          "right" : 55,
-          "left" : 55
+          "right" : 79,
+          "left" : 79
         }
       },
       "idiom" : "universal",
-      "filename" : "search@3.png",
+      "filename" : "sousuokuang_2.png",
       "scale" : "3x"
     }
   ],
