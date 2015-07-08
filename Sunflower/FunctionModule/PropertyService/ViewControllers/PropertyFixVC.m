@@ -1071,10 +1071,10 @@
                           NSBackgroundColorAttributeName:k_COLOR_CLEAR,
                           NSParagraphStyleAttributeName:ps};
     NSMutableString *infoStr = [@"" mutableCopy];
-    [infoStr appendFormat:@"姓名：%@\n",issue.userName];
-    [infoStr appendFormat:@"手机：%@\n",issue.userPhone];
-    [infoStr appendFormat:@"地址：%@\n",issue.address];
-    [infoStr appendFormat:@"描述：%@",issue.content];
+    [infoStr appendFormat:@"姓名：%@\n",issue.userName ?: @""];
+    [infoStr appendFormat:@"手机：%@\n",issue.userPhone ?: @""];
+    [infoStr appendFormat:@"地址：%@\n",issue.address ?: @""];
+    [infoStr appendFormat:@"描述：%@",issue.content ?: @""];
     NSAttributedString *str = [[NSAttributedString alloc] initWithString:infoStr attributes:att];
     return str;
 }
