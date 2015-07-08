@@ -15,6 +15,7 @@
 #import "CommunityChooseVC.h"
 #import "CommonModel.h"
 #import "MainModel.h"
+#import "CSSettingModel.h"
 
 @interface GSSettingVC ()
 
@@ -40,6 +41,37 @@
     self.communityBtn.enabled = NO;
     
     [self _setupObserver];
+    
+    [self _showLocalData];
+}
+
+- (void)_showLocalData {
+    CommunityInfo *communityInfo = [[CommonModel sharedModel] currentCommunity];
+    if (!communityInfo) {
+        return;
+    }
+    // 小区
+    self.community = [OpendCommunityInfo infoObjFromManagedObj:[communityInfo getOrInsertManagedObject]];
+    // 市
+    NSArray *cityList = [[CSSettingModel sharedModel] localOpendCitys];
+    [cityList enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+        OpendCityInfo *city = obj;
+        if ([city.city isEqualToString:communityInfo.city]) {
+            self.city = city;
+            *stop = YES;
+        }
+    }];
+    // 区，县
+    if (self.city) {
+        NSArray *areaList = [[CSSettingModel sharedModel] localAreaWithCity:self.city];
+        [areaList enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+            OpendAreaInfo *area = obj;
+            if ([area.area isEqualToString:communityInfo.area]) {
+                self.area = area;
+                *stop = YES;
+            }
+        }];
+    }
 }
 
 - (void)_setupObserver {
