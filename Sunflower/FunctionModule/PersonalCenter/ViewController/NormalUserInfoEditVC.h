@@ -10,4 +10,6 @@
 
 @interface NormalUserInfoEditVC : MKWViewController
 
+@property(nonatomic,assign)BOOL     isProperty;
+
 @end

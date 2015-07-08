@@ -23,6 +23,7 @@
 @property(nonatomic,weak)IBOutlet UIView    *contentV;
 @property(nonatomic,strong)UITableView      *commentTableV;
 @property(nonatomic,strong)UIImageView      *actionV;
+@property(nonatomic,strong)UIImageView      *deleteActionV;
 
 @property(nonatomic,strong)NSArray          *commentList;
 @property(nonatomic,strong)NSNumber         *currentPage;
@@ -154,10 +155,10 @@
                     [self performSegueWithIdentifier:@"Segue_WeiComment_Detail" sender:cell];
                 };
                 cell.actionBlock = ^(WeiCommentCell *cell) {
-                    if ([self.actionV isHidden]) {
-                        self.actionComment = cell.comment;
-                        if (self.isMine) {
-                            [self.actionV mas_remakeConstraints:^(MASConstraintMaker *make) {
+                    self.actionComment = cell.comment;
+                    if (self.isMine || ([UserModel sharedModel].isNormalLogined && [cell.comment.userId integerValue] == [[UserModel sharedModel].currentNormalUser.userId integerValue])) {
+                        if ([self.deleteActionV isHidden]) {
+                            [self.deleteActionV mas_remakeConstraints:^(MASConstraintMaker *make) {
                                 _strong(self);
                                 CGRect cellRect = [cell convertRect:cell.bounds toView:self.contentV];
                                 make.top.equalTo(@(cellRect.origin.y+39));
@@ -166,7 +167,10 @@
                                 make.height.equalTo(@39);
                             }];
                         }
-                        else {
+                        [self.deleteActionV setHidden:!self.deleteActionV.isHidden];
+                    }
+                    else {
+                        if ([self.actionV isHidden]) {
                             [self.actionV mas_remakeConstraints:^(MASConstraintMaker *make) {
                                 _strong(self);
                                 CGRect cellRect = [cell convertRect:cell.bounds toView:self.contentV];
@@ -176,8 +180,8 @@
                                 make.height.equalTo(@69);
                             }];
                         }
+                        [self.actionV setHidden:!self.actionV.isHidden];
                     }
-                    [self.actionV setHidden:!self.actionV.isHidden];
                 };
                 cell.picShowBlock = ^(NSArray *picUrlArray, NSInteger index) {
                     _strong(self);
@@ -233,97 +237,99 @@
         });
     }
     
+    if (!self.deleteActionV) {
+        self.deleteActionV = [[UIImageView alloc] init];
+        self.deleteActionV.userInteractionEnabled = YES;
+        self.deleteActionV.image = [UIImage imageNamed:@"p_weicomment_action_btn"];
+        UIButton *deleteBtn = [[UIButton alloc] init];
+        deleteBtn.titleLabel.font = [UIFont boldSystemFontOfSize:14];
+        [deleteBtn setTitleColor:k_COLOR_WHITE forState:UIControlStateNormal];
+        [deleteBtn setTitleColor:k_COLOR_GALLERY_F forState:UIControlStateHighlighted];
+        [deleteBtn setTitle:@"删除" forState:UIControlStateNormal];
+        [self.deleteActionV addSubview:deleteBtn];
+        _weak(self);
+        [deleteBtn mas_makeConstraints:^(MASConstraintMaker *make) {
+            _strong(self);
+            make.left.top.right.bottom.equalTo(self.deleteActionV);
+        }];
+        [deleteBtn addControlEvents:UIControlEventTouchUpInside action:^(UIControl *control, NSSet *touches) {
+            _strong(self);
+            [self.deleteActionV setHidden:YES];
+            if (![[UserModel sharedModel] isNormalLogined]) {
+                [SVProgressHUD showErrorWithStatus:@"请先登录"];
+                return;
+            }
+            if (!self.actionComment) {
+                return;
+            }
+            [[CommunityLifeModel sharedModel] asyncWeiDeleteWithCommentId:self.actionComment.commentId remoteBlock:^(BOOL isSuccess, NSError *error) {
+                _strong(self);
+                if (isSuccess) {
+                    [SVProgressHUD showSuccessWithStatus:@"删除成功"];
+                    [self _refreshCommentList];
+                }
+            }];
+        }];
+    }
+    
     if (!self.actionV) {
         self.actionV = [[UIImageView alloc] init];
         self.actionV.userInteractionEnabled = YES;
-        self.actionV.image = [UIImage imageNamed:(self.isMine?@"p_weicomment_action_btn":@"cl_weicomment_action")];
-        if (self.isMine) {
-            UIButton *deleteBtn = [[UIButton alloc] init];
-            deleteBtn.titleLabel.font = [UIFont boldSystemFontOfSize:14];
-            [deleteBtn setTitleColor:k_COLOR_WHITE forState:UIControlStateNormal];
-            [deleteBtn setTitleColor:k_COLOR_GALLERY_F forState:UIControlStateHighlighted];
-            [deleteBtn setTitle:@"删除" forState:UIControlStateNormal];
-            [self.actionV addSubview:deleteBtn];
-            _weak(self);
-            [deleteBtn mas_makeConstraints:^(MASConstraintMaker *make) {
-                _strong(self);
-                make.left.top.right.bottom.equalTo(self.actionV);
+        self.actionV.image = [UIImage imageNamed:@"cl_weicomment_action"];
+        UIButton *unlikeBtn = [[UIButton alloc] init];
+        unlikeBtn.titleLabel.font = [UIFont boldSystemFontOfSize:14];
+        [unlikeBtn setTitleColor:k_COLOR_WHITE forState:UIControlStateNormal];
+        [unlikeBtn setTitleColor:k_COLOR_GALLERY_F forState:UIControlStateHighlighted];
+        [unlikeBtn setTitle:@"不感兴趣" forState:UIControlStateNormal];
+        [self.actionV addSubview:unlikeBtn];
+        _weak(self);
+        [unlikeBtn mas_makeConstraints:^(MASConstraintMaker *make) {
+            _strong(self);
+            make.left.right.equalTo(self.actionV);
+            make.top.equalTo(self.actionV).with.offset(6);
+            make.height.equalTo(@32);
+        }];
+        [unlikeBtn addControlEvents:UIControlEventTouchUpInside action:^(UIControl *control, NSSet *touches) {
+            _strong(self);
+            [self.actionV setHidden:YES];
+            if (![[UserModel sharedModel] isNormalLogined]) {
+                [SVProgressHUD showErrorWithStatus:@"请先登录"];
+                return;
+            }
+            if (!self.actionComment) {
+                return;
+            }
+            [[CommunityLifeModel sharedModel] asyncWeiUnlikeWithCommentId:self.actionComment.commentId remoteBlock:^(BOOL isSuccess, NSError *error) {
+                
             }];
-            [deleteBtn addControlEvents:UIControlEventTouchUpInside action:^(UIControl *control, NSSet *touches) {
-                _strong(self);
-                [self.actionV setHidden:YES];
-                if (![[UserModel sharedModel] isNormalLogined]) {
-                    [SVProgressHUD showErrorWithStatus:@"请先登录"];
-                    return;
-                }
-                if (!self.actionComment) {
-                    return;
-                }
-                [[CommunityLifeModel sharedModel] asyncWeiDeleteWithCommentId:self.actionComment.commentId remoteBlock:^(BOOL isSuccess, NSError *error) {
-                    _strong(self);
-                    if (isSuccess) {
-                        [SVProgressHUD showSuccessWithStatus:@"删除成功"];
-                        [self _refreshCommentList];
-                    }
-                }];
+        }];
+        
+        UIButton *reportBtn = [[UIButton alloc] init];
+        reportBtn.titleLabel.font = [UIFont boldSystemFontOfSize:14];
+        [reportBtn setTitleColor:k_COLOR_WHITE forState:UIControlStateNormal];
+        [reportBtn setTitleColor:k_COLOR_GALLERY_F forState:UIControlStateHighlighted];
+        [reportBtn setTitle:@"举报" forState:UIControlStateNormal];
+        [self.actionV addSubview:reportBtn];
+        [reportBtn mas_makeConstraints:^(MASConstraintMaker *make) {
+            _strong(self);
+            make.left.right.equalTo(self.actionV);
+            make.top.equalTo(self.actionV).with.offset(38);
+            make.height.equalTo(@32);
+        }];
+        [reportBtn addControlEvents:UIControlEventTouchUpInside action:^(UIControl *control, NSSet *touches) {
+            _strong(self);
+            [self.actionV setHidden:YES];
+            if (![[UserModel sharedModel] isNormalLogined]) {
+                [SVProgressHUD showErrorWithStatus:@"请先登录"];
+                return;
+            }
+            if (!self.actionComment) {
+                return;
+            }
+            [[CommunityLifeModel sharedModel] asyncWeiReportWithCommentId:self.actionComment.commentId remoteBlock:^(BOOL isSuccess, NSError *error) {
+                
             }];
-        }
-        else {
-            UIButton *unlikeBtn = [[UIButton alloc] init];
-            unlikeBtn.titleLabel.font = [UIFont boldSystemFontOfSize:14];
-            [unlikeBtn setTitleColor:k_COLOR_WHITE forState:UIControlStateNormal];
-            [unlikeBtn setTitleColor:k_COLOR_GALLERY_F forState:UIControlStateHighlighted];
-            [unlikeBtn setTitle:@"不感兴趣" forState:UIControlStateNormal];
-            [self.actionV addSubview:unlikeBtn];
-            _weak(self);
-            [unlikeBtn mas_makeConstraints:^(MASConstraintMaker *make) {
-                _strong(self);
-                make.left.right.equalTo(self.actionV);
-                make.top.equalTo(self.actionV).with.offset(6);
-                make.height.equalTo(@32);
-            }];
-            [unlikeBtn addControlEvents:UIControlEventTouchUpInside action:^(UIControl *control, NSSet *touches) {
-                _strong(self);
-                [self.actionV setHidden:YES];
-                if (![[UserModel sharedModel] isNormalLogined]) {
-                    [SVProgressHUD showErrorWithStatus:@"请先登录"];
-                    return;
-                }
-                if (!self.actionComment) {
-                    return;
-                }
-                [[CommunityLifeModel sharedModel] asyncWeiUnlikeWithCommentId:self.actionComment.commentId remoteBlock:^(BOOL isSuccess, NSError *error) {
-                    
-                }];
-            }];
-            
-            UIButton *reportBtn = [[UIButton alloc] init];
-            reportBtn.titleLabel.font = [UIFont boldSystemFontOfSize:14];
-            [reportBtn setTitleColor:k_COLOR_WHITE forState:UIControlStateNormal];
-            [reportBtn setTitleColor:k_COLOR_GALLERY_F forState:UIControlStateHighlighted];
-            [reportBtn setTitle:@"举报" forState:UIControlStateNormal];
-            [self.actionV addSubview:reportBtn];
-            [reportBtn mas_makeConstraints:^(MASConstraintMaker *make) {
-                _strong(self);
-                make.left.right.equalTo(self.actionV);
-                make.top.equalTo(self.actionV).with.offset(38);
-                make.height.equalTo(@32);
-            }];
-            [reportBtn addControlEvents:UIControlEventTouchUpInside action:^(UIControl *control, NSSet *touches) {
-                _strong(self);
-                [self.actionV setHidden:YES];
-                if (![[UserModel sharedModel] isNormalLogined]) {
-                    [SVProgressHUD showErrorWithStatus:@"请先登录"];
-                    return;
-                }
-                if (!self.actionComment) {
-                    return;
-                }
-                [[CommunityLifeModel sharedModel] asyncWeiReportWithCommentId:self.actionComment.commentId remoteBlock:^(BOOL isSuccess, NSError *error) {
-                    
-                }];
-            }];
-        }
+        }];
     }
 }
 
@@ -360,6 +366,8 @@
     
     [self.contentV addSubview:self.actionV];
     [self.actionV setHidden:YES];
+    [self.contentV addSubview:self.deleteActionV];
+    [self.deleteActionV setHidden:YES];
     
     [self _setupTapGestureRecognizer];
 }
@@ -371,6 +379,9 @@
         _strong(self);
         if (!CGRectContainsPoint(self.actionV.frame, [touch locationInView:self.contentV])) {
             [self.actionV setHidden:YES];
+        }
+        if (!CGRectContainsPoint(self.deleteActionV.frame, [touch locationInView:self.deleteActionV])) {
+            [self.deleteActionV setHidden:YES];
         }
         return NO;
     }];

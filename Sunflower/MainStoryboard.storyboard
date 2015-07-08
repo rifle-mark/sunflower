@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7706" systemVersion="14D136" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="dtT-5x-8e6">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7706" systemVersion="14E46" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="dtT-5x-8e6">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
@@ -2550,6 +2550,7 @@
                         <outlet property="ploginNameT" destination="Iw3-sd-5zx" id="Gm9-gC-qb3"/>
                         <outlet property="ploginPasswdT" destination="ynI-2G-B2A" id="8wv-Gm-C0t"/>
                         <outlet property="propertyAvatarV" destination="iT2-Dt-9a9" id="Xz3-ft-0cS"/>
+                        <outlet property="propertyInfoV" destination="jNl-Y7-jUL" id="lCN-Iy-hgd"/>
                         <outlet property="propertyLoginV" destination="M6b-0c-0aM" id="ear-dY-Zpw"/>
                         <outlet property="propertyNameL" destination="Muf-WL-mZ8" id="s2m-ay-76d"/>
                         <outlet property="propertyV" destination="Nu2-Ly-8d5" id="kNf-lH-nvV"/>
@@ -2566,6 +2567,7 @@
                         <segue destination="WSW-HZ-4mO" kind="show" identifier="Segue_PCCenter_Register" id="JvK-HF-8Js"/>
                         <segue destination="VsH-gW-w6t" kind="show" identifier="Segue_PCCenter_FindPassword" id="MP3-vb-YSL"/>
                         <segue destination="LIC-Xf-Azb" kind="show" identifier="Segue_PersonalCenter_MyFixRecord" id="zwY-2W-LTX"/>
+                        <segue destination="Sq6-5Z-b5u" kind="show" identifier="Segue_PC_UserInfoEdit" id="aUW-he-JIX"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Qx7-ue-bKb" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -2911,30 +2913,30 @@
                                                 <exclude reference="ejY-5a-GDV"/>
                                                 <exclude reference="VdF-hj-bfB"/>
                                                 <exclude reference="zqX-CO-Xfl"/>
-                                                <exclude reference="b9i-JG-Mvq"/>
-                                                <exclude reference="vL4-bt-gby"/>
-                                                <exclude reference="98N-wf-99M"/>
-                                                <exclude reference="YCj-Jv-iI2"/>
-                                                <exclude reference="wQB-ve-EIC"/>
-                                                <exclude reference="Y6o-uM-scm"/>
-                                                <exclude reference="swX-KG-fyQ"/>
                                                 <exclude reference="0E4-h6-IKK"/>
                                                 <exclude reference="HVo-yP-kdL"/>
                                                 <exclude reference="fC2-2B-PWb"/>
-                                                <exclude reference="HEN-LL-Qui"/>
-                                                <exclude reference="L9H-XP-qzo"/>
+                                                <exclude reference="98N-wf-99M"/>
+                                                <exclude reference="YCj-Jv-iI2"/>
+                                                <exclude reference="wQB-ve-EIC"/>
+                                                <exclude reference="3ih-mV-J3R"/>
+                                                <exclude reference="elb-pw-E6z"/>
+                                                <exclude reference="yMM-i9-kC8"/>
+                                                <exclude reference="Y6o-uM-scm"/>
+                                                <exclude reference="swX-KG-fyQ"/>
                                                 <exclude reference="NwQ-QC-OwF"/>
                                                 <exclude reference="nVt-jM-5PM"/>
                                                 <exclude reference="xVa-UV-bPP"/>
                                                 <exclude reference="Cg3-32-hrt"/>
                                                 <exclude reference="t8F-Yv-yvp"/>
-                                                <exclude reference="3ih-mV-J3R"/>
-                                                <exclude reference="elb-pw-E6z"/>
-                                                <exclude reference="yMM-i9-kC8"/>
+                                                <exclude reference="HEN-LL-Qui"/>
+                                                <exclude reference="L9H-XP-qzo"/>
                                                 <exclude reference="JaS-Pe-WGc"/>
                                                 <exclude reference="MOt-xB-A0h"/>
                                                 <exclude reference="SDV-Jy-m5E"/>
                                                 <exclude reference="kxe-Kq-Xzm"/>
+                                                <exclude reference="b9i-JG-Mvq"/>
+                                                <exclude reference="vL4-bt-gby"/>
                                                 <exclude reference="GSi-Gd-Mdm"/>
                                                 <exclude reference="QAl-yy-rXi"/>
                                                 <exclude reference="h0Q-5j-2Jq"/>
@@ -2958,30 +2960,30 @@
                                                 <include reference="ejY-5a-GDV"/>
                                                 <include reference="VdF-hj-bfB"/>
                                                 <include reference="zqX-CO-Xfl"/>
-                                                <include reference="b9i-JG-Mvq"/>
-                                                <include reference="vL4-bt-gby"/>
-                                                <include reference="98N-wf-99M"/>
-                                                <include reference="YCj-Jv-iI2"/>
-                                                <include reference="wQB-ve-EIC"/>
-                                                <include reference="Y6o-uM-scm"/>
-                                                <include reference="swX-KG-fyQ"/>
                                                 <include reference="0E4-h6-IKK"/>
                                                 <include reference="HVo-yP-kdL"/>
                                                 <include reference="fC2-2B-PWb"/>
-                                                <include reference="HEN-LL-Qui"/>
-                                                <include reference="L9H-XP-qzo"/>
+                                                <include reference="98N-wf-99M"/>
+                                                <include reference="YCj-Jv-iI2"/>
+                                                <include reference="wQB-ve-EIC"/>
+                                                <include reference="3ih-mV-J3R"/>
+                                                <include reference="elb-pw-E6z"/>
+                                                <include reference="yMM-i9-kC8"/>
+                                                <include reference="Y6o-uM-scm"/>
+                                                <include reference="swX-KG-fyQ"/>
                                                 <include reference="NwQ-QC-OwF"/>
                                                 <include reference="nVt-jM-5PM"/>
                                                 <include reference="xVa-UV-bPP"/>
                                                 <include reference="Cg3-32-hrt"/>
                                                 <include reference="t8F-Yv-yvp"/>
-                                                <include reference="3ih-mV-J3R"/>
-                                                <include reference="elb-pw-E6z"/>
-                                                <include reference="yMM-i9-kC8"/>
+                                                <include reference="HEN-LL-Qui"/>
+                                                <include reference="L9H-XP-qzo"/>
                                                 <include reference="JaS-Pe-WGc"/>
                                                 <include reference="MOt-xB-A0h"/>
                                                 <include reference="SDV-Jy-m5E"/>
                                                 <include reference="kxe-Kq-Xzm"/>
+                                                <include reference="b9i-JG-Mvq"/>
+                                                <include reference="vL4-bt-gby"/>
                                                 <include reference="GSi-Gd-Mdm"/>
                                                 <include reference="QAl-yy-rXi"/>
                                                 <include reference="h0Q-5j-2Jq"/>
@@ -3036,11 +3038,11 @@
                                 <exclude reference="qEF-Tu-pVH"/>
                             </mask>
                             <mask key="constraints">
+                                <exclude reference="Nlv-vK-iNd"/>
                                 <exclude reference="eXl-PM-iuq"/>
                                 <exclude reference="fVN-f2-dgZ"/>
                                 <exclude reference="omc-BK-Wwr"/>
                                 <exclude reference="Upa-Ev-e7f"/>
-                                <exclude reference="Nlv-vK-iNd"/>
                             </mask>
                         </variation>
                         <variation key="heightClass=regular-widthClass=compact">
@@ -3049,11 +3051,11 @@
                                 <include reference="qEF-Tu-pVH"/>
                             </mask>
                             <mask key="constraints">
+                                <include reference="Nlv-vK-iNd"/>
                                 <include reference="eXl-PM-iuq"/>
                                 <include reference="fVN-f2-dgZ"/>
                                 <include reference="omc-BK-Wwr"/>
                                 <include reference="Upa-Ev-e7f"/>
-                                <include reference="Nlv-vK-iNd"/>
                             </mask>
                         </variation>
                     </view>
@@ -3083,7 +3085,7 @@
                     </connections>
                 </tapGestureRecognizer>
             </objects>
-            <point key="canvasLocation" x="6853.5" y="854.25"/>
+            <point key="canvasLocation" x="6754.5" y="879.75"/>
         </scene>
         <!--优惠管理-->
         <scene sceneID="3xb-iF-L7p">
@@ -4228,11 +4230,11 @@
                                                 <exclude reference="D4j-L4-6jC"/>
                                                 <exclude reference="XhJ-SM-RCt"/>
                                                 <exclude reference="gv2-wC-9o2"/>
-                                                <exclude reference="6RR-D6-XCQ"/>
-                                                <exclude reference="7J9-H7-yuF"/>
                                                 <exclude reference="GIr-Qg-wxB"/>
                                                 <exclude reference="NgV-Qc-FMV"/>
                                                 <exclude reference="ngD-rQ-M6k"/>
+                                                <exclude reference="6RR-D6-XCQ"/>
+                                                <exclude reference="7J9-H7-yuF"/>
                                                 <exclude reference="lKA-QA-RLt"/>
                                                 <exclude reference="lMz-GM-uz2"/>
                                                 <exclude reference="mPv-Nb-2h7"/>
@@ -4258,11 +4260,11 @@
                                                 <include reference="D4j-L4-6jC"/>
                                                 <include reference="XhJ-SM-RCt"/>
                                                 <include reference="gv2-wC-9o2"/>
-                                                <include reference="6RR-D6-XCQ"/>
-                                                <include reference="7J9-H7-yuF"/>
                                                 <include reference="GIr-Qg-wxB"/>
                                                 <include reference="NgV-Qc-FMV"/>
                                                 <include reference="ngD-rQ-M6k"/>
+                                                <include reference="6RR-D6-XCQ"/>
+                                                <include reference="7J9-H7-yuF"/>
                                                 <include reference="lKA-QA-RLt"/>
                                                 <include reference="lMz-GM-uz2"/>
                                                 <include reference="mPv-Nb-2h7"/>
@@ -4321,11 +4323,11 @@
                                 <exclude reference="fcZ-lj-w4a"/>
                             </mask>
                             <mask key="constraints">
-                                <exclude reference="UvM-YZ-hQ7"/>
+                                <exclude reference="hPp-QP-we0"/>
                                 <exclude reference="dCA-Tn-V2D"/>
                                 <exclude reference="pKh-cF-Xmy"/>
                                 <exclude reference="znQ-Vu-I2b"/>
-                                <exclude reference="hPp-QP-we0"/>
+                                <exclude reference="UvM-YZ-hQ7"/>
                             </mask>
                         </variation>
                         <variation key="heightClass=regular-widthClass=compact">
@@ -4334,11 +4336,11 @@
                                 <include reference="fcZ-lj-w4a"/>
                             </mask>
                             <mask key="constraints">
-                                <include reference="UvM-YZ-hQ7"/>
+                                <include reference="hPp-QP-we0"/>
                                 <include reference="dCA-Tn-V2D"/>
                                 <include reference="pKh-cF-Xmy"/>
                                 <include reference="znQ-Vu-I2b"/>
-                                <include reference="hPp-QP-we0"/>
+                                <include reference="UvM-YZ-hQ7"/>
                             </mask>
                         </variation>
                         <connections>
@@ -4958,7 +4960,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="O5W-wK-dGO" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="7525.5" y="854.25"/>
+            <point key="canvasLocation" x="7480.5" y="879.75"/>
         </scene>
         <!--商家信息-->
         <scene sceneID="mDt-vs-EVb">
@@ -5032,7 +5034,7 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="PoF-ML-deU" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <exit id="uBC-Ca-hgC" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
-            <point key="canvasLocation" x="6169.5" y="854.25"/>
+            <point key="canvasLocation" x="6031.5" y="879.75"/>
         </scene>
         <!--我的订单-->
         <scene sceneID="by6-pN-HBW">
@@ -16446,23 +16448,24 @@
         <image name="znmj" width="40" height="40"/>
     </resources>
     <inferredMetricsTieBreakers>
+        <segue reference="H5L-QS-jcp"/>
+        <segue reference="aUW-he-JIX"/>
+        <segue reference="MP3-vb-YSL"/>
+        <segue reference="JvK-HF-8Js"/>
+        <segue reference="aQf-9T-5bW"/>
+        <segue reference="Inj-kg-Q16"/>
         <segue reference="1Se-RM-Pj9"/>
-        <segue reference="2uU-mn-vfd"/>
+        <segue reference="KDL-iw-rz2"/>
+        <segue reference="C0G-o1-knm"/>
+        <segue reference="9Qn-Ef-wx3"/>
         <segue reference="vKk-6R-1Xp"/>
-        <segue reference="tvY-dW-G3D"/>
         <segue reference="qb1-be-3If"/>
+        <segue reference="2uU-mn-vfd"/>
+        <segue reference="tvY-dW-G3D"/>
         <segue reference="OVy-Pr-4D6"/>
         <segue reference="5u4-Y1-2li"/>
         <segue reference="Zam-LA-Mfg"/>
         <segue reference="yli-Jp-NAd"/>
-        <segue reference="H5L-QS-jcp"/>
         <segue reference="eZI-At-RQh"/>
-        <segue reference="JhC-Jm-NcA"/>
-        <segue reference="9Qn-Ef-wx3"/>
-        <segue reference="C0G-o1-knm"/>
-        <segue reference="YRR-in-NRb"/>
-        <segue reference="Fgf-l2-77f"/>
-        <segue reference="gt6-KE-Nk0"/>
-        <segue reference="KDL-iw-rz2"/>
     </inferredMetricsTieBreakers>
 </document>

@@ -687,7 +687,8 @@
             make.width.equalTo(@78);
         }];
         UILabel *picsubL = titleLabelBlock(@"可以将您遇到的问题拍照给我们，以便更快速解决问题");
-        picsubL.font = [UIFont boldSystemFontOfSize:11];
+        picsubL.font = [UIFont boldSystemFontOfSize:10];
+        picsubL.numberOfLines = 2;
         [self.contentView addSubview:picsubL];
         _weak(picL);
         [picsubL mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -696,7 +697,7 @@
             make.bottom.equalTo(picL);
             make.left.equalTo(picL.mas_right);
             make.right.equalTo(self.nameT);
-            make.height.equalTo(@11);
+            make.height.equalTo(@24);
         }];
         
         UICollectionViewFlowLayout *layout = [[UICollectionViewFlowLayout alloc] init];
@@ -1332,7 +1333,7 @@
             subtitleL.textColor = k_COLOR_GALLERY_F;
             subtitleL.font = [UIFont boldSystemFontOfSize:12];
             subtitleL.textAlignment = NSTextAlignmentCenter;
-            subtitleL.text = (section == 1?([UserModel sharedModel].isPropertyAdminLogined?@"以下是客户提出的维修事件，请及时处理":@"提交您的维修信息，我们会尽及时与您联系"):@"我们为您提供其他的维修产品体验");
+            subtitleL.text = (section == 1?([UserModel sharedModel].isPropertyAdminLogined?@"以下是客户提出的维修事件，请及时处理":@"提交您的维修信息，我们会及时与您联系"):@"我们为您提供其他的维修产品体验");
             [ret addSubview:titleL];
             _weak(ret);
             [titleL mas_makeConstraints:^(MASConstraintMaker *make) {

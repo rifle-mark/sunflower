@@ -545,8 +545,16 @@
 
 - (void)updateAdminInfoWithNickName:(NSString *)nickName
                              avatar:(NSString *)avatar
-                        remoteBlock:(void(^)(BOOL isSuccess))remote {
-    
+                        remoteBlock:(void(^)(BOOL isSuccess, NSError *error))remote {
+    [JSONServerProxy postJSONWithUrl:k_API_P_USER_ADMINE_INFO_UPDATE parameters:@{@"userInfo":@{@"NickName":nickName,@"Avatar":avatar,@"Password":@""}} success:^(NSDictionary *responseJSON) {
+        if (![[responseJSON objectForKey:@"isSuc"] boolValue]) {
+            GCBlockInvoke(remote, NO, [NSError errorWithDomain:[responseJSON objectForKey:@"message"] code:1801001 userInfo:nil]);
+            return;
+        }
+        GCBlockInvoke(remote, YES, nil);
+    } failed:^(NSError *error) {
+        GCBlockInvoke(remote, NO, error);
+    }];
 }
 
 - (void)asyncCheckCodeWithPhoneNumber:(NSString *)phoneNumber

@@ -146,7 +146,7 @@ typedef NS_ENUM(NSUInteger, UserRegisterType) {
 
 - (void)updateAdminInfoWithNickName:(NSString *)nickName
                              avatar:(NSString *)avatar
-                        remoteBlock:(void(^)(BOOL isSuccess))remote;
+                        remoteBlock:(void(^)(BOOL isSuccess, NSError *error))remote;
 
 
 - (void)asyncAddCommunityNoticeWithCommunityId:(NSNumber *)communityId

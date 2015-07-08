@@ -9,6 +9,7 @@
 #import "PersonalCenterVC.h"
 #import "WeCommentListVC.h"
 #import "NormalRegisterVC.h"
+#import "NormalUserInfoEditVC.h"
 #import "ContractVC.h"
 #import "FindPasswdVC.h"
 #import "APIGenerator.h"
@@ -55,6 +56,7 @@
 
 //
 @property(nonatomic,weak)IBOutlet UIView            *propertyV;
+@property(nonatomic,weak)IBOutlet UIView            *propertyInfoV;
 @property(nonatomic,weak)IBOutlet UIView            *propertyLoginV;
 @property(nonatomic,weak)IBOutlet UILabel           *propertyNameL;
 @property(nonatomic,weak)IBOutlet UIImageView       *propertyAvatarV;
@@ -86,14 +88,24 @@
     
     [self _setupObserver];
     
+    _weak(self);
     UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] init];
     [tap withBlockForShouldReceiveTouch:^BOOL(UIGestureRecognizer *gesture, UITouch *touch) {
+        _strong(self);
         if (self.focusedField) {
             [self.focusedField resignFirstResponder];
         }
         return NO;
     }];
     [self.view addGestureRecognizer:tap];
+    
+    UITapGestureRecognizer *tapProperty = [[UITapGestureRecognizer alloc] initWithActionBlock:^(UIGestureRecognizer *gesture) {
+        _strong(self);
+        if ([UserModel sharedModel].isPropertyAdminLogined) {
+            [self performSegueWithIdentifier:@"Segue_PC_UserInfoEdit" sender:nil];
+        }
+    }];
+    [self.propertyInfoV addGestureRecognizer:tapProperty];
     
     self.pcScrollV.showsVerticalScrollIndicator = NO;
     self.pcScrollV.showsHorizontalScrollIndicator = NO;
@@ -116,7 +128,7 @@
     [self _refreshLoginState];
 }
 
--(void)viewDidLayoutSubviews {
+- (void)viewDidLayoutSubviews {
     [super viewDidLayoutSubviews];
     _weak(self);
     [self.businessScroConV mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -153,6 +165,10 @@
         else if ([sender isEqual:self.businessContractBtn]) {
             ((ContractVC*)segue.destinationViewController).url = [NSURL URLWithString:[APIGenerator apiAddressWithSuffix:k_API_BUSINESS_ANNOUNCE]];
         }
+    }
+    
+    if ([segue.identifier isEqualToString:@"Segue_PC_UserInfoEdit"]) {
+        ((NormalUserInfoEditVC*)segue.destinationViewController).isProperty = YES;
     }
 }
 

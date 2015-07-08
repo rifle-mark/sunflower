@@ -23,7 +23,7 @@
 @property(nonatomic,weak)IBOutlet UIView        *noteV;
 @property(nonatomic,weak)IBOutlet UIButton      *latestNotifyB;
 
-@property(nonatomic,strong)UIImageView          *avatarV;
+//@property(nonatomic,strong)UIImageView          *avatarV;
 @property(nonatomic,strong)UIView               *communityNameV;
 @property(nonatomic,strong)UIImageView          *gpsImgeV;
 @property(nonatomic,strong)UILabel              *communityNameL;
@@ -47,8 +47,6 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     
-    self.navigationController.navigationBarHidden = YES;
-    
     self.tabBarController.tabBar.selectedImageTintColor = k_COLOR_BLUE;
     
     self.latestNoteInfo = nil;
@@ -62,6 +60,17 @@
         [self _refreshCommunityInfo];
         [self _refreshLatestNotify];
     }
+}
+
+-(void)viewWillAppear:(BOOL)animated {
+    [self.navigationController setNavigationBarHidden:YES animated:YES];
+    [super viewWillAppear:animated];
+    
+}
+
+- (void)viewWillDisappear:(BOOL)animated {
+    [super viewWillDisappear:animated];
+    [self.navigationController setNavigationBarHidden:NO animated:YES];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -93,8 +102,6 @@
     // Get the new view controller using [segue destinationViewController].
     // Pass the selected object to the new view controller.
     
-    self.navigationController.navigationBarHidden = NO;
-    
     if ([segue.identifier isEqualToString:@"Segue_MainPage_Payment"]) {
         ((PropertyPayListVC *)[segue destinationViewController]).type = ChargeProperty;
     }
@@ -113,7 +120,7 @@
 }
 
 - (void)unwindSegue:(UIStoryboardSegue *)segue {
-    self.navigationController.navigationBarHidden = YES;
+    
 }
 
 - (IBAction)latestNotifyButtonOnClick:(UIButton *)sender {
@@ -124,12 +131,12 @@
 
 #pragma mark - coding Views
 - (void)_loadCodingViews {
-    self.avatarV = ({
-        UIImageView *v = [[UIImageView alloc] init];
-        v.clipsToBounds = YES;
-        v.image = [UIImage imageNamed:@"default_avatar"];
-        v;
-    });
+//    self.avatarV = ({
+//        UIImageView *v = [[UIImageView alloc] init];
+//        v.clipsToBounds = YES;
+//        v.image = [UIImage imageNamed:@"default_avatar"];
+//        v;
+//    });
     
     self.communityNameV = ({
         UIView *v = [[UIView alloc] init];
@@ -178,20 +185,20 @@
 
 - (void)_layoutCodingViews {
     _weak(self);
-    if (![self.avatarV superview]) {
-        if ([[UserModel sharedModel] isNormalLogined]) {
-            UserInfo *cUser = [[UserModel sharedModel] currentNormalUser];
-            [self.communityBgV addSubview:self.avatarV];
-            [self.avatarV setImageWithURL:[NSURL URLWithString:cUser.avatar] placeholderImage:[UIImage imageNamed:@"default_avatar"]];
-            [self.avatarV mas_makeConstraints:^(MASConstraintMaker *make) {
-                _strong(self);
-                make.right.equalTo(self.communityBgV).with.offset(-13);
-                make.top.equalTo(self.communityBgV).with.offset(25);
-                make.width.height.equalTo(@60);
-            }];
-            self.avatarV.layer.cornerRadius = 30;
-        }
-    }
+//    if (![self.avatarV superview]) {
+//        if ([[UserModel sharedModel] isNormalLogined]) {
+//            UserInfo *cUser = [[UserModel sharedModel] currentNormalUser];
+//            [self.communityBgV addSubview:self.avatarV];
+//            [self.avatarV setImageWithURL:[NSURL URLWithString:cUser.avatar] placeholderImage:[UIImage imageNamed:@"default_avatar"]];
+//            [self.avatarV mas_makeConstraints:^(MASConstraintMaker *make) {
+//                _strong(self);
+//                make.right.equalTo(self.communityBgV).with.offset(-13);
+//                make.top.equalTo(self.communityBgV).with.offset(25);
+//                make.width.height.equalTo(@60);
+//            }];
+//            self.avatarV.layer.cornerRadius = 30;
+//        }
+//    }
     
     if (![self.communityNameV superview]) {
         [self.communityBgV addSubview:self.communityNameV];

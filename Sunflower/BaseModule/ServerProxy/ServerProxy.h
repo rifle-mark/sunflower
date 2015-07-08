@@ -240,4 +240,6 @@
 #define k_API_P_USER_LOGIN_PROPERTY     @"adminuser/login"
 // 物业申请
 #define k_API_P_USER_APPLY_PROPERTY     @"apply/add"
+
+#define k_API_P_USER_ADMINE_INFO_UPDATE @"adminuser/Update"
 #endif
