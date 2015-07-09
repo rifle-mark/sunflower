@@ -54,7 +54,7 @@
 
 #pragma mark - areas
 - (NSArray*)localAreaWithCity:(OpendCityInfo*)city {
-    NSPredicate *p = [NSPredicate predicateWithFormat:@"cityId = %@", city.cityId];
+    NSPredicate *p = [NSPredicate predicateWithFormat:@"openCityId = %@", city.cityId];
     NSSortDescriptor *s = [NSSortDescriptor sortDescriptorWithKey:@"orderId" ascending:YES];
     return [[MKWModelHandler defaultHandler] queryObjectsForEntity:k_ENTITY_OPENDAREA predicate:p sortDescriptors:@[s] error:NULL];
 }
@@ -62,7 +62,11 @@
     GCBlockInvoke(cache, [self localAreaWithCity:city]);
     
     [JSONServerProxy postJSONWithUrl:k_API_ALL_CITY_AREA parameters:@{@"cityName":city.city} success:^(NSDictionary *responseJSON) {
-        GCBlockInvoke(remote, [OpendAreaInfo infoArrayWithJSONArray:[responseJSON objectForKey:@"result"]], nil);
+        NSArray *areaArray = [OpendAreaInfo infoArrayWithJSONArray:[responseJSON objectForKey:@"result"]];
+        for (OpendAreaInfo *area in areaArray) {
+            area.openCityId = city.cityId;
+        }
+        GCBlockInvoke(remote, areaArray, nil);
     } failed:^(NSError *error) {
         GCBlockInvoke(remote, nil, error);
     }];
@@ -90,7 +94,7 @@
                       pageSize:(NSNumber*)pageSize
                     cacheBlock:(void(^)(NSArray* communityArray))cache
                    remoteBlock:(void(^)(NSArray* communityArray, NSError *error))remote {
-    GCBlockInvoke(cache, [self localAreaWithCity:city]);
+    GCBlockInvoke(cache, [self localCommunityWithCity:city area:area]);
     
     [JSONServerProxy postJSONWithUrl:k_API_COMMUNITY_QUERY parameters:@{@"queryCommunity":@{@"PageIndex":page, @"PageSize":pageSize, @"Keywords":keywords, @"Province":city.province, @"City":city.city, @"Area":area.area}} success:^(NSDictionary *responseJSON) {
         GCBlockInvoke(remote, [OpendCommunityInfo opendCommunityArrayWithJSONArray:[[responseJSON objectForKey:@"result"] objectForKey:@"Items"]], nil);

@@ -166,6 +166,7 @@
         <attribute name="area" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="areaId" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="cityId" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="openCityId" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
         <attribute name="orderId" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
     </entity>
     <entity name="OpendCity" representedClassName="OpendCity" syncable="YES">
@@ -377,10 +378,11 @@
         <element name="HouseImage" positionX="-9" positionY="234" width="128" height="105"/>
         <element name="LifeServer" positionX="-27" positionY="135" width="128" height="195"/>
         <element name="LocationAddr" positionX="-9" positionY="135" width="128" height="210"/>
-        <element name="OpendArea" positionX="-63" positionY="9" width="128" height="105"/>
+        <element name="OpendArea" positionX="-63" positionY="9" width="128" height="120"/>
         <element name="OpendCity" positionX="-63" positionY="-18" width="128" height="90"/>
         <element name="OpendCommunity" positionX="-54" positionY="36" width="128" height="165"/>
         <element name="Payment" positionX="-9" positionY="135" width="128" height="165"/>
+        <element name="PointRuler" positionX="-9" positionY="135" width="128" height="105"/>
         <element name="PropertyShop" positionX="-9" positionY="135" width="128" height="165"/>
         <element name="RentHouse" positionX="18" positionY="18" width="128" height="435"/>
         <element name="RentList" positionX="36" positionY="54" width="128" height="435"/>
@@ -393,6 +395,5 @@
         <element name="UserPoint" positionX="-9" positionY="135" width="128" height="135"/>
         <element name="WeiComment" positionX="-9" positionY="135" width="128" height="240"/>
         <element name="WeiCommentAction" positionX="0" positionY="144" width="128" height="105"/>
-        <element name="PointRuler" positionX="-9" positionY="135" width="128" height="105"/>
     </elements>
 </model>

@@ -55,7 +55,7 @@
     // 市
     NSArray *cityList = [[CSSettingModel sharedModel] localOpendCitys];
     [cityList enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
-        OpendCityInfo *city = obj;
+        OpendCityInfo *city = [OpendCityInfo infoWithManagedObj:obj];
         if ([city.city isEqualToString:communityInfo.city]) {
             self.city = city;
             *stop = YES;
