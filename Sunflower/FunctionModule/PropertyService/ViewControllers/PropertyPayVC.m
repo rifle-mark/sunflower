@@ -302,7 +302,7 @@
                                             NSForegroundColorAttributeName:priceColor,
                                             NSBaselineOffsetAttributeName: @0};
         NSMutableAttributedString *countStr= [[NSMutableAttributedString alloc] initWithString:@"共" attributes:normalattributes];
-        [countStr appendAttributedString:[[NSAttributedString alloc] initWithString:[NSString stringWithFormat:@"%lu", self.paymentList.count] attributes:countattributes]];
+        [countStr appendAttributedString:[[NSAttributedString alloc] initWithString:[NSString stringWithFormat:@"%lu", (unsigned long)self.paymentList.count] attributes:countattributes]];
         [countStr appendAttributedString:[[NSAttributedString alloc] initWithString:@"笔缴费" attributes:normalattributes]];
         
         self.countL.attributedText = countStr;

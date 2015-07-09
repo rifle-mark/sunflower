@@ -10,8 +10,6 @@
 
 static CGFloat splitHeight = 5;
 static CGFloat userVHeight = 68;
-static CGFloat pictureVHeight = 102;
-static CGFloat picWidth = 82;
 static CGFloat controlHeight = 47;
 
 @implementation WeiCommentPicCell

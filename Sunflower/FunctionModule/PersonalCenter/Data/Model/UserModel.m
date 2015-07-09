@@ -556,6 +556,13 @@
             GCBlockInvoke(remote, NO, [NSError errorWithDomain:[responseJSON objectForKey:@"message"] code:[[responseJSON objectForKey:@"code"]integerValue] userInfo:nil]);
             return;
         }
+        if ([_currentAdminUser.adminType integerValue] == Property) {
+            _currentAdminUser.realName = nickName;
+            _currentAdminUser.avatar = avatar;
+            [_currentAdminUser saveToDb];
+            
+            [[NSNotificationCenter defaultCenter] postNotificationName:k_NOTIFY_NAME_PROPERTY_USER_UPDATE object:nil];
+        }
         GCBlockInvoke(remote, YES, nil);
     } failed:^(NSError *error) {
         GCBlockInvoke(remote, NO, error);

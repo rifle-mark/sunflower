@@ -26,7 +26,7 @@
     }
     [pay setKey:PARTNER_ID];
     [pay setPayNotifyUrl:[APIGenerator urlAddWithoutHTTP:WXPayNOTIFY_URL]];
-    NSString *totalFee = [NSString stringWithFormat:@"%ld", ((NSInteger)([price floatValue] * 100))];
+    NSString *totalFee = [NSString stringWithFormat:@"%ld", (long)((NSInteger)([price floatValue] * 100))];
     NSDictionary *payInfo = [pay sendPayWithOrderNum:orderNum name:name price:totalFee];
     if (!payInfo) {
         GCBlockInvoke(failed, @"支付失败，请检查网络");

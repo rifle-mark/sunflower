@@ -144,7 +144,7 @@
 
 - (void)updateUpState {
     if (self.isUped) {
-        [self.upBtn setTitle:[NSString stringWithFormat:@"赞（%d）", [self.guanjia.actionCount integerValue]+1] forState:UIControlStateNormal];
+        [self.upBtn setTitle:[NSString stringWithFormat:@"赞（%ld）", (long)([self.guanjia.actionCount integerValue]+1)] forState:UIControlStateNormal];
     }
 }
 @end

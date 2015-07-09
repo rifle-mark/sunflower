@@ -593,7 +593,7 @@
                                                     </mask>
                                                 </variation>
                                                 <connections>
-                                                    <segue destination="bXf-jJ-QJT" kind="push" id="SXf-ts-dRC"/>
+                                                    <segue destination="bXf-jJ-QJT" kind="show" id="SXf-ts-dRC"/>
                                                 </connections>
                                             </button>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Xi7-qG-aRy">
@@ -6345,7 +6345,7 @@
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
-                                    <segue destination="WDU-0D-dAf" kind="push" identifier="Segue_PropertyInfo_PropertyEdit" id="wqN-Q0-77f"/>
+                                    <segue destination="WDU-0D-dAf" kind="show" identifier="Segue_PropertyInfo_PropertyEdit" id="wqN-Q0-77f"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -6502,7 +6502,7 @@
                     </navigationItem>
                     <connections>
                         <outlet property="contentV" destination="FbW-vN-itz" id="tiC-gy-bOk"/>
-                        <segue destination="3Rb-Zu-gKx" kind="push" identifier="Segue_NotifyList_NotifyInfo" id="OVy-Pr-4D6"/>
+                        <segue destination="3Rb-Zu-gKx" kind="show" identifier="Segue_NotifyList_NotifyInfo" id="OVy-Pr-4D6"/>
                         <segue destination="yiK-S9-mw9" kind="show" identifier="Segue_NotifyList_NotifyEdit" id="9zu-t1-uZZ"/>
                     </connections>
                 </viewController>
@@ -14930,7 +14930,7 @@
                                     </mask>
                                 </variation>
                                 <connections>
-                                    <segue destination="fRY-5F-dIx" kind="push" id="H5L-QS-jcp"/>
+                                    <segue destination="fRY-5F-dIx" kind="show" id="H5L-QS-jcp"/>
                                 </connections>
                             </button>
                             <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="shfw" translatesAutoresizingMaskIntoConstraints="NO" id="QHZ-fK-973">
@@ -14986,7 +14986,7 @@
                                     </mask>
                                 </variation>
                                 <connections>
-                                    <segue destination="S52-BR-pPh" kind="push" id="eZI-At-RQh"/>
+                                    <segue destination="S52-BR-pPh" kind="show" id="eZI-At-RQh"/>
                                 </connections>
                             </button>
                             <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="zbyh" translatesAutoresizingMaskIntoConstraints="NO" id="DPh-Db-Nt7">
@@ -15039,7 +15039,7 @@
                                     </mask>
                                 </variation>
                                 <connections>
-                                    <segue destination="Zfs-XU-0d6" kind="push" id="t3E-K7-JpC"/>
+                                    <segue destination="Zfs-XU-0d6" kind="show" id="t3E-K7-JpC"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="bottom" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1Wl-aM-5IS">
@@ -15938,7 +15938,7 @@
                                     </mask>
                                 </variation>
                                 <connections>
-                                    <segue destination="LeM-xw-b0y" kind="push" identifier="GS_ChooseCommunity" id="jc3-J0-2je"/>
+                                    <segue destination="LeM-xw-b0y" kind="show" identifier="GS_ChooseCommunity" id="jc3-J0-2je"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Bxb-Kh-SkY">
@@ -16419,16 +16419,16 @@
     <inferredMetricsTieBreakers>
         <segue reference="9Qn-Ef-wx3"/>
         <segue reference="C0G-o1-knm"/>
-        <segue reference="yli-Jp-NAd"/>
         <segue reference="t3E-K7-JpC"/>
-        <segue reference="Kev-8d-YJN"/>
-        <segue reference="FMP-zl-Y9S"/>
-        <segue reference="gSS-48-SZG"/>
         <segue reference="H5L-QS-jcp"/>
+        <segue reference="Kev-8d-YJN"/>
         <segue reference="eZI-At-RQh"/>
+        <segue reference="gSS-48-SZG"/>
+        <segue reference="FMP-zl-Y9S"/>
+        <segue reference="yli-Jp-NAd"/>
         <segue reference="wqP-zY-FUh"/>
-        <segue reference="6ua-yP-pr3"/>
         <segue reference="Zam-LA-Mfg"/>
+        <segue reference="OVy-Pr-4D6"/>
         <segue reference="5u4-Y1-2li"/>
         <segue reference="YRR-in-NRb"/>
         <segue reference="JvK-HF-8Js"/>

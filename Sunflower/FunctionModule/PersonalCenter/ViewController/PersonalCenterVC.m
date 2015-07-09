@@ -356,6 +356,11 @@
         self.adminUser = [[UserModel sharedModel] currentAdminUser];
         [self.propertyLoginV setHidden:YES];
     }];
+    [self addObserverForNotificationName:k_NOTIFY_NAME_PROPERTY_USER_UPDATE usingBlock:^(NSNotification *notification) {
+        _strong(self);
+        self.adminUser = [[UserModel sharedModel] currentAdminUser];
+        [self.propertyLoginV setHidden:YES];
+    }];
     [self addObserverForNotificationName:k_NOTIFY_NAME_PROPERTY_USER_LOGOUT usingBlock:^(NSNotification *notification) {
         _strong(self);
         [self.propertyLoginV setHidden:NO];

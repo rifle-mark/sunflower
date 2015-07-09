@@ -115,6 +115,8 @@
 #define k_NOTIFY_NAME_PROPERTY_USER_LOGIN            @"Property_User_Login_Succeed"
 // 物管用户退出
 #define k_NOTIFY_NAME_PROPERTY_USER_LOGOUT           @"Property_LogOut_Succeed"
+// 物管用户更新信息
+#define k_NOTIFY_NAME_PROPERTY_USER_UPDATE           @"Property_Update_Info_Succeed"
 
 // 物业缴费成功
 #define k_NOTIFY_NAME_PROPERTY_CHARGE_SUCCESS       @"Property_Charge_Succeed"
