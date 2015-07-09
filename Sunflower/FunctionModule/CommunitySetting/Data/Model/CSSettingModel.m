@@ -62,6 +62,11 @@
     GCBlockInvoke(cache, [self localAreaWithCity:city]);
     
     [JSONServerProxy postJSONWithUrl:k_API_ALL_CITY_AREA parameters:@{@"cityName":city.city} success:^(NSDictionary *responseJSON) {
+        if (![[responseJSON objectForKey:@"isSuc"] boolValue]) {
+            GCBlockInvoke(remote, nil, [NSError errorWithDomain:[responseJSON objectForKey:@"message"] code:[[responseJSON objectForKey:@"code"]integerValue] userInfo:nil]);
+            return;
+        }
+        
         NSArray *areaArray = [OpendAreaInfo infoArrayWithJSONArray:[responseJSON objectForKey:@"result"]];
         for (OpendAreaInfo *area in areaArray) {
             area.openCityId = city.cityId;
@@ -97,6 +102,11 @@
     GCBlockInvoke(cache, [self localCommunityWithCity:city area:area]);
     
     [JSONServerProxy postJSONWithUrl:k_API_COMMUNITY_QUERY parameters:@{@"queryCommunity":@{@"PageIndex":page, @"PageSize":pageSize, @"Keywords":keywords, @"Province":city.province, @"City":city.city, @"Area":area.area}} success:^(NSDictionary *responseJSON) {
+        if (![[responseJSON objectForKey:@"isSuc"] boolValue]) {
+            GCBlockInvoke(remote, nil, [NSError errorWithDomain:[responseJSON objectForKey:@"message"] code:[[responseJSON objectForKey:@"code"]integerValue] userInfo:nil]);
+            return;
+        }
+        
         GCBlockInvoke(remote, [OpendCommunityInfo opendCommunityArrayWithJSONArray:[[responseJSON objectForKey:@"result"] objectForKey:@"Items"]], nil);
     } failed:^(NSError *error) {
         GCBlockInvoke(remote, nil, error);

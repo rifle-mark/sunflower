@@ -152,6 +152,10 @@
         url = k_API_P_USER_REST_PASSWD_BUSINESS;
     }
     [JSONServerProxy postJSONWithUrl:url parameters:@{@"phonenum":phoneNumber, @"password":passwd} success:^(NSDictionary *responseJSON) {
+        if (![[responseJSON objectForKey:@"isSuc"] boolValue]) {
+            GCBlockInvoke(remote, NO, [responseJSON objectForKey:@"message"], [NSError errorWithDomain:[responseJSON objectForKey:@"message"] code:[[responseJSON objectForKey:@"code"]integerValue] userInfo:nil]);
+            return;
+        }
         GCBlockInvoke(remote, [[responseJSON objectForKey:@"isSuc"] boolValue], [responseJSON objectForKey:@"message"], nil);
     } failed:^(NSError *error) {
         GCBlockInvoke(remote, NO, @"网络错误", error);
@@ -164,7 +168,7 @@
                           remoteBlock:(void(^)(NSArray *couponList, NSNumber *cPage, NSError *error))remote {
     [JSONServerProxy getWithUrl:[NSString stringWithFormat:@"%@%@/%@",k_API_P_COUPON_MY_QUERY,page,pageSize] success:^(NSDictionary *responseJSON) {
         if (![[responseJSON objectForKey:@"isSuc"] boolValue]) {
-            GCBlockInvoke(remote, nil, page, [NSError errorWithDomain:[responseJSON objectForKey:@"message"] code:18006001 userInfo:nil]);
+            GCBlockInvoke(remote, nil, page, [NSError errorWithDomain:[responseJSON objectForKey:@"message"] code:[[responseJSON objectForKey:@"code"]integerValue] userInfo:nil]);
             return;
         }
         GCBlockInvoke(remote, [CouponListInfo infoArrayWithJSONArray:[[responseJSON objectForKey:@"result"] objectForKey:@"Items"]], page, nil);
@@ -179,7 +183,7 @@
                             remoteBlock:(void(^)(NSArray *couponList, NSNumber *cPage,  NSError *error))remote {
     [JSONServerProxy getWithUrl:[NSString stringWithFormat:@"%@%@/%@",k_API_P_COUPON_MY_EXPIRED_QUERY,page,pageSize] success:^(NSDictionary *responseJSON) {
         if (![[responseJSON objectForKey:@"isSuc"] boolValue]) {
-            GCBlockInvoke(remote, nil, page, [NSError errorWithDomain:[responseJSON objectForKey:@"message"] code:18006001 userInfo:nil]);
+            GCBlockInvoke(remote, nil, page, [NSError errorWithDomain:[responseJSON objectForKey:@"message"] code:[[responseJSON objectForKey:@"code"]integerValue] userInfo:nil]);
             return;
         }
         GCBlockInvoke(remote, [CouponListInfo infoArrayWithJSONArray:[[responseJSON objectForKey:@"result"] objectForKey:@"Items"]], page, nil);
@@ -194,7 +198,7 @@
                          remoteBlock:(void(^)(NSArray *couponList, NSNumber *cPage,  NSError *error))remote {
     [JSONServerProxy getWithUrl:[NSString stringWithFormat:@"%@%@/%@",k_API_P_COUPON_MY_USED_QUERY,page,pageSize] success:^(NSDictionary *responseJSON) {
         if (![[responseJSON objectForKey:@"isSuc"] boolValue]) {
-            GCBlockInvoke(remote, nil, page, [NSError errorWithDomain:[responseJSON objectForKey:@"message"] code:18006001 userInfo:nil]);
+            GCBlockInvoke(remote, nil, page, [NSError errorWithDomain:[responseJSON objectForKey:@"message"] code:[[responseJSON objectForKey:@"code"]integerValue] userInfo:nil]);
             return;
         }
         GCBlockInvoke(remote, [CouponListInfo infoArrayWithJSONArray:[[responseJSON objectForKey:@"result"] objectForKey:@"Items"]], page, nil);
@@ -207,7 +211,7 @@
                       remoteBlock:(void(^)(BOOL isSuccess, NSString *msg, NSError *error))remote {
     [JSONServerProxy postJSONWithUrl:k_API_P_COUPON_MY_DELETE parameters:@{@"couponId":couponId} success:^(NSDictionary *responseJSON) {
         if (![[responseJSON objectForKey:@"isSuc"] boolValue]) {
-            GCBlockInvoke(remote, NO, [responseJSON objectForKey:@"message"], [NSError errorWithDomain:[responseJSON objectForKey:@"message"] code:18005001 userInfo:nil]);
+            GCBlockInvoke(remote, NO, [responseJSON objectForKey:@"message"], [NSError errorWithDomain:[responseJSON objectForKey:@"message"] code:[[responseJSON objectForKey:@"code"]integerValue] userInfo:nil]);
             return;
         }
         self.currentNormalUser.couponCount = @([self.currentNormalUser.couponCount integerValue] -1);
@@ -223,7 +227,7 @@
                          remoteBlock:(void(^)(BOOL isSuccess, NSString *msg, NSError *error))remote {
     [JSONServerProxy postJSONWithUrl:k_API_P_COUPON_MY_DELETE_ARRAY parameters:@{@"couponIds":couponIdArray} success:^(NSDictionary *responseJSON) {
         if (![[responseJSON objectForKey:@"isSuc"] boolValue]) {
-            GCBlockInvoke(remote, NO, [responseJSON objectForKey:@"message"], [NSError errorWithDomain:[responseJSON objectForKey:@"message"] code:18005001 userInfo:nil]);
+            GCBlockInvoke(remote, NO, [responseJSON objectForKey:@"message"], [NSError errorWithDomain:[responseJSON objectForKey:@"message"] code:[[responseJSON objectForKey:@"code"]integerValue] userInfo:nil]);
             return;
         }
         self.currentNormalUser.couponCount = @([self.currentNormalUser.couponCount integerValue]-[couponIdArray count]);
@@ -239,7 +243,7 @@
                      remoteBlock:(void(^)(BOOL isSuccess, NSString *couponCode, NSString *msg, NSError *error))remote {
     [JSONServerProxy postJSONWithUrl:k_API_P_COUPON_MY_ADD parameters:@{@"couponId":couponId} success:^(NSDictionary *responseJSON) {
         if (![[responseJSON objectForKey:@"isSuc"] boolValue]) {
-            GCBlockInvoke(remote, NO, nil, [responseJSON objectForKey:@"message"], [NSError errorWithDomain:[responseJSON objectForKey:@"message"] code:18005001 userInfo:nil]);
+            GCBlockInvoke(remote, NO, nil, [responseJSON objectForKey:@"message"], [NSError errorWithDomain:[responseJSON objectForKey:@"message"] code:[[responseJSON objectForKey:@"code"]integerValue] userInfo:nil]);
             return;
         }
         self.currentNormalUser.couponCount = @([self.currentNormalUser.couponCount integerValue] +1);
@@ -258,7 +262,7 @@
                         remoteBlock:(void(^)(NSArray *houseList, NSNumber *cPage,  NSError *error))remote {
     [JSONServerProxy getWithUrl:[NSString stringWithFormat:@"%@%@/%@",k_API_P_HOUSE_MY_LIST_QUERY,page,pageSize] success:^(NSDictionary *responseJSON) {
         if (![[responseJSON objectForKey:@"isSuc"] boolValue]) {
-            GCBlockInvoke(remote, nil, page, [NSError errorWithDomain:[responseJSON objectForKey:@"message"] code:18006001 userInfo:nil]);
+            GCBlockInvoke(remote, nil, page, [NSError errorWithDomain:[responseJSON objectForKey:@"message"] code:[[responseJSON objectForKey:@"code"]integerValue] userInfo:nil]);
             return;
         }
         GCBlockInvoke(remote, [RentListInfo infoArrayWithJSONArray:[[responseJSON objectForKey:@"result"] objectForKey:@"Items"]], page, nil);
@@ -271,7 +275,7 @@
                      remoteBlock:(void(^)(BOOL isSuccess, NSString *msg, NSError *error))remote {
     [JSONServerProxy getWithUrl:[NSString stringWithFormat:@"%@%@",k_API_P_HOUSE_MY_DELETE, houseId] success:^(NSDictionary *responseJSON) {
         if (![[responseJSON objectForKey:@"isSuc"] boolValue]) {
-            GCBlockInvoke(remote, NO, [responseJSON objectForKey:@"message"], [NSError errorWithDomain:[responseJSON objectForKey:@"message"] code:18005001 userInfo:nil]);
+            GCBlockInvoke(remote, NO, [responseJSON objectForKey:@"message"], [NSError errorWithDomain:[responseJSON objectForKey:@"message"] code:[[responseJSON objectForKey:@"code"]integerValue] userInfo:nil]);
             return;
         }
         GCBlockInvoke(remote, YES, [responseJSON objectForKey:@"message"], nil);
@@ -284,7 +288,7 @@
                         remoteBlock:(void(^)(BOOL isSuccess, NSString *msg, NSError *error))remote {
     [JSONServerProxy postJSONWithUrl:k_API_P_HOUSE_MY_DELETE_ARRAY parameters:@{@"ids":houseIdArray} success:^(NSDictionary *responseJSON) {
         if (![[responseJSON objectForKey:@"isSuc"] boolValue]) {
-            GCBlockInvoke(remote, NO, [responseJSON objectForKey:@"message"], [NSError errorWithDomain:[responseJSON objectForKey:@"message"] code:18005001 userInfo:nil]);
+            GCBlockInvoke(remote, NO, [responseJSON objectForKey:@"message"], [NSError errorWithDomain:[responseJSON objectForKey:@"message"] code:[[responseJSON objectForKey:@"code"]integerValue] userInfo:nil]);
             return;
         }
         GCBlockInvoke(remote, YES, [responseJSON objectForKey:@"message"], nil);
@@ -468,6 +472,7 @@
     [JSONServerProxy getWithUrl:k_API_P_USER_POINT_RULE_QUERY success:^(NSDictionary *responseJSON) {
         if (![[responseJSON objectForKey:@"isSuc"] boolValue]) {
             GCBlockInvoke(remote, nil, [NSError errorWithDomain:[responseJSON objectForKey:@"message"] code:[[responseJSON objectForKey:@"code"] integerValue] userInfo:nil]);
+            return;
         }
         GCBlockInvoke(remote, [PointRulerInfo infoArrayWithJSONArray:[responseJSON objectForKey:@"result"]], nil);
     } failed:^(NSError *error) {
@@ -490,7 +495,7 @@
             [[NSNotificationCenter defaultCenter] postNotificationName:(type==Business?k_NOTIFY_NAME_BUSINESS_USER_LOGIN:k_NOTIFY_NAME_PROPERTY_USER_LOGIN) object:nil];
         }
         else {
-            GCBlockInvoke(remote, nil, [NSError errorWithDomain:[responseJSON objectForKey:@"message"] code:1802003 userInfo:nil]);
+            GCBlockInvoke(remote, nil, [NSError errorWithDomain:[responseJSON objectForKey:@"message"] code:[[responseJSON objectForKey:@"code"]integerValue] userInfo:nil]);
         }
     } failed:^(NSError *error) {
         
@@ -513,7 +518,7 @@
             
         }
         else {
-            GCBlockInvoke(remote, nil, [NSError errorWithDomain:[responseJSON objectForKey:@"message"] code:1801002 userInfo:nil]);
+            GCBlockInvoke(remote, nil, [NSError errorWithDomain:[responseJSON objectForKey:@"message"] code:[[responseJSON objectForKey:@"code"]integerValue] userInfo:nil]);
         }
     } failed:^(NSError *error) {
         GCBlockInvoke(remote, nil, error);
@@ -548,7 +553,7 @@
                         remoteBlock:(void(^)(BOOL isSuccess, NSError *error))remote {
     [JSONServerProxy postJSONWithUrl:k_API_P_USER_ADMINE_INFO_UPDATE parameters:@{@"userInfo":@{@"RealName":nickName,@"Avatar":avatar,@"Password":@""}} success:^(NSDictionary *responseJSON) {
         if (![[responseJSON objectForKey:@"isSuc"] boolValue]) {
-            GCBlockInvoke(remote, NO, [NSError errorWithDomain:[responseJSON objectForKey:@"message"] code:1801001 userInfo:nil]);
+            GCBlockInvoke(remote, NO, [NSError errorWithDomain:[responseJSON objectForKey:@"message"] code:[[responseJSON objectForKey:@"code"]integerValue] userInfo:nil]);
             return;
         }
         GCBlockInvoke(remote, YES, nil);
@@ -561,7 +566,7 @@
                           remoteBlock:(void(^)(NSString *code, NSString *msg, NSError *error))remote {
     [JSONServerProxy postJSONWithUrl:k_API_P_CHECKCODE_QUERY parameters:@{@"phonenum":phoneNumber} success:^(NSDictionary *responseJSON) {
         if (![[responseJSON objectForKey:@"isSuc"] boolValue]) {
-            GCBlockInvoke(remote, nil, nil, [NSError errorWithDomain:[responseJSON objectForKey:@"message"] code:1801001 userInfo:nil]);
+            GCBlockInvoke(remote, nil, nil, [NSError errorWithDomain:[responseJSON objectForKey:@"message"] code:[[responseJSON objectForKey:@"code"]integerValue] userInfo:nil]);
             return;
         }
         GCBlockInvoke(remote, [responseJSON objectForKey:@"result"], [responseJSON objectForKey:@"message"], nil);
@@ -579,7 +584,7 @@
                            remoteBlock:(void(^)(BOOL isSuccess, NSError *error))remote {
     [JSONServerProxy postJSONWithUrl:k_API_P_USER_APPLY_PROPERTY parameters:@{@"apply":@{@"Province":province,@"City":city,@"Address":address,@"CommunityName":communityName,@"TrueName":name,@"Tel":tel}} success:^(NSDictionary *responseJSON) {
         if (![[responseJSON objectForKey:@"isSuc"] boolValue]) {
-            GCBlockInvoke(remote, NO, [NSError errorWithDomain:[responseJSON objectForKey:@"message"] code:1801010 userInfo:nil]);
+            GCBlockInvoke(remote, NO, [NSError errorWithDomain:[responseJSON objectForKey:@"message"] code:[[responseJSON objectForKey:@"code"]integerValue] userInfo:nil]);
             return;
         }
         GCBlockInvoke(remote, YES, nil);
@@ -594,7 +599,7 @@
                            remoteBlock:(void(^)(ShopInfo *shop, NSArray *shopStoreList, NSError *error))remote {
     [JSONServerProxy getWithUrl:k_API_P_SHOP_INFO success:^(NSDictionary *responseJSON) {
         if (![[responseJSON objectForKey:@"isSuc"] boolValue]) {
-            GCBlockInvoke(remote, nil, nil, [NSError errorWithDomain:[responseJSON objectForKey:@"message"] code:1801010 userInfo:nil]);
+            GCBlockInvoke(remote, nil, nil, [NSError errorWithDomain:[responseJSON objectForKey:@"message"] code:[[responseJSON objectForKey:@"code"]integerValue] userInfo:nil]);
             return;
         }
         ShopInfo *shop = [[ShopInfo alloc] init];
@@ -613,7 +618,7 @@
                         remoteBlock:(void(^)(BOOL isSuccess, NSString *msg, NSError *error))remote {
     [JSONServerProxy postJSONWithUrl:k_API_P_SHOP_INFO_UPDATE parameters:@{@"seller":@{@"Name":[MKWStringHelper isNilEmptyOrBlankString:name]?@"":name,@"Tel":[MKWStringHelper isNilEmptyOrBlankString:tel]?@"":tel,@"Address":[MKWStringHelper isNilEmptyOrBlankString:address]?@"":address,@"Logo":[MKWStringHelper isNilEmptyOrBlankString:logo]?@"":logo,@"Description":[MKWStringHelper isNilEmptyOrBlankString:desc]?@"":desc}} success:^(NSDictionary *responseJSON) {
         if (![[responseJSON objectForKey:@"isSuc"] boolValue]) {
-            GCBlockInvoke(remote, NO, @"保存失败", [NSError errorWithDomain:[responseJSON objectForKey:@"message"] code:1801010 userInfo:nil]);
+            GCBlockInvoke(remote, NO, @"保存失败", [NSError errorWithDomain:[responseJSON objectForKey:@"message"] code:[[responseJSON objectForKey:@"code"]integerValue] userInfo:nil]);
             return;
         }
         GCBlockInvoke(remote, YES, @"保存成功", nil);
@@ -628,7 +633,7 @@
                       remoteBlock:(void(^)(BOOL isSuccess, NSNumber *shopId, NSString *msg, NSError *error))remote {
     [JSONServerProxy postJSONWithUrl:k_API_P_SHOP_ADD_STORE parameters:@{@"sellerShop":@{@"Name":name, @"Tel":tel, @"Address":address}} success:^(NSDictionary *responseJSON) {
         if (![[responseJSON objectForKey:@"isSuc"] boolValue]) {
-            GCBlockInvoke(remote, NO, @-1, @"添加失败", [NSError errorWithDomain:[responseJSON objectForKey:@"message"] code:1801012 userInfo:nil]);
+            GCBlockInvoke(remote, NO, @-1, @"添加失败", [NSError errorWithDomain:[responseJSON objectForKey:@"message"] code:[[responseJSON objectForKey:@"code"]integerValue] userInfo:nil]);
             return;
         }
         GCBlockInvoke(remote, YES, [responseJSON objectForKey:@"result"], @"添加成功", nil);
@@ -644,7 +649,7 @@
                            remoteBlock:(void(^)(BOOL isSuccess, NSString *msg, NSError *error))remote {
     [JSONServerProxy postJSONWithUrl:k_API_P_SHOP_UPDATE_STORE parameters:@{@"sellerShop":@{@"ShopId":shopId, @"Name":name, @"Tel":tel, @"Address":address}} success:^(NSDictionary *responseJSON) {
         if (![[responseJSON objectForKey:@"isSuc"] boolValue]) {
-            GCBlockInvoke(remote, NO, @"保存失败", [NSError errorWithDomain:[responseJSON objectForKey:@"message"] code:1801013 userInfo:nil]);
+            GCBlockInvoke(remote, NO, @"保存失败", [NSError errorWithDomain:[responseJSON objectForKey:@"message"] code:[[responseJSON objectForKey:@"code"]integerValue] userInfo:nil]);
             return;
         }
         GCBlockInvoke(remote, YES, @"保存成功", nil);
@@ -657,7 +662,7 @@
                            remoteBlock:(void(^)(BOOL isSuccess, NSString *msg, NSError *error))remote {
     [JSONServerProxy postJSONWithUrl:k_API_P_SHOP_DELETE_STORE parameters:@{@"shopid":shopId} success:^(NSDictionary *responseJSON) {
         if (![[responseJSON objectForKey:@"isSuc"] boolValue]) {
-            GCBlockInvoke(remote, NO, @"删除失败", [NSError errorWithDomain:[responseJSON objectForKey:@"message"] code:1801014 userInfo:nil]);
+            GCBlockInvoke(remote, NO, @"删除失败", [NSError errorWithDomain:[responseJSON objectForKey:@"message"] code:[[responseJSON objectForKey:@"code"]integerValue] userInfo:nil]);
             return;
         }
         GCBlockInvoke(remote, YES, @"删除成功", nil);
@@ -674,7 +679,7 @@
                            remoteBlock:(void(^)(NSArray *couponList, NSNumber *cPage, NSError *error))remote {
     [JSONServerProxy getWithUrl:[NSString stringWithFormat:@"%@%@/%@", k_API_P_SHOP_COUPON_QUERY, page, pageSize] success:^(NSDictionary *responseJSON) {
         if (![[responseJSON objectForKey:@"isSuc"] boolValue]) {
-            GCBlockInvoke(remote, nil, page, [NSError errorWithDomain:[responseJSON objectForKey:@"message"] code:1801015 userInfo:nil]);
+            GCBlockInvoke(remote, nil, page, [NSError errorWithDomain:[responseJSON objectForKey:@"message"] code:[[responseJSON objectForKey:@"code"]integerValue] userInfo:nil]);
             return;
         }
         GCBlockInvoke(remote, [CouponListInfo infoArrayWithJSONArray:[[responseJSON objectForKey:@"result"] objectForKey:@"Items"]], page, nil);
@@ -691,7 +696,7 @@
                    remoteBlock:(void(^)(BOOL isSuccess, NSString *msg, NSError *error))remote {
     [JSONServerProxy postJSONWithUrl:k_API_P_SHOP_COUPON_ADD parameters:@{@"coupon":@{@"Name":name,@"SubTitle":them,@"Image":imgurl,@"EndDate":enddate,@"Description":detail}} success:^(NSDictionary *responseJSON) {
         if (![[responseJSON objectForKey:@"isSuc"] boolValue]) {
-            GCBlockInvoke(remote, NO, [responseJSON objectForKey:@"message"], [NSError errorWithDomain:[responseJSON objectForKey:@"message"] code:1801016 userInfo:nil]);
+            GCBlockInvoke(remote, NO, [responseJSON objectForKey:@"message"], [NSError errorWithDomain:[responseJSON objectForKey:@"message"] code:[[responseJSON objectForKey:@"code"]integerValue] userInfo:nil]);
             return;
         }
         GCBlockInvoke(remote, YES, [responseJSON objectForKey:@"message"], nil);
@@ -709,7 +714,7 @@
                           remoteBlock:(void(^)(BOOL isSuccess, NSString *msg, NSError *error))remote {
     [JSONServerProxy postJSONWithUrl:k_API_P_SHOP_COUPON_UPDATE parameters:@{@"coupon":@{@"Id":couponId, @"Name":name,@"SubTitle":them,@"Image":imgurl,@"EndDate":enddate,@"Description":detail}} success:^(NSDictionary *responseJSON) {
         if (![[responseJSON objectForKey:@"isSuc"] boolValue]) {
-            GCBlockInvoke(remote, NO, [responseJSON objectForKey:@"message"], [NSError errorWithDomain:[responseJSON objectForKey:@"message"] code:1801017 userInfo:nil]);
+            GCBlockInvoke(remote, NO, [responseJSON objectForKey:@"message"], [NSError errorWithDomain:[responseJSON objectForKey:@"message"] code:[[responseJSON objectForKey:@"code"]integerValue] userInfo:nil]);
             return;
         }
         GCBlockInvoke(remote, YES, [responseJSON objectForKey:@"message"], nil);
@@ -722,7 +727,7 @@
                           remoteBlock:(void(^)(BOOL isSuccess, NSString *msg, NSError *error))remote {
     [JSONServerProxy postJSONWithUrl:k_API_P_SHOP_COUPON_DELETE parameters:@{@"Id":couponId} success:^(NSDictionary *responseJSON) {
         if (![[responseJSON objectForKey:@"isSuc"] boolValue]) {
-            GCBlockInvoke(remote, NO, [responseJSON objectForKey:@"message"], [NSError errorWithDomain:[responseJSON objectForKey:@"message"] code:1801018 userInfo:nil]);
+            GCBlockInvoke(remote, NO, [responseJSON objectForKey:@"message"], [NSError errorWithDomain:[responseJSON objectForKey:@"message"] code:[[responseJSON objectForKey:@"code"]integerValue] userInfo:nil]);
             return;
         }
         GCBlockInvoke(remote, YES, [responseJSON objectForKey:@"message"], nil);
@@ -738,7 +743,7 @@
                      remoteBlock:(void(^)(NSArray *orderList, NSNumber *cPage, NSError *error))remote {
     [JSONServerProxy postJSONWithUrl:k_API_P_SHOP_COUPON_USER_QUERY parameters:@{@"pageindex":page,@"pagesize":pageSize,@"key":key} success:^(NSDictionary *responseJSON) {
         if (![[responseJSON objectForKey:@"isSuc"] boolValue]) {
-            GCBlockInvoke(remote, nil, page, [NSError errorWithDomain:[responseJSON objectForKey:@"message"] code:1801019 userInfo:nil]);
+            GCBlockInvoke(remote, nil, page, [NSError errorWithDomain:[responseJSON objectForKey:@"message"] code:[[responseJSON objectForKey:@"code"]integerValue] userInfo:nil]);
             return;
         }
         GCBlockInvoke(remote, [CouponUserInfo infoArrayWithJSONArray:[[responseJSON objectForKey:@"result"] objectForKey:@"Items"]], page, nil);
@@ -751,7 +756,7 @@
                     remoteBlock:(void(^)(BOOL isSuccess, NSString *msg, NSError *error))remote {
     [JSONServerProxy postJSONWithUrl:k_API_P_SHOP_COUPON_USER_USE parameters:@{@"Id":orderId} success:^(NSDictionary *responseJSON) {
         if (![[responseJSON objectForKey:@"isSuc"] boolValue]) {
-            GCBlockInvoke(remote, NO, [responseJSON objectForKey:@"message"], [NSError errorWithDomain:[responseJSON objectForKey:@"message"] code:1801020 userInfo:nil]);
+            GCBlockInvoke(remote, NO, [responseJSON objectForKey:@"message"], [NSError errorWithDomain:[responseJSON objectForKey:@"message"] code:[[responseJSON objectForKey:@"code"]integerValue] userInfo:nil]);
             return;
         }
         GCBlockInvoke(remote, YES, [responseJSON objectForKey:@"message"], nil);

@@ -149,40 +149,6 @@ typedef NS_ENUM(NSUInteger, UserRegisterType) {
                         remoteBlock:(void(^)(BOOL isSuccess, NSError *error))remote;
 
 
-- (void)asyncAddCommunityNoticeWithCommunityId:(NSNumber *)communityId
-                                         title:(NSString *)title
-                                       content:(NSString *)content
-                                         image:(NSString *)imageUrl
-                                   remoteBlock:(void(^)(BOOL isSuccess, NSError *error))remote;
-
-- (void)asyncUpdateCommuntiyNoticeWithNoticeId:(NSNumber *)noticeId
-                                   communityId:(NSNumber *)communityId
-                                         title:(NSString *)title
-                                       content:(NSString *)content
-                                         image:(NSString *)imageUrl
-                                   remoteBlock:(void(^)(BOOL isSuccess, NSError *error))remote;
-
-- (void)asyncDeleteCommunityNoticeWithNoticeId:(NSNumber *)noticeId
-                                   remoteBlock:(void(^)(BOOL isSuccess, NSError *error))remote;
-
-- (void)asyncAddHousekeeperWithCommunityId:(NSNumber *)communityId
-                                      name:(NSString *)name
-                                       job:(NSString *)job
-                                       tel:(NSString *)tel
-                                    avatar:(NSString *)avatar
-                               remoteBlock:(void(^)(BOOL isSuccess, NSError *error))remote;
-
-- (void)asyncUpdateHousekeeperWithId:(NSNumber *)keeperId
-                         communityId:(NSNumber *)communityId
-                                name:(NSString *)name
-                                 job:(NSString *)job
-                                 tel:(NSString *)tel
-                              avatar:(NSString *)avatar
-                         remoteBlock:(void(^)(BOOL isSuccess, NSError *error))remote;
-
-- (void)asyncDeleteHousekeeperWithId:(NSNumber *)keeperId
-                         remoteBlock:(void(^)(BOOL isSuccess, NSError *error))remote;
-
 #pragma mark - Business
 
 - (void)businessUserRegistWithName:(NSString *)name
