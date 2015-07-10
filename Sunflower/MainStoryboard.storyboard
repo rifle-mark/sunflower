@@ -6822,6 +6822,23 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="aP4-w7-hRa">
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="64" id="RDD-Bi-YhO"/>
+                                </constraints>
+                                <variation key="default">
+                                    <mask key="constraints">
+                                        <exclude reference="RDD-Bi-YhO"/>
+                                    </mask>
+                                </variation>
+                                <variation key="heightClass=regular-widthClass=compact">
+                                    <mask key="constraints">
+                                        <include reference="RDD-Bi-YhO"/>
+                                    </mask>
+                                </variation>
+                            </view>
                             <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="wmO-H9-7E3">
                                 <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
                                 <subviews>
@@ -6862,37 +6879,48 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
+                            <constraint firstAttribute="trailingMargin" secondItem="aP4-w7-hRa" secondAttribute="trailing" id="DxA-7y-Fct"/>
                             <constraint firstItem="wmO-H9-7E3" firstAttribute="top" secondItem="540-YA-24m" secondAttribute="bottom" id="XgV-wK-65p"/>
                             <constraint firstAttribute="width" secondItem="x56-aT-bqd" secondAttribute="width" id="evY-gj-Nf4"/>
                             <constraint firstItem="wmO-H9-7E3" firstAttribute="leading" secondItem="GhM-M5-82U" secondAttribute="leading" id="kA0-wU-wGw"/>
                             <constraint firstItem="Nf6-oz-RpK" firstAttribute="top" secondItem="wmO-H9-7E3" secondAttribute="bottom" id="rJu-ZQ-8bD"/>
+                            <constraint firstItem="aP4-w7-hRa" firstAttribute="top" secondItem="GhM-M5-82U" secondAttribute="topMargin" id="s6r-m9-kwh"/>
                             <constraint firstAttribute="trailing" secondItem="wmO-H9-7E3" secondAttribute="trailing" id="ulF-0A-vlb"/>
+                            <constraint firstItem="aP4-w7-hRa" firstAttribute="leading" secondItem="GhM-M5-82U" secondAttribute="leadingMargin" id="wD3-jN-8Al"/>
                             <constraint firstAttribute="height" secondItem="x56-aT-bqd" secondAttribute="height" id="yiA-AW-iv8"/>
                         </constraints>
                         <variation key="default">
                             <mask key="subviews">
+                                <exclude reference="aP4-w7-hRa"/>
                                 <exclude reference="wmO-H9-7E3"/>
                             </mask>
                             <mask key="constraints">
-                                <exclude reference="rJu-ZQ-8bD"/>
                                 <exclude reference="XgV-wK-65p"/>
                                 <exclude reference="kA0-wU-wGw"/>
                                 <exclude reference="ulF-0A-vlb"/>
                                 <exclude reference="evY-gj-Nf4"/>
                                 <exclude reference="yiA-AW-iv8"/>
+                                <exclude reference="DxA-7y-Fct"/>
+                                <exclude reference="s6r-m9-kwh"/>
+                                <exclude reference="wD3-jN-8Al"/>
+                                <exclude reference="rJu-ZQ-8bD"/>
                             </mask>
                         </variation>
                         <variation key="heightClass=regular-widthClass=compact">
                             <mask key="subviews">
+                                <include reference="aP4-w7-hRa"/>
                                 <include reference="wmO-H9-7E3"/>
                             </mask>
                             <mask key="constraints">
-                                <include reference="rJu-ZQ-8bD"/>
                                 <include reference="XgV-wK-65p"/>
                                 <include reference="kA0-wU-wGw"/>
                                 <include reference="ulF-0A-vlb"/>
                                 <include reference="evY-gj-Nf4"/>
                                 <include reference="yiA-AW-iv8"/>
+                                <include reference="DxA-7y-Fct"/>
+                                <include reference="s6r-m9-kwh"/>
+                                <include reference="wD3-jN-8Al"/>
+                                <include reference="rJu-ZQ-8bD"/>
                             </mask>
                         </variation>
                     </view>

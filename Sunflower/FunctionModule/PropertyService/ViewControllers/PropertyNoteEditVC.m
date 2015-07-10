@@ -88,6 +88,7 @@
 - (void)_loadEditer {
     self.imageV = ({
         UIImageView *v = [[UIImageView alloc] init];
+        v.image = [UIImage imageNamed:@"default_top_width"];
         v;
     });
     if (self.note) {

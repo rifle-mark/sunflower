@@ -34,6 +34,7 @@
 
 @property(nonatomic,strong)CommunityInfo        *community;
 @property(nonatomic,strong)CommunityNoteInfo    *latestNoteInfo;
+@property(nonatomic,strong)NSDictionary         *weatherInfoDic;
 
 @end
 
@@ -58,14 +59,16 @@
     [self _setupObserver];
     if ([[CommonModel sharedModel] currentCommunityId]) {
         [self _refreshCommunityInfo];
-        [self _refreshLatestNotify];
+        
     }
 }
 
 -(void)viewWillAppear:(BOOL)animated {
     [self.navigationController setNavigationBarHidden:YES animated:YES];
     [super viewWillAppear:animated];
-    
+    if ([[CommonModel sharedModel] currentCommunityId]) {
+        [self _refreshLatestNotify];
+    }
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
@@ -249,6 +252,15 @@
             make.width.equalTo(@100);
         }];
     }
+    if (![self.weatherL superview]) {
+        [self.communityBgV addSubview:self.weatherL];
+        [self.weatherL mas_makeConstraints:^(MASConstraintMaker *make) {
+            _strong(self);
+            make.top.bottom.equalTo(self.checkInL);
+            make.left.equalTo(self.communityBgV).with.offset(15);
+            make.right.equalTo(self.checkInL.mas_left);
+        }];
+    }
 }
 
 #pragma mark - data
@@ -273,6 +285,9 @@
     
     [self startObserveObject:self forKeyPath:@"community" usingBlock:^(NSObject *target, NSString *keyPath, NSDictionary *change) {
         _strong(self);
+        if (!self.community) {
+            return;
+        }
         if (self.communityNameV.superview) {
             NSMutableParagraphStyle *ps = [[NSMutableParagraphStyle alloc] init];
             NSDictionary *att = @{NSFontAttributeName:self.communityNameL.font,
@@ -287,12 +302,20 @@
         self.communityNameL.text = self.community.name;
         
         self.checkInL.text = [NSString stringWithFormat:@"已有%@人入住", self.community.checkInUserCount];
+        [self _refreshWeatherInfo];
     }];
     
     [self startObserveObject:self forKeyPath:@"latestNoteInfo" usingBlock:^(NSObject *target, NSString *keyPath, NSDictionary *change) {
         _strong(self);
         NSString *title = self.latestNoteInfo ? self.latestNoteInfo.title : @"暂无最新公告";
         [self.latestNotifyB setTitle:title forState:UIControlStateNormal];
+    }];
+    
+    [self startObserveObject:self forKeyPath:@"weatherInfoDic" usingBlock:^(NSObject *target, NSString *keyPath, NSDictionary *change) {
+        _strong(self);
+        if (self.weatherL && [self.weatherInfoDic count] > 0 && ![MKWStringHelper isNilEmptyOrBlankString:[self.weatherInfoDic objectForKey:@"weather"]] && ![MKWStringHelper isNilEmptyOrBlankString:[self.weatherInfoDic objectForKey:@"l_tmp"]] && ![MKWStringHelper isNilEmptyOrBlankString:[self.weatherInfoDic objectForKey:@"h_tmp"]]) {
+            self.weatherL.text = [NSString stringWithFormat:@"%@ %@℃ ~ %@℃", [self.weatherInfoDic objectForKey:@"weather"], [self.weatherInfoDic objectForKey:@"l_tmp"], [self.weatherInfoDic objectForKey:@"h_tmp"]];
+        }
     }];
 }
 
@@ -314,6 +337,16 @@
     [[PropertyServiceModel sharedModel] asyncCommunityNoteListWithCommunityId:[[CommonModel sharedModel] currentCommunityId] pageIndex:@1 pageSize:@1 cacheBlock:nil remoteBlock:^(NSArray *list, NSNumber *cPage, NSError *error) {
         _strong(self);
         self.latestNoteInfo = !error && [list count] > 0 ? list[0] : nil;
+    }];
+}
+
+- (void)_refreshWeatherInfo {
+    _weak(self);
+    [MainModel asyncGetWeatherInfoWithCityName:[CommonModel sharedModel].currentCity remoteBlock:^(NSDictionary *info, NSError *error) {
+        _strong(self);
+        if (!error) {
+            self.weatherInfoDic = info;
+        }
     }];
 }
 

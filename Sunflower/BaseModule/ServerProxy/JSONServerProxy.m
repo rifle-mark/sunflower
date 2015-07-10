@@ -71,13 +71,13 @@
     }];
 }
 
-+ (void)getWithUrl:(NSString*)urlStr success:(void(^)(NSDictionary *responseJSON))success failed:(void(^)(NSError *error))failed {
++ (void)getWithUrl:(NSString*)urlStr params:(NSDictionary *)param success:(void(^)(NSDictionary *responseJSON))success failed:(void(^)(NSError *error))failed {
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
     // 设置返回格式：
     manager.responseSerializer = [AFJSONResponseSerializer serializer];
     
     [JSONServerProxy prepareRequestHeader:manager];
-    [manager GET:[APIGenerator apiAddressWithSuffix:urlStr] parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+    [manager GET:[APIGenerator apiAddressWithSuffix:urlStr] parameters:param success:^(AFHTTPRequestOperation *operation, id responseObject) {
         GCBlockInvoke(success, responseObject);
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         GCAlertView *alert = [[GCAlertView alloc] initWithTitle:@"网络异常" andMessage:@"请检查网络连接"];

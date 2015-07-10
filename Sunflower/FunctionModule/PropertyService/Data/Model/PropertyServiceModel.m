@@ -29,7 +29,7 @@
 - (void)asyncCommunityWithId:(NSNumber *)communityId cacheBlock:(void(^)(OpendCommunityInfo *community))cache remoteBlock:(void(^)(OpendCommunityInfo *community, NSError *error))remote {
     GCBlockInvoke(cache, [self localCommunityWithId:communityId]);
     
-    [JSONServerProxy getWithUrl:[NSString stringWithFormat:@"%@%@", k_API_COMMUNITY_QUERY_BY_ID, communityId] success:^(NSDictionary *responseJSON) {
+    [JSONServerProxy getWithUrl:[NSString stringWithFormat:@"%@%@", k_API_COMMUNITY_QUERY_BY_ID, communityId] params:nil success:^(NSDictionary *responseJSON) {
         GCBlockInvoke(remote, [OpendCommunityInfo opendCommunityWithJSONDic:[responseJSON objectForKey:@"result"]], nil);
     } failed:^(NSError *error) {
         GCBlockInvoke(remote, nil, error);
@@ -59,7 +59,7 @@
                                      pageSize:(NSNumber *)pageSize
                                    cacheBlock:(void (^)(NSArray *))cache
                                   remoteBlock:(void (^)(NSArray *, NSNumber *cPage, NSError *))remote {
-    [JSONServerProxy getWithUrl:[NSString stringWithFormat:@"%@%@/%@/%@", k_API_C_NOTE_QUERY_BY_ID, page, pageSize, communityId] success:^(NSDictionary *responseJSON) {
+    [JSONServerProxy getWithUrl:[NSString stringWithFormat:@"%@%@/%@/%@", k_API_C_NOTE_QUERY_BY_ID, page, pageSize, communityId] params:nil success:^(NSDictionary *responseJSON) {
         if (![[responseJSON objectForKey:@"isSuc"] boolValue]) {
             GCBlockInvoke(remote, nil, page, [NSError errorWithDomain:[responseJSON objectForKey:@"message"] code:[[responseJSON objectForKey:@"code"] integerValue] userInfo:nil]);
             return;
@@ -91,7 +91,7 @@
                                pageSize:(NSNumber *)pageSize
                              cacheBlock:(void(^)(NSArray *list, NSNumber *page))cache
                             remoteBlock:(void(^)(NSArray *list, NSNumber *page, NSError *error))remote {
-    [JSONServerProxy getWithUrl:[NSString stringWithFormat:@"%@%@/%@/%@", k_API_C_GUANJIA_QUERY_BY_ID, page, pageSize, communityId] success:^(NSDictionary *responseJSON) {
+    [JSONServerProxy getWithUrl:[NSString stringWithFormat:@"%@%@/%@/%@", k_API_C_GUANJIA_QUERY_BY_ID, page, pageSize, communityId] params:nil success:^(NSDictionary *responseJSON) {
         if (![[responseJSON objectForKey:@"isSuc"] boolValue]) {
             GCBlockInvoke(remote, nil, page, [NSError errorWithDomain:[responseJSON objectForKey:@"message"] code:[[responseJSON objectForKey:@"code"] integerValue] userInfo:nil]);
             return;
@@ -103,7 +103,7 @@
 }
 - (void)asyncUpGuanJiaWithGuanjiaId:(NSNumber *)guanjiaId
                         remoteBlock:(void(^)(BOOL isSuccess, NSString *msg, NSError *error))remote {
-    [JSONServerProxy getWithUrl:[NSString stringWithFormat:@"%@%@",k_API_C_GUANJIA_UP_BY_ID, guanjiaId] success:^(NSDictionary *responseJSON) {
+    [JSONServerProxy getWithUrl:[NSString stringWithFormat:@"%@%@",k_API_C_GUANJIA_UP_BY_ID, guanjiaId] params:nil success:^(NSDictionary *responseJSON) {
         GCBlockInvoke(remote, [[responseJSON objectForKey:@"isSuc"] boolValue], [responseJSON objectForKey:@"message"], nil);
     } failed:^(NSError *error) {
         GCBlockInvoke(remote, NO, @"操作失败", error);
@@ -112,7 +112,7 @@
 
 - (void)asyncDeleteGuanJiaWithGuanJiaId:(NSNumber *)guanjiaId
                             remoteBlock:(void(^)(BOOL isSuccess, NSError *error))remote {
-    [JSONServerProxy getWithUrl:[NSString stringWithFormat:@"%@%@", k_API_C_GUANJIA_DELETE, guanjiaId] success:^(NSDictionary *responseJSON) {
+    [JSONServerProxy getWithUrl:[NSString stringWithFormat:@"%@%@", k_API_C_GUANJIA_DELETE, guanjiaId] params:nil success:^(NSDictionary *responseJSON) {
         if (![[responseJSON objectForKey:@"isSuc"] boolValue]) {
             GCBlockInvoke(remote, NO, [NSError errorWithDomain:[responseJSON objectForKey:@"message"] code:[[responseJSON objectForKey:@"code"] integerValue] userInfo:nil]);
             return;
@@ -181,7 +181,7 @@
                                detail:(NSString *)detail
                                 image:(NSString *)imgurl
                           remoteBlock:(void(^)(BOOL isSuccess, NSString *msg, NSError *error))remote {
-    [JSONServerProxy postJSONWithUrl:k_API_C_NOTE_UPDATE parameters:@{@"noteice":@{@"NoticeId":noteId,@"CommunityId":communityId, @"Image":imgurl, @"Content":detail, @"Title":title}} success:^(NSDictionary *responseJSON) {
+    [JSONServerProxy postJSONWithUrl:k_API_C_NOTE_UPDATE parameters:@{@"notice":@{@"NoticeId":noteId,@"CommunityId":communityId, @"Image":imgurl, @"Content":detail, @"Title":title}} success:^(NSDictionary *responseJSON) {
         if (![[responseJSON objectForKey:@"isSuc"] boolValue]) {
             GCBlockInvoke(remote, NO, [responseJSON objectForKey:@"message"], [[NSError alloc] initWithDomain:[responseJSON objectForKey:@"message"] code:1008030 userInfo:nil]);
             return;
@@ -210,7 +210,7 @@
 
 - (void)asyncDeleteNoteInfoWithNoteId:(NSNumber *)noteId
                           remoteBlock:(void(^)(BOOL isSuccess, NSString *msg, NSError *error))remote {
-    [JSONServerProxy getWithUrl:[NSString stringWithFormat:@"%@%@",k_API_C_NOTE_DELETE,noteId] success:^(NSDictionary *responseJSON) {
+    [JSONServerProxy getWithUrl:[NSString stringWithFormat:@"%@%@",k_API_C_NOTE_DELETE,noteId] params:nil success:^(NSDictionary *responseJSON) {
         if (![[responseJSON objectForKey:@"isSuc"] boolValue]) {
             GCBlockInvoke(remote, NO, [responseJSON objectForKey:@"message"], [[NSError alloc] initWithDomain:[responseJSON objectForKey:@"message"] code:1008030 userInfo:nil]);
             return;
@@ -246,7 +246,7 @@
         return;
     }
     
-    [JSONServerProxy getWithUrl:url success:^(NSDictionary *responseJSON) {
+    [JSONServerProxy getWithUrl:url params:nil success:^(NSDictionary *responseJSON) {
         if (![[responseJSON objectForKey:@"isSuc"] boolValue]) {
             GCBlockInvoke(remote, nil, [[NSError alloc] initWithDomain:[responseJSON objectForKey:@"message"] code:[[responseJSON objectForKey:@"code"] integerValue] userInfo:nil]);
             return;
@@ -346,7 +346,7 @@
 
 - (void)asyncNoteDetailWithNoteId:(NSNumber *)noteId
                       remoteblock:(void(^)(CommunityNoteInfo *note, NSError *error))remote {
-    [JSONServerProxy getWithUrl:[NSString stringWithFormat:@"%@%@", k_API_C_NOTE_DETAIL, noteId] success:^(NSDictionary *responseJSON) {
+    [JSONServerProxy getWithUrl:[NSString stringWithFormat:@"%@%@", k_API_C_NOTE_DETAIL, noteId] params:nil success:^(NSDictionary *responseJSON) {
         if (![[responseJSON objectForKey:@"isSuc"] boolValue]) {
             GCBlockInvoke(remote, nil, [NSError errorWithDomain:[responseJSON objectForKey:@"message"] code:[[responseJSON objectForKey:@"code"] integerValue] userInfo:nil]);
             return;

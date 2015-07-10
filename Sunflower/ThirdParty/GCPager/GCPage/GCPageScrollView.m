@@ -104,7 +104,7 @@
 
 @interface GCPageScrollView () <UIScrollViewDelegate>
 
-@property (nonatomic, copy) NSUInteger (^blockForPageViewCount)(GCPageScrollView* view);
+
 @property (nonatomic, copy) UIView* (^blockForPageViewForDisplay)(GCPageScrollView* view, NSUInteger index);
 @property (nonatomic, copy) void (^blockForPageViewDidEndDisplay)(GCPageScrollView* view, NSUInteger index, UIView* displayView);
 @property (nonatomic, copy) void (^blockForPageViewDidUndisplay)(GCPageScrollView* view, NSUInteger index, UIView* undisplayView);

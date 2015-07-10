@@ -140,6 +140,10 @@
             if (self.isDidAppear)
                 self.currentIndex = pageView.currentPageIndex;
         }];
+        [p withLeftBorderAction:^{
+            _strong(self);
+            [self performSegueWithIdentifier:@"UnSegue_PictureShow" sender:nil];
+        }];
         p;
     });
 }

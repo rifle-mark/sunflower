@@ -70,7 +70,7 @@
                      cacheBlock:(void(^)(CouponInfo *info, NSArray *shopList))cache
                     remoteBlock:(void(^)(CouponInfo *info, NSArray *shopList, NSError *error))remote {
     GCBlockInvoke(cache, [self localCouponWithCouponId:couponId], [self localShopListWithCouponId:couponId]);
-    [JSONServerProxy getWithUrl:[NSString stringWithFormat:@"%@%@", k_API_L_COUPON_DETAIL_QUERY,couponId] success:^(NSDictionary *responseJSON) {
+    [JSONServerProxy getWithUrl:[NSString stringWithFormat:@"%@%@", k_API_L_COUPON_DETAIL_QUERY,couponId] params:nil success:^(NSDictionary *responseJSON) {
         if (![[responseJSON objectForKey:@"isSuc"] boolValue]) {
             GCBlockInvoke(remote, nil, nil, [NSError errorWithDomain:[responseJSON objectForKey:@"message"] code:[[responseJSON objectForKey:@"code"]integerValue] userInfo:nil]);
             return;
@@ -278,7 +278,7 @@
                                 cacheBlock:(void(^)(NSArray *list))cache
                                remoteBlock:(void(^)(NSArray *list, NSInteger page, NSError *error))remote {
     GCBlockInvoke(cache, [self localLifeServerListWithCommunityId:communityId]);
-    [JSONServerProxy getWithUrl:[NSString stringWithFormat:@"%@%@/%@/%@", k_API_L_SERVICE_LIST_QUERY,communityId,page,pageSize] success:^(NSDictionary *responseJSON) {
+    [JSONServerProxy getWithUrl:[NSString stringWithFormat:@"%@%@/%@/%@", k_API_L_SERVICE_LIST_QUERY,communityId,page,pageSize] params:nil success:^(NSDictionary *responseJSON) {
         if (![[responseJSON objectForKey:@"isSuc"] boolValue]) {
             GCBlockInvoke(remote, nil, [page integerValue], [NSError errorWithDomain:[responseJSON objectForKey:@"message"] code:[[responseJSON objectForKey:@"code"]integerValue] userInfo:nil]);
             return;
@@ -298,7 +298,7 @@
                             pageSize:(NSNumber *)pageSize
                           cacheBlock:(void(^)(NSArray *list))cache
                          remoteBlock:(void(^)(NSArray *list, NSInteger page, NSError *error))remote {
-    [JSONServerProxy getWithUrl:[NSString stringWithFormat:@"%@%@/%@/%@/%@", k_API_L_HOUSE_LIST_QUERY_BY_TYPE, page, pageSize,communityId,@(type)] success:^(NSDictionary *responseJSON) {
+    [JSONServerProxy getWithUrl:[NSString stringWithFormat:@"%@%@/%@/%@/%@", k_API_L_HOUSE_LIST_QUERY_BY_TYPE, page, pageSize,communityId,@(type)] params:nil success:^(NSDictionary *responseJSON) {
         if (![[responseJSON objectForKey:@"isSuc"] boolValue]) {
             GCBlockInvoke(remote, nil, [page integerValue], [NSError errorWithDomain:[responseJSON objectForKey:@"message"] code:[[responseJSON objectForKey:@"code"] integerValue] userInfo:nil]);
             return;
@@ -311,7 +311,7 @@
 - (void)asyncRentHouseWithId:(NSNumber *)houseId
                   cacheBlock:(void(^)(RentHouseInfo *info, NSArray *images))cache
                  remoteBlock:(void(^)(RentHouseInfo *info, NSArray *images, NSError *error))remote {
-    [JSONServerProxy getWithUrl:[NSString stringWithFormat:@"%@%@", k_API_L_HOUSE_DETAIL, houseId] success:^(NSDictionary *responseJSON) {
+    [JSONServerProxy getWithUrl:[NSString stringWithFormat:@"%@%@", k_API_L_HOUSE_DETAIL, houseId] params:nil success:^(NSDictionary *responseJSON) {
         if (![[responseJSON objectForKey:@"isSuc"] boolValue]) {
             GCBlockInvoke(remote, nil, nil, [NSError errorWithDomain:[responseJSON objectForKey:@"message"] code:[[responseJSON objectForKey:@"code"] integerValue] userInfo:nil]);
             return;
@@ -421,7 +421,7 @@
 
 - (void)asyncWeiUpWithCommentId:(NSNumber *)commentId
                     remoteBlock:(void(^)(BOOL isSuccess, NSString *msg, NSError *error))remote {
-    [JSONServerProxy getWithUrl:[NSString stringWithFormat:@"%@%@", k_API_L_WEI_UP, commentId] success:^(NSDictionary *responseJSON) {
+    [JSONServerProxy getWithUrl:[NSString stringWithFormat:@"%@%@", k_API_L_WEI_UP, commentId] params:nil success:^(NSDictionary *responseJSON) {
         if (![[responseJSON objectForKey:@"isSuc"] boolValue]) {
             GCBlockInvoke(remote, NO, [responseJSON objectForKey:@"message"], [NSError errorWithDomain:[responseJSON objectForKey:@"message"] code:-1 userInfo:nil]);
             return;
