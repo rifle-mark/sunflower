@@ -44,27 +44,27 @@
     NSString *version = [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleShortVersionString"];
     [MobClick setAppVersion:version];
     
-//    [[MKWPushNotificationHandler sharedHandler] setupPushWithLaunchOptions:launchOptions];
-    // App 是用户点击推送消息启动
-    
-    //test
-    
-    NSDictionary *userInfo = [launchOptions objectForKey:UIApplicationLaunchOptionsRemoteNotificationKey];
-    if (userInfo) {
-        NSLog(@"从消息启动:%@",userInfo);
-        [BPush handleNotification:userInfo];
-        
-    }
-    [[UIApplication sharedApplication] setApplicationIconBadgeNumber:0];
-    //角标清0
-    
-    
+    [[MKWPushNotificationHandler sharedHandler] setupPushWithLaunchOptions:launchOptions pushMode:BPushModeDevelopment isDebug:YES];
     NSString *displayName = [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleDisplayName"];
     [WXApi registerApp:@"wx9d7542e3d90fd680" withDescription:displayName];
     //第三方平台
     [MKWShareModule registerApp];
     [MKWShareModule connectDestinations];
     
+    self.window = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
+    UIStoryboard *story = [UIStoryboard storyboardWithName:@"MainStoryboard" bundle:[NSBundle mainBundle]];
+    self.window.rootViewController = [story instantiateInitialViewController];
+    [self.window makeKeyAndVisible];
+    
+    NSDictionary *userInfo = [launchOptions objectForKey:UIApplicationLaunchOptionsRemoteNotificationKey];
+    if (userInfo) {
+        NSLog(@"从消息启动:%@",userInfo);
+        [[MKWPushNotificationHandler sharedHandler] handlePushNotification:userInfo rootVC:self.window.rootViewController];
+        [BPush handleNotification:userInfo];
+        
+    }
+    //角标清0
+    [[UIApplication sharedApplication] setApplicationIconBadgeNumber:0];
     return YES;
 }
 

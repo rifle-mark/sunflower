@@ -7,6 +7,7 @@
 //
 
 #import "MKWViewController.h"
+#import "MKWPushNotificationHandler.h"
 
 @interface MKWViewController ()
 
@@ -51,6 +52,8 @@
     if (![MKWStringHelper isNilEmptyOrBlankString:[self umengPageName]]) {
         [MobClick beginLogPageView:[self umengPageName]];
     }
+    
+    [MKWPushNotificationHandler sharedHandler].currentvc = self;
 }
 
 - (void)viewWillDisappear:(BOOL)animated {

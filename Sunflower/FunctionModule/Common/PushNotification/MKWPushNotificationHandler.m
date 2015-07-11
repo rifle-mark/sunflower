@@ -43,7 +43,7 @@
     return self;
 }
 
-- (void)setupPushWithLaunchOptions:(NSDictionary *)launchOptions {
+- (void)setupPushWithLaunchOptions:(NSDictionary *)launchOptions pushMode:(BPushMode)pushMode isDebug:(BOOL)isDebug {
     // 设置百度推送
     if ([[[UIDevice currentDevice] systemVersion] floatValue] >= 8.0) {
         UIUserNotificationType myTypes = UIUserNotificationTypeBadge | UIUserNotificationTypeSound | UIUserNotificationTypeAlert;
@@ -56,7 +56,7 @@
     }
     
     // 在 App 启动时注册百度云推送服务，需要提供 Apikey
-    [BPush registerChannel:launchOptions apiKey:@"AX7iCmhNzycBFQDlhWAhePtW" pushMode:BPushModeProduction withFirstAction:nil withSecondAction:nil withCategory:nil isDebug:YES];
+    [BPush registerChannel:launchOptions apiKey:@"AX7iCmhNzycBFQDlhWAhePtW" pushMode:pushMode withFirstAction:nil withSecondAction:nil withCategory:nil isDebug:isDebug];
     
     NSNumber *usercommunityId = [UserModel sharedModel].currentNormalUser.communityId;
     NSNumber *communityId = [CommonModel sharedModel].currentCommunityId;
@@ -76,53 +76,16 @@
         return;
     }
     
-//    GCAlertView *alert = [[GCAlertView alloc] initWithTitle:@"收到推送" andMessage:@"asdf"];
-//    [alert setCancelButtonWithTitle:@"OK" actionBlock:nil];
-//    [alert show];
-    
     NSNumber* ID = pushNotiDic[@"rel_id"];
     NSNumber* type = pushNotiDic[@"rel_type"];
     
-    if ([type integerValue] == 1) {
-        UIStoryboard *story = [UIStoryboard storyboardWithName:@"MainStoryboard" bundle:[NSBundle mainBundle]];
-        //由storyboard根据myView的storyBoardID来获取我们要切换的视图]
+    if ([type integerValue] == 1 && self.currentvc.navigationController) {
+        UIStoryboard *story = self.currentvc.storyboard;
         PropertyNotifyVC *noteVC = [story instantiateViewControllerWithIdentifier:@"CNoteInfoVC"];
         noteVC.noteId = ID;
         [noteVC refreshNote];
         
-        
-
-            UIViewController *result = nil;
-            UIWindow * window = [[UIApplication sharedApplication] keyWindow];
-            if (window.windowLevel != UIWindowLevelNormal)
-            {
-                NSArray *windows = [[UIApplication sharedApplication] windows];
-                for(UIWindow * tmpWin in windows)
-                {
-                    if (tmpWin.windowLevel == UIWindowLevelNormal)
-                    {
-                        window = tmpWin;
-                        break;
-                    }
-                }
-            }
-        if ([[window subviews] count] > 0) {
-            UIView *frontView = [[window subviews] objectAtIndex:0];
-            id nextResponder = [frontView nextResponder];
-            
-            if ([nextResponder isKindOfClass:[UIViewController class]])
-                result = nextResponder;
-            else
-                result = window.rootViewController;
-        }
-        else {
-            result = window.rootViewController;
-        }
-    
-        if (result.navigationController) {
-            [result.navigationController pushViewController:noteVC animated:YES];
-        }
-//        [result presentViewController:noteVC animated:NO completion:nil];
+        [self.currentvc.navigationController pushViewController:noteVC animated:YES];
     }
     
     [UIApplication sharedApplication].applicationIconBadgeNumber = 1;
