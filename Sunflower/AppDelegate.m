@@ -44,7 +44,7 @@
     NSString *version = [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleShortVersionString"];
     [MobClick setAppVersion:version];
     
-    [[MKWPushNotificationHandler sharedHandler] setupPushWithLaunchOptions:launchOptions pushMode:BPushModeDevelopment isDebug:YES];
+    [[MKWPushNotificationHandler sharedHandler] setupPushWithLaunchOptions:launchOptions pushMode:BPushModeProduction isDebug:NO];
     NSString *displayName = [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleDisplayName"];
     [WXApi registerApp:@"wx9d7542e3d90fd680" withDescription:displayName];
     //第三方平台
