@@ -342,7 +342,7 @@
 
 - (void)_refreshWeatherInfo {
     _weak(self);
-    [MainModel asyncGetWeatherInfoWithCityName:[CommonModel sharedModel].currentCity remoteBlock:^(NSDictionary *info, NSError *error) {
+    [MainModel asyncGetWeatherInfoWithCityName:[CommonModel sharedModel].currentCommunity.city remoteBlock:^(NSDictionary *info, NSError *error) {
         _strong(self);
         if (!error) {
             self.weatherInfoDic = info;
