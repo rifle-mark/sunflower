@@ -15,7 +15,8 @@
     if ([suffix hasPrefix:@"http"]) {
         return suffix;
     }
-    return [[NSString stringWithFormat:@"%@api/", k_API_DOMAIN_PREFIX] stringByAppendingPathComponent:suffix];
+//    return [[NSString stringWithFormat:@"%@api/", k_API_DOMAIN_PREFIX] stringByAppendingPathComponent:suffix];
+    return [NSString stringWithFormat:@"%@api/%@", k_API_DOMAIN_PREFIX, suffix];
 }
 + (NSString *)normalAddressWithSuffix:(NSString *)suffix {
     if ([suffix hasPrefix:@"http"]) {

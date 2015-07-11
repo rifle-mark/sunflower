@@ -129,7 +129,7 @@
         self.nameL.text = self.guanjia.name;
         self.titleL.text = self.guanjia.title;
         self.phoneL.text = self.guanjia.phone;
-        [self.upBtn setTitle:[NSString stringWithFormat:@"赞（%@）", self.guanjia.actionCount] forState:UIControlStateNormal];
+        [self.upBtn setTitle:[NSString stringWithFormat:@"赞（%@）", self.guanjia.actionCount ?: @0] forState:UIControlStateNormal];
     }];
     
     [self startObserveObject:self forKeyPath:@"isUped" usingBlock:^(NSObject *target, NSString *keyPath, NSDictionary *change) {
@@ -144,7 +144,7 @@
 
 - (void)updateUpState {
     if (self.isUped) {
-        [self.upBtn setTitle:[NSString stringWithFormat:@"赞（%ld）", [self.guanjia.actionCount integerValue]+1] forState:UIControlStateNormal];
+        [self.upBtn setTitle:[NSString stringWithFormat:@"赞（%ld）", (long)([self.guanjia.actionCount integerValue]+1)] forState:UIControlStateNormal];
     }
 }
 @end

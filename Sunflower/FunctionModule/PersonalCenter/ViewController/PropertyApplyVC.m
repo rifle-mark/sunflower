@@ -16,6 +16,8 @@
 
 @interface PropertyApplyVC () <UITextFieldDelegate>
 
+@property(nonatomic,weak)IBOutlet UIScrollView  *scrollV;
+@property(nonatomic,weak)IBOutlet UIView        *contentV;
 @property(nonatomic,weak)IBOutlet UIButton      *provinceB;
 @property(nonatomic,weak)IBOutlet UIButton      *cityB;
 @property(nonatomic,weak)IBOutlet UITextField   *addressT;
@@ -27,6 +29,10 @@
 
 @property(nonatomic,strong)UITableView          *selectionV;
 @property(nonatomic,strong)NSArray              *selectionA;
+
+@property(nonatomic,assign)NSInteger            selectedProvinceIndex;
+@property(nonatomic,strong)NSArray              *provinceList;
+@property(nonatomic,strong)NSArray              *cityList;
 
 @end
 
@@ -46,6 +52,16 @@
     
     [self _setupSelectionV];
     [self _setupObserver];
+    
+    self.selectedProvinceIndex = -1;
+    [self _loadCityList];
+}
+
+- (void)viewDidLayoutSubviews {
+    [super viewDidLayoutSubviews];
+    [self.contentV mas_updateConstraints:^(MASConstraintMaker *make) {
+        make.width.equalTo(self.view);
+    }];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -122,11 +138,14 @@
 - (IBAction)selectionBtnTap:(id)sender {
     UIButton *btn = (UIButton *)sender;
     if ([btn isEqual:self.provinceB]) {
-        self.selectionA = @[@"北京"];
+        self.selectionA = self.provinceList;
     }
-    
-    if ([btn isEqual:self.cityB]) {
-        self.selectionA = @[@"北京"];
+    else if ([btn isEqual:self.cityB]) {
+        if (self.selectedProvinceIndex < 0) {
+            [SVProgressHUD showErrorWithStatus:@"请先选择“省”"];
+            return;
+        }
+        self.selectionA = self.cityList[self.selectedProvinceIndex];
     }
     
     _weak(btn);
@@ -134,6 +153,10 @@
     [self.selectionV withBlockForRowDidSelect:^(UITableView *view, NSIndexPath *path) {
         _strong(btn);
         _strong(self);
+        if ([btn isEqual:self.provinceB]) {
+            self.selectedProvinceIndex = path.row;
+            [self.cityB setTitle:@"请选择城市" forState:UIControlStateNormal];
+        }
         UITableViewCell *cell = [view cellForRowAtIndexPath:path];
         [btn setTitle:cell.textLabel.text forState:UIControlStateNormal];
         [btn setTitle:cell.textLabel.text forState:UIControlStateHighlighted];
@@ -141,6 +164,7 @@
     }];
     
     [self.view addSubview:self.selectionV];
+    [self.selectionV scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0] atScrollPosition:UITableViewScrollPositionTop animated:NO];
     [self.selectionV mas_remakeConstraints:^(MASConstraintMaker *make) {
         _strong(btn);
         make.top.equalTo(btn.mas_bottom);
@@ -152,12 +176,36 @@
 
 #pragma mark - Business Logic
 
+- (void)_loadCityList {
+    NSString *plistPath = [[NSBundle mainBundle] pathForResource:@"CityList" ofType:@"plist"];
+    NSArray *array = [[NSArray alloc] initWithContentsOfFile:plistPath];
+    
+    NSMutableArray *pList = [[NSMutableArray alloc] init];
+    NSMutableArray *cList = [[NSMutableArray alloc] init];
+    [array enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+        NSArray *arr = obj;
+        NSMutableArray *citys = [[NSMutableArray alloc] init];
+        [arr enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+            if (idx == 0)
+                [pList addObject:obj];
+            else
+                [citys addObject:obj];
+        }];
+        [cList addObject:citys];
+    }];
+    self.provinceList = pList;
+    self.cityList = cList;
+}
+
 - (void)_setupSelectionV {
     self.selectionV = ({
         UITableView *v = [[UITableView alloc] init];
-        v.separatorStyle = UITableViewCellSeparatorStyleNone;
-        v.showsHorizontalScrollIndicator = NO;
-        v.showsVerticalScrollIndicator = NO;
+        [v setShowsHorizontalScrollIndicator:NO];
+        [v setShowsVerticalScrollIndicator:NO];
+        [v setSeparatorStyle:UITableViewCellSeparatorStyleNone];
+        v.layer.borderColor = [k_COLOR_GALLERY_F CGColor];
+        v.layer.borderWidth = 1;
+        v.layer.cornerRadius = 4;
         [v registerClass:[UITableViewCell class] forCellReuseIdentifier:@"selection_cell"];
         
         [v withBlockForRowNumber:^NSInteger(UITableView *view, NSInteger section) {
@@ -181,6 +229,7 @@
      });
 }
 - (void)_setupObserver {
+    [self.scrollV handleKeyboard];
     _weak(self);
     [self startObserveObject:self forKeyPath:@"selectionA" usingBlock:^(NSObject *target, NSString *keyPath, NSDictionary *change) {
         _strong(self);

@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		2409AE881B48EF2C00506D0A /* UIScrollView+Keyboard.m in Sources */ = {isa = PBXBuildFile; fileRef = 2409AE871B48EF2C00506D0A /* UIScrollView+Keyboard.m */; };
+		24CDF48D1B4D616D00D01469 /* CityList.plist in Resources */ = {isa = PBXBuildFile; fileRef = 24CDF48C1B4D616D00D01469 /* CityList.plist */; };
+		24FBC6311B47C3A2006A2601 /* UIImage+AdjustmentSize.m in Sources */ = {isa = PBXBuildFile; fileRef = 24FBC6301B47C3A2006A2601 /* UIImage+AdjustmentSize.m */; };
 		4D092D1E1B3160010083DC9F /* MKWViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4D092D1D1B3160010083DC9F /* MKWViewController.m */; };
 		4D092D211B3168020083DC9F /* GuanJiaEditVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 4D092D201B3168020083DC9F /* GuanJiaEditVC.m */; };
 		4D092D331B331CB60083DC9F /* UserPoint.m in Sources */ = {isa = PBXBuildFile; fileRef = 4D092D321B331CB60083DC9F /* UserPoint.m */; };
@@ -290,6 +293,11 @@
 
 /* Begin PBXFileReference section */
 		0F0907FFB0DC5B57820A255D /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		2409AE861B48EF2C00506D0A /* UIScrollView+Keyboard.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIScrollView+Keyboard.h"; sourceTree = "<group>"; };
+		2409AE871B48EF2C00506D0A /* UIScrollView+Keyboard.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIScrollView+Keyboard.m"; sourceTree = "<group>"; };
+		24CDF48C1B4D616D00D01469 /* CityList.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = CityList.plist; sourceTree = "<group>"; };
+		24FBC62F1B47C3A2006A2601 /* UIImage+AdjustmentSize.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+AdjustmentSize.h"; sourceTree = "<group>"; };
+		24FBC6301B47C3A2006A2601 /* UIImage+AdjustmentSize.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+AdjustmentSize.m"; sourceTree = "<group>"; };
 		444B2CEDD4F7ABBB0B37B757 /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
 		4D092D1C1B3160010083DC9F /* MKWViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MKWViewController.h; sourceTree = "<group>"; };
 		4D092D1D1B3160010083DC9F /* MKWViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MKWViewController.m; sourceTree = "<group>"; };
@@ -1340,6 +1348,7 @@
 			children = (
 				4D4EB6481B43D5F00067030F /* index.html */,
 				4D4EB6491B43D5F00067030F /* index.hyperesources */,
+				24CDF48C1B4D616D00D01469 /* CityList.plist */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
@@ -1788,6 +1797,10 @@
 				FA3594991AF76F9C007F700B /* NSNumber+MKWDate.m */,
 				4D092D581B3BA4AE0083DC9F /* UIMenuController+UserInfo.h */,
 				4D092D591B3BA4AE0083DC9F /* UIMenuController+UserInfo.m */,
+				24FBC62F1B47C3A2006A2601 /* UIImage+AdjustmentSize.h */,
+				24FBC6301B47C3A2006A2601 /* UIImage+AdjustmentSize.m */,
+				2409AE861B48EF2C00506D0A /* UIScrollView+Keyboard.h */,
+				2409AE871B48EF2C00506D0A /* UIScrollView+Keyboard.m */,
 			);
 			path = CategoryClass;
 			sourceTree = "<group>";
@@ -2361,6 +2374,7 @@
 				4D4EB65A1B43D5F00067030F /* b.png in Resources */,
 				FA58010D1AECAD2D002FD43C /* CSTableViewCell.xib in Resources */,
 				4D4EB65B1B43D5F00067030F /* blank.gif in Resources */,
+				24CDF48D1B4D616D00D01469 /* CityList.plist in Resources */,
 				FA5801111AECBCF9002FD43C /* CSCityAreaCell.xib in Resources */,
 				4DA578341B2546330081B93A /* TencentOpenApi_IOS_Bundle.bundle in Resources */,
 				4D4EB6631B43D5F00067030F /* index_hype_generated_script.js in Resources */,
@@ -2539,6 +2553,7 @@
 				FAC7D1AC1AFA60CA004BB38F /* GCPageViewCell.m in Sources */,
 				4D9E25E31B11840600074AE2 /* ShopOrderListVC.m in Sources */,
 				FA2C19831AF4E057007B7D16 /* LifeServiceListVC.m in Sources */,
+				2409AE881B48EF2C00506D0A /* UIScrollView+Keyboard.m in Sources */,
 				FA3594B11AF7DA91007F700B /* LifeServerTableCell.m in Sources */,
 				FAFD6E901ADFFC78007BD17D /* AppDelegate.m in Sources */,
 				FA5801151AECE33F002FD43C /* JSONServerProxy.m in Sources */,
@@ -2565,6 +2580,7 @@
 				4D092DD61B3D69270083DC9F /* base64.m in Sources */,
 				4DCBCAC51B1D82E1003E9676 /* LifeInfoListVC.m in Sources */,
 				4D092D4E1B3A48B20083DC9F /* MyFixRecordVC.m in Sources */,
+				24FBC6311B47C3A2006A2601 /* UIImage+AdjustmentSize.m in Sources */,
 				FA5801021AEC9976002FD43C /* MKWStringHelper.m in Sources */,
 				FA2C19A91AF5DCC0007B7D16 /* GuanJiaListVC.m in Sources */,
 				4DBE7E511B14D3D300D11C27 /* MyPaymentRecorderVC.m in Sources */,
@@ -2749,6 +2765,7 @@
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				DEBUG_INFORMATION_FORMAT = dwarf;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Sunflower/ThirdParty/ShareSDK/Connection",

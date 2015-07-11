@@ -119,10 +119,10 @@
         // update UI
         self.titleL.text = self.house.title;
         if ([self.house.type integerValue] == 1) {
-            self.priceL.text = [NSString stringWithFormat:@"%@元/月", self.house.price];
+            self.priceL.text = [NSString stringWithFormat:@"%@元/月", self.house.price ?: @(0)];
         }
         else {
-            self.priceL.text = [NSString stringWithFormat:@"%@万元", self.house.price];
+            self.priceL.text = [NSString stringWithFormat:@"%@万元", self.house.price ?: @(0)];
         }
         [self.avatarV setImageWithURL:[NSURL URLWithString:self.house.adminAvatar] placeholderImage:[UIImage imageNamed:@"default_avatar"]];
         self.nickNameL.text = self.house.userName;
@@ -226,7 +226,9 @@
     CGRect rect = [str boundingRectWithSize:CGSizeMake(V_W_(self.view)-30, 1000) options:NSStringDrawingUsesLineFragmentOrigin context:nil];
     [self.detailT setSize:CGSizeMake(V_W_(self.view)-30, rect.size.height+15) position:ccp(15, 15) anchor:ccp(0, 0)];
     self.detailT.attributedText = str;
-    [self.detailContainerV setFrameHeight:rect.size.height + 30];
+    [self.detailContainerV mas_updateConstraints:^(MASConstraintMaker *make) {
+        make.height.equalTo(@(rect.size.height + 30));
+    }];
     [self.detailContainerV addSubview:self.detailT];
 }
 

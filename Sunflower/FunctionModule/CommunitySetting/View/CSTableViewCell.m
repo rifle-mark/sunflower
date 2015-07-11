@@ -25,6 +25,10 @@
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
     [super setSelected:selected animated:animated];
 
+    [self selectedStyleWithSelected:selected];
+}
+
+- (void)selectedStyleWithSelected:(BOOL)selected {
     self.selectedImgV.hidden = !selected;
     // Configure the view for the selected state
     [UIView animateKeyframesWithDuration:0.3 delay:0 options:UIViewKeyframeAnimationOptionCalculationModeLinear animations:^{

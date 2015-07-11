@@ -23,6 +23,7 @@
 #pragma mark - 首页
 #define k_API_MAIN_COMMUNITYINFO_QUERY  @"community/detail/"
 #define k_URL_ZHOUBIANYOU               @"http://www.qunar.com"
+#define k_API_MAIN_WEATHER_QUERY        @"weather.ashx"
 
 #pragma mark - 物业服务
 // 通过小区ID 获取小区详情
@@ -240,4 +241,6 @@
 #define k_API_P_USER_LOGIN_PROPERTY     @"adminuser/login"
 // 物业申请
 #define k_API_P_USER_APPLY_PROPERTY     @"apply/add"
+
+#define k_API_P_USER_ADMINE_INFO_UPDATE @"adminuser/Update"
 #endif

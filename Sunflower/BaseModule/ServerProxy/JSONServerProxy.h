@@ -14,5 +14,5 @@
 
 + (void)postWithUrl:(NSString*)urlStr parameters:(NSDictionary *)parameters success:(void(^)(NSDictionary *responseJSON))success failed:(void(^)(NSError *error))failed;
 
-+ (void)getWithUrl:(NSString*)urlStr success:(void(^)(NSDictionary *responseJSON))success failed:(void(^)(NSError *error))failed;
++ (void)getWithUrl:(NSString*)urlStr params:(NSDictionary *)param success:(void(^)(NSDictionary *responseJSON))success failed:(void(^)(NSError *error))failed;
 @end

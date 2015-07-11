@@ -35,8 +35,6 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
-    
-    [self _updateNoteReadIcon];
 }
 
 - (void)loadView {
@@ -50,6 +48,12 @@
     [super viewDidLayoutSubviews];
     
     [self _layoutCodingViews];
+}
+
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    
+    [self _updateNoteReadIcon];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -121,7 +125,7 @@
 
 - (void)_updateNoteReadIcon {
     [self.readIcon setHidden:YES];
-    CommunityNoteInfo *note = [[[MKWModelHandler defaultHandler] queryObjectsForEntity:k_ENTITY_COMMUNITYNOTE predicate:[NSPredicate predicateWithFormat:@"isRead=%@", @(NO)]] firstObject];
+    CommunityNoteInfo *note = [[[MKWModelHandler defaultHandler] queryObjectsForEntity:k_ENTITY_COMMUNITYNOTE predicate:[NSPredicate predicateWithFormat:@"isRead=%@ AND communityId=%@", @(NO), [CommonModel sharedModel].currentCommunityId]] firstObject];
     if (note) {
         [self.readIcon setHidden:NO];
         return;
@@ -131,7 +135,7 @@
         _strong(self);
         if (!error && [list count] > 0) {
             CommunityNoteInfo *info = list[0];
-            if (![[[MKWModelHandler defaultHandler] queryObjectsForEntity:k_ENTITY_COMMUNITYNOTE predicate:[NSPredicate predicateWithFormat:@"noticeId=%@", info.noticeId]] firstObject]) {
+            if (![[[MKWModelHandler defaultHandler] queryObjectsForEntity:k_ENTITY_COMMUNITYNOTE predicate:[NSPredicate predicateWithFormat:@"noticeId=%@ AND isRead=%@", info.noticeId, @(YES)]] firstObject]) {
                 [self.readIcon setHidden:NO];
             }
         }

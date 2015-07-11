@@ -105,7 +105,7 @@
         NSMutableParagraphStyle *ps = [[NSMutableParagraphStyle alloc] init];
         NSMutableAttributedString *infoStr = [[NSMutableAttributedString alloc] init];
         [infoStr appendAttributedString:[[NSAttributedString alloc] initWithString:@"共" attributes:@{NSFontAttributeName:[UIFont systemFontOfSize:12], NSForegroundColorAttributeName:k_COLOR_GALLERY_F, NSParagraphStyleAttributeName:ps}]];
-        [infoStr appendAttributedString:[[NSAttributedString alloc] initWithString:[NSString stringWithFormat:@"%lu", [self.paymentList count]] attributes:@{NSFontAttributeName:[UIFont systemFontOfSize:12], NSForegroundColorAttributeName:priceColor, NSParagraphStyleAttributeName:ps}]];
+        [infoStr appendAttributedString:[[NSAttributedString alloc] initWithString:[NSString stringWithFormat:@"%lu", (unsigned long)[self.paymentList count]] attributes:@{NSFontAttributeName:[UIFont systemFontOfSize:12], NSForegroundColorAttributeName:priceColor, NSParagraphStyleAttributeName:ps}]];
         [infoStr appendAttributedString:[[NSAttributedString alloc] initWithString:@"次未缴记录  总计：" attributes:@{NSFontAttributeName:[UIFont systemFontOfSize:12], NSForegroundColorAttributeName:k_COLOR_GALLERY_F, NSParagraphStyleAttributeName:ps}]];
         [infoStr appendAttributedString:[[NSAttributedString alloc] initWithString:[NSString stringWithFormat:@"%@元", price] attributes:@{NSFontAttributeName:[UIFont systemFontOfSize:12], NSForegroundColorAttributeName:priceColor, NSParagraphStyleAttributeName:ps}]];
         

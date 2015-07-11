@@ -183,7 +183,7 @@
                 _weak(cell);
                 cell.titleText = self.locatedCity;
                 if ([MKWStringHelper isNilEmptyOrBlankString:self.locatedCity]) {
-                    cell.userInteractionEnabled = NO;
+                    cell.userInteractionEnabled = YES;
                     cell.titleText = @"正在努力定位...";
                 }
                 [cell startObserveObject:self forKeyPath:@"locatedCity" usingBlock:^(NSObject *target, NSString *keyPath, NSDictionary *change) {
@@ -196,6 +196,12 @@
                     _strong(self);
                     [cell.selectedImgV setHidden:!self.isLocatedCityChoosed];
                 }];
+                if (_city && [self.locatedCity hasPrefix:_city.city]) {
+                    [cell selectedStyleWithSelected:YES];
+                }
+                else {
+                    [cell selectedStyleWithSelected:NO];
+                }
             }
             if (path.section == 1) {
                 cell.titleText = [(OpendCityInfo*)self.opendCityArray[path.row] city];
@@ -205,8 +211,25 @@
         }];
         [v withBlockForRowDidSelect:^(UITableView *view, NSIndexPath *path) {
             _strong(self);
+            if (path.section == 0 && self.locatedCity && self.opendCityArray) {
+                BOOL containLocatedCity = NO;
+                for (OpendCityInfo *city in self.opendCityArray) {
+                    if ([self.locatedCity hasPrefix:city.city]) {
+                        containLocatedCity = YES;
+                        [self _selectedCity:city];
+                        [self.cityTableView reloadSections:[NSIndexSet indexSetWithIndex:1] withRowAnimation:UITableViewRowAnimationAutomatic];
+                    }
+                }
+                
+                if (!containLocatedCity) {
+                    [[view cellForRowAtIndexPath:path] setSelected:NO animated:YES];
+                    [SVProgressHUD showErrorWithStatus:@"您所在的城市还未开通，敬请期待"];
+                }
+            }
             if (path.section == 1) {
                 [self _selectedCity:[self.opendCityArray objectAtIndex:path.row]];
+                if (!self.isLocatedCityChoosed) {
+                }
             }
         }];
         v;

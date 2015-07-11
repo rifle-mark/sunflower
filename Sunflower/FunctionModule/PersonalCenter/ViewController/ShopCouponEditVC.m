@@ -34,7 +34,7 @@
 @property(nonatomic,strong)UILabel              *endDateTitleL;
 @property(nonatomic,strong)UILabel              *detailTitleL;
 @property(nonatomic,strong)UIDatePicker         *datePicker;
-@property(nonatomic,strong)UIButton              *endDateL;
+@property(nonatomic,strong)UITextField          *endDateT;
 @property(nonatomic,strong)UITextView           *detailT;
 @property(nonatomic,strong)UIButton             *deleteBtn;
 @property(nonatomic,strong)UIButton             *submitBtn;
@@ -96,13 +96,15 @@
 */
 - (void)_setupObserver {
     _weak(self);
+    [self.scrollV handleKeyboard];
     [self startObserveObject:self forKeyPath:@"coupon" usingBlock:^(NSObject *target, NSString *keyPath, NSDictionary *change) {
         _strong(self);
         [self.imageV setImageWithURL:[NSURL URLWithString:self.coupon.image] placeholderImage:[UIImage imageNamed:@"default_top_width"]];
         self.nameT.text = self.coupon.name;
         self.themT.text = self.coupon.subTitle;
         self.detailT.text = self.coupon.couponDesc;
-        [self.endDateL setTitle:[self.coupon.endDate dateSplitByChinese] forState:UIControlStateNormal];
+        self.endDateT.text = [self.coupon.endDate dateSplitByChinese];
+        self.datePicker.date = [self.coupon.endDate dateOfSelf];
     }];
 }
 
@@ -168,10 +170,11 @@
                     [self dismissViewControllerAnimated:NO completion:^{
                         _strong(self);
                         [SVProgressHUD showWithStatus:@"正在上传图片" maskType:SVProgressHUDMaskTypeClear];
-                        [[CommonModel sharedModel] uploadImage:thumbnail path:filePath progress:nil remoteBlock:^(NSString *url, NSError *error) {
+                        UIImage *newImage = [thumbnail adjustmentWithNewSize:CGSizeMake(750, 375)];
+                        [[CommonModel sharedModel] uploadImage:newImage path:filePath progress:nil remoteBlock:^(NSString *url, NSError *error) {
                             if (!error) {
                                 [SVProgressHUD showSuccessWithStatus:@"上传成功"];
-                                [self.imageV setImage:thumbnail];
+                                [self.imageV setImage:newImage];
                                 self.imageUrl = url;
                             }
                             else {
@@ -229,26 +232,26 @@
     self.themTitleL = subLabelBlock(@"优惠主题:");
     self.themT = textFieldBlock();
     self.endDateTitleL = subLabelBlock(@"有效日期:");
-    self.endDateL = [[UIButton alloc] init];
-    self.endDateL.titleLabel.font = [UIFont systemFontOfSize:14];
-    [self.endDateL setTitleColor:k_COLOR_GALLERY_F forState:UIControlStateNormal];
-    self.endDateL.layer.borderColor = [k_COLOR_GALLERY CGColor];
-    self.endDateL.layer.borderWidth = 1;
-    self.endDateL.layer.cornerRadius = 4;
-    [self.endDateL setTitle:@"点击选择日期" forState:UIControlStateNormal];
-    [self.endDateL addControlEvents:UIControlEventTouchUpInside action:^(UIControl *control, NSSet *touches) {
-        _strong(self);
-        if ([self.datePicker isHidden]) {
-            [self.datePicker setHidden:NO];
-        }
-    }];
     
     self.datePicker = [[UIDatePicker alloc] init];
-    [self.datePicker setHidden:YES];
     self.datePicker.minimumDate = [NSDate date];
     self.datePicker.datePickerMode = UIDatePickerModeDate;
     self.datePicker.backgroundColor = k_COLOR_GALLERY;
     [self.datePicker addTarget:self action:@selector(dateChanged:) forControlEvents:UIControlEventValueChanged];
+    
+    self.endDateT = ({
+        UITextField *t = [[UITextField alloc] init];
+        t.borderStyle = UITextBorderStyleRoundedRect;
+        t.font = [UIFont systemFontOfSize:14];
+        t.textColor = k_COLOR_GALLERY_F;
+        t.inputView = self.datePicker;
+        t.returnKeyType = UIReturnKeyDone;
+        [t withBlockForDidBeginEditing:^(UITextField *view) {
+            _strong(self);
+            self.focusedV = view;
+        }];
+        t;
+    });
     
     self.detailTitleL = subLabelBlock(@"优惠细则");
     self.detailT = ({
@@ -329,7 +332,7 @@
                 return;
             }
             
-            NSString *endDateStr = [NSString stringWithFormat:@"/Date(%ld000)/", (NSUInteger)[self.endDate timeIntervalSince1970]];
+            NSString *endDateStr = [NSString stringWithFormat:@"/Date(%ld000)/", (unsigned long)[self.endDate timeIntervalSince1970]];
             
             NSString *desc = [MKWStringHelper trimWithStr:self.detailT.text];
             if ([MKWStringHelper isNilEmptyOrBlankString:desc]) {
@@ -444,8 +447,8 @@
         make.left.right.height.equalTo(self.nameTitleL);
     }];
     
-    [self.contentV addSubview:self.endDateL];
-    [self.endDateL mas_makeConstraints:^(MASConstraintMaker *make) {
+    [self.contentV addSubview:self.endDateT];
+    [self.endDateT mas_makeConstraints:^(MASConstraintMaker *make) {
         _strong(self);
         make.top.equalTo(self.endDateTitleL.mas_bottom).with.offset(8);
         make.left.right.height.equalTo(self.nameT);
@@ -455,7 +458,7 @@
         _strong(self);
         make.left.equalTo(self.imageV);
         make.right.equalTo(self.nameT);
-        make.top.equalTo(self.endDateL.mas_bottom).with.offset(8);
+        make.top.equalTo(self.endDateT.mas_bottom).with.offset(8);
         make.height.equalTo(self.nameTitleL);
     }];
     
@@ -529,21 +532,11 @@
         make.height.equalTo(@540);
     }];
     
-    [self.view addSubview:self.datePicker];
-    [self.datePicker mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.right.equalTo(self.view);
-        make.bottom.equalTo(self.view);
-        make.height.equalTo(@216);
-    }];
-    
     UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] init];
     
     [tap withBlockForShouldReceiveTouch:^BOOL(UIGestureRecognizer *gesture, UITouch *touch) {
         if (self.focusedV) {
             [self.focusedV resignFirstResponder];
-        }
-        if (!self.datePicker.isHidden) {
-            [self.datePicker setHidden:YES];
         }
         return NO;
     }];
@@ -554,10 +547,10 @@
 }
 
 - (void)dateChanged:(id)sender {
-    if ([self.endDateL superview]) {
+    if ([self.endDateT superview]) {
         NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
         [formatter setDateFormat:@"yyyy年MM月dd日"];
-        [self.endDateL setTitle:[formatter stringFromDate:self.datePicker.date] forState:UIControlStateNormal];
+        self.endDateT.text = [formatter stringFromDate:self.datePicker.date];
         self.endDate = self.datePicker.date;
     }
 }

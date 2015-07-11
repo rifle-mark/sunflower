@@ -21,7 +21,8 @@
 @property(nonatomic,weak)IBOutlet UIView    *contentV;
 @property(nonatomic,strong)UITableView      *commentDetailTableV;
 @property(nonatomic,strong)WeiSubCommentView *commentV;
-@property(nonatomic,strong)UIView           *actionV;
+@property(nonatomic,strong)UIImageView      *actionV;
+@property(nonatomic,strong)UIImageView      *deleteActionV;
 
 @property(nonatomic,strong)NSArray          *commentList;
 @property(nonatomic,strong)NSNumber         *currentPage;
@@ -91,6 +92,7 @@
             v.showsHorizontalScrollIndicator = NO;
             v.showsVerticalScrollIndicator = NO;
             v.separatorStyle = UITableViewCellSeparatorStyleNone;
+            v.allowsSelection = NO;
             _weak(self);
             [v withBlockForRowNumber:^NSInteger(UITableView *view, NSInteger section) {
                 _strong(self);
@@ -146,6 +148,34 @@
                         _strong(self);
                         [self performSegueWithIdentifier:@"Segue_WeiCommentInfo_PictureShow" sender:@{@"dataArray":picUrlArray, @"Index":@(index)}];
                     };
+                    cell.actionBlock = ^(WeiCommentCell *cell) {
+                        if (([UserModel sharedModel].isNormalLogined && [cell.comment.userId integerValue] == [[UserModel sharedModel].currentNormalUser.userId integerValue])) {
+                            if ([self.deleteActionV isHidden]) {
+                                [self.deleteActionV mas_remakeConstraints:^(MASConstraintMaker *make) {
+                                    _strong(self);
+                                    CGRect cellRect = [cell convertRect:cell.bounds toView:self.contentV];
+                                    make.top.equalTo(@(cellRect.origin.y+39));
+                                    make.right.equalTo(self.contentV).with.offset(-8);
+                                    make.width.equalTo(@77);
+                                    make.height.equalTo(@39);
+                                }];
+                            }
+                            [self.deleteActionV setHidden:!self.deleteActionV.isHidden];
+                        }
+                        else {
+                            if ([self.actionV isHidden]) {
+                                [self.actionV mas_remakeConstraints:^(MASConstraintMaker *make) {
+                                    _strong(self);
+                                    CGRect cellRect = [cell convertRect:cell.bounds toView:self.contentV];
+                                    make.top.equalTo(@(cellRect.origin.y+39));
+                                    make.right.equalTo(self.contentV).with.offset(-8);
+                                    make.width.equalTo(@77);
+                                    make.height.equalTo(@69);
+                                }];
+                            }
+                            [self.actionV setHidden:!self.actionV.isHidden];
+                        }
+                    };
                     return cell;
                 }
                 else {
@@ -187,6 +217,101 @@
             }];
             v;
         });
+    }
+    
+    if (!self.deleteActionV) {
+        self.deleteActionV = [[UIImageView alloc] init];
+        self.deleteActionV.userInteractionEnabled = YES;
+        self.deleteActionV.image = [UIImage imageNamed:@"p_weicomment_action_btn"];
+        UIButton *deleteBtn = [[UIButton alloc] init];
+        deleteBtn.titleLabel.font = [UIFont boldSystemFontOfSize:14];
+        [deleteBtn setTitleColor:k_COLOR_WHITE forState:UIControlStateNormal];
+        [deleteBtn setTitleColor:k_COLOR_GALLERY_F forState:UIControlStateHighlighted];
+        [deleteBtn setTitle:@"删除" forState:UIControlStateNormal];
+        [self.deleteActionV addSubview:deleteBtn];
+        _weak(self);
+        [deleteBtn mas_makeConstraints:^(MASConstraintMaker *make) {
+            _strong(self);
+            make.left.top.right.bottom.equalTo(self.deleteActionV);
+        }];
+        [deleteBtn addControlEvents:UIControlEventTouchUpInside action:^(UIControl *control, NSSet *touches) {
+            _strong(self);
+            [self.deleteActionV setHidden:YES];
+            if (![[UserModel sharedModel] isNormalLogined]) {
+                [SVProgressHUD showErrorWithStatus:@"请先登录"];
+                return;
+            }
+            if (!self.comment) {
+                return;
+            }
+            [[CommunityLifeModel sharedModel] asyncWeiDeleteWithCommentId:self.comment.commentId remoteBlock:^(BOOL isSuccess, NSError *error) {
+                _strong(self);
+                if (isSuccess) {
+                    [SVProgressHUD showSuccessWithStatus:@"删除成功"];
+                    [self performSegueWithIdentifier:@"UnSegue_WeiCommentDetail" sender:nil];
+                }
+            }];
+        }];
+    }
+    
+    if (!self.actionV) {
+        self.actionV = [[UIImageView alloc] init];
+        self.actionV.userInteractionEnabled = YES;
+        self.actionV.image = [UIImage imageNamed:@"cl_weicomment_action"];
+        UIButton *unlikeBtn = [[UIButton alloc] init];
+        unlikeBtn.titleLabel.font = [UIFont boldSystemFontOfSize:14];
+        [unlikeBtn setTitleColor:k_COLOR_WHITE forState:UIControlStateNormal];
+        [unlikeBtn setTitleColor:k_COLOR_GALLERY_F forState:UIControlStateHighlighted];
+        [unlikeBtn setTitle:@"不感兴趣" forState:UIControlStateNormal];
+        [self.actionV addSubview:unlikeBtn];
+        _weak(self);
+        [unlikeBtn mas_makeConstraints:^(MASConstraintMaker *make) {
+            _strong(self);
+            make.left.right.equalTo(self.actionV);
+            make.top.equalTo(self.actionV).with.offset(6);
+            make.height.equalTo(@32);
+        }];
+        [unlikeBtn addControlEvents:UIControlEventTouchUpInside action:^(UIControl *control, NSSet *touches) {
+            _strong(self);
+            [self.actionV setHidden:YES];
+            if (![[UserModel sharedModel] isNormalLogined]) {
+                [SVProgressHUD showErrorWithStatus:@"请先登录"];
+                return;
+            }
+            if (!self.comment) {
+                return;
+            }
+            [[CommunityLifeModel sharedModel] asyncWeiUnlikeWithCommentId:self.comment.commentId remoteBlock:^(BOOL isSuccess, NSError *error) {
+                
+            }];
+        }];
+        
+        UIButton *reportBtn = [[UIButton alloc] init];
+        reportBtn.titleLabel.font = [UIFont boldSystemFontOfSize:14];
+        [reportBtn setTitleColor:k_COLOR_WHITE forState:UIControlStateNormal];
+        [reportBtn setTitleColor:k_COLOR_GALLERY_F forState:UIControlStateHighlighted];
+        [reportBtn setTitle:@"举报" forState:UIControlStateNormal];
+        [self.actionV addSubview:reportBtn];
+        [reportBtn mas_makeConstraints:^(MASConstraintMaker *make) {
+            _strong(self);
+            make.left.right.equalTo(self.actionV);
+            make.top.equalTo(self.actionV).with.offset(38);
+            make.height.equalTo(@32);
+        }];
+        [reportBtn addControlEvents:UIControlEventTouchUpInside action:^(UIControl *control, NSSet *touches) {
+            _strong(self);
+            [self.actionV setHidden:YES];
+            if (![[UserModel sharedModel] isNormalLogined]) {
+                [SVProgressHUD showErrorWithStatus:@"请先登录"];
+                return;
+            }
+            if (!self.comment) {
+                return;
+            }
+            [[CommunityLifeModel sharedModel] asyncWeiReportWithCommentId:self.comment.commentId remoteBlock:^(BOOL isSuccess, NSError *error) {
+                
+            }];
+        }];
     }
     
     if (!self.commentV) {
@@ -268,6 +393,10 @@
             make.bottom.equalTo(self.contentV);
         }];
     }
+    [self.contentV addSubview:self.actionV];
+    [self.actionV setHidden:YES];
+    [self.contentV addSubview:self.deleteActionV];
+    [self.deleteActionV setHidden:YES];
     
     [self _setupTapGestureRecognizer];
 }
@@ -340,6 +469,9 @@
         _strong(self);
         if (!CGRectContainsPoint(self.actionV.frame, [touch locationInView:self.contentV])) {
             [self.actionV setHidden:YES];
+        }
+        if (!CGRectContainsPoint(self.deleteActionV.frame, [touch locationInView:self.deleteActionV])) {
+            [self.deleteActionV setHidden:YES];
         }
         
         if (!CGRectContainsPoint(self.commentV.frame, [touch locationInView:self.contentV])) {

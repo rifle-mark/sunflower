@@ -12,6 +12,9 @@
 #import "CommonModel.h"
 #import "MKWModelHandler.h"
 #import "CommunityBuild.h"
+#import "ContractVC.h"
+#import "APIGenerator.h"
+#import "ServerProxy.h"
 
 @interface AuditTelNumCell : UICollectionViewCell
 
@@ -249,6 +252,9 @@
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     // Get the new view controller using [segue destinationViewController].
     // Pass the selected object to the new view controller.
+    if ([segue.identifier isEqualToString:@"Segue_PCAudit_Contract"]) {
+        ((ContractVC*)segue.destinationViewController).url = [NSURL URLWithString:[APIGenerator apiAddressWithSuffix:k_API_USER_ANNOUNCE]];
+    }
 }
 
 - (void)unwindSegue:(UIStoryboardSegue *)segue {

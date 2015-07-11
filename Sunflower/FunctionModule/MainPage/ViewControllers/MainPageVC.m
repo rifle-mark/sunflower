@@ -23,7 +23,7 @@
 @property(nonatomic,weak)IBOutlet UIView        *noteV;
 @property(nonatomic,weak)IBOutlet UIButton      *latestNotifyB;
 
-@property(nonatomic,strong)UIImageView          *avatarV;
+//@property(nonatomic,strong)UIImageView          *avatarV;
 @property(nonatomic,strong)UIView               *communityNameV;
 @property(nonatomic,strong)UIImageView          *gpsImgeV;
 @property(nonatomic,strong)UILabel              *communityNameL;
@@ -34,6 +34,7 @@
 
 @property(nonatomic,strong)CommunityInfo        *community;
 @property(nonatomic,strong)CommunityNoteInfo    *latestNoteInfo;
+@property(nonatomic,strong)NSDictionary         *weatherInfoDic;
 
 @end
 
@@ -47,8 +48,6 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     
-    self.navigationController.navigationBarHidden = YES;
-    
     self.tabBarController.tabBar.selectedImageTintColor = k_COLOR_BLUE;
     
     self.latestNoteInfo = nil;
@@ -60,8 +59,21 @@
     [self _setupObserver];
     if ([[CommonModel sharedModel] currentCommunityId]) {
         [self _refreshCommunityInfo];
+        
+    }
+}
+
+-(void)viewWillAppear:(BOOL)animated {
+    [self.navigationController setNavigationBarHidden:YES animated:YES];
+    [super viewWillAppear:animated];
+    if ([[CommonModel sharedModel] currentCommunityId]) {
         [self _refreshLatestNotify];
     }
+}
+
+- (void)viewWillDisappear:(BOOL)animated {
+    [super viewWillDisappear:animated];
+    [self.navigationController setNavigationBarHidden:NO animated:YES];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -93,13 +105,12 @@
     // Get the new view controller using [segue destinationViewController].
     // Pass the selected object to the new view controller.
     
-    self.navigationController.navigationBarHidden = NO;
-    
     if ([segue.identifier isEqualToString:@"Segue_MainPage_Payment"]) {
         ((PropertyPayListVC *)[segue destinationViewController]).type = ChargeProperty;
     }
     else if ([segue.identifier isEqualToString:@"Segue_MainPage_Web"]) {
         ((MKWWebVC*)segue.destinationViewController).naviTitle = @"周边游";
+        ((MKWWebVC*)segue.destinationViewController).showControl = YES;
         ((MKWWebVC*)segue.destinationViewController).url = [NSURL URLWithString:k_URL_ZHOUBIANYOU];
     }
     else if ([segue.identifier isEqualToString:@"Segue_MainPage_WeiComment"]) {
@@ -112,7 +123,7 @@
 }
 
 - (void)unwindSegue:(UIStoryboardSegue *)segue {
-    self.navigationController.navigationBarHidden = YES;
+    
 }
 
 - (IBAction)latestNotifyButtonOnClick:(UIButton *)sender {
@@ -123,12 +134,12 @@
 
 #pragma mark - coding Views
 - (void)_loadCodingViews {
-    self.avatarV = ({
-        UIImageView *v = [[UIImageView alloc] init];
-        v.clipsToBounds = YES;
-        v.image = [UIImage imageNamed:@"default_avatar"];
-        v;
-    });
+//    self.avatarV = ({
+//        UIImageView *v = [[UIImageView alloc] init];
+//        v.clipsToBounds = YES;
+//        v.image = [UIImage imageNamed:@"default_avatar"];
+//        v;
+//    });
     
     self.communityNameV = ({
         UIView *v = [[UIView alloc] init];
@@ -136,6 +147,7 @@
         v.clipsToBounds = YES;
         _weak(self);
         UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithActionBlock:^(UIGestureRecognizer *gesture) {
+            _strong(self);
             [self _showCommunitySettingVC];
         }];
         [v addGestureRecognizer:tap];
@@ -144,7 +156,7 @@
     
     self.gpsImgeV = ({
         UIImageView *locationV = [[UIImageView alloc] init];
-        locationV.image = [UIImage imageNamed:@"GPSIcon"];
+        locationV.image = [UIImage imageNamed:@"main_db"];
         locationV.contentMode = UIViewContentModeScaleToFill;
         locationV.clipsToBounds = YES;
         locationV;
@@ -176,29 +188,39 @@
 
 - (void)_layoutCodingViews {
     _weak(self);
-    if (![self.avatarV superview]) {
-        if ([[UserModel sharedModel] isNormalLogined]) {
-            UserInfo *cUser = [[UserModel sharedModel] currentNormalUser];
-            [self.communityBgV addSubview:self.avatarV];
-            [self.avatarV setImageWithURL:[NSURL URLWithString:cUser.avatar] placeholderImage:[UIImage imageNamed:@"default_avatar"]];
-            [self.avatarV mas_makeConstraints:^(MASConstraintMaker *make) {
-                _strong(self);
-                make.right.equalTo(self.communityBgV).with.offset(-13);
-                make.top.equalTo(self.communityBgV).with.offset(25);
-                make.width.height.equalTo(@60);
-            }];
-            self.avatarV.layer.cornerRadius = 30;
-        }
-    }
+//    if (![self.avatarV superview]) {
+//        if ([[UserModel sharedModel] isNormalLogined]) {
+//            UserInfo *cUser = [[UserModel sharedModel] currentNormalUser];
+//            [self.communityBgV addSubview:self.avatarV];
+//            [self.avatarV setImageWithURL:[NSURL URLWithString:cUser.avatar] placeholderImage:[UIImage imageNamed:@"default_avatar"]];
+//            [self.avatarV mas_makeConstraints:^(MASConstraintMaker *make) {
+//                _strong(self);
+//                make.right.equalTo(self.communityBgV).with.offset(-13);
+//                make.top.equalTo(self.communityBgV).with.offset(25);
+//                make.width.height.equalTo(@60);
+//            }];
+//            self.avatarV.layer.cornerRadius = 30;
+//        }
+//    }
     
     if (![self.communityNameV superview]) {
         [self.communityBgV addSubview:self.communityNameV];
+        
+        CGRect nameRect = CGRectZero;
+        if (self.community) {
+            NSMutableParagraphStyle *ps = [[NSMutableParagraphStyle alloc] init];
+            NSDictionary *att = @{NSFontAttributeName:self.communityNameL.font,
+                                  NSForegroundColorAttributeName:self.communityNameL.textColor,
+                                  NSBackgroundColorAttributeName:k_COLOR_CLEAR,
+                                  NSParagraphStyleAttributeName:ps,};
+            nameRect = [self.community.name boundingRectWithSize:ccs(1000, 30) options:NSStringDrawingUsesLineFragmentOrigin attributes:att context:nil];
+        }
         [self.communityNameV mas_makeConstraints:^(MASConstraintMaker *make) {
             _strong(self);
             make.top.equalTo(self.communityBgV).with.offset(33);
+            make.width.equalTo(@(nameRect.size.width+30));
             make.centerX.equalTo(self.communityBgV);
             make.height.equalTo(@30);
-            make.width.equalTo(@30);
         }];
     }
     
@@ -207,8 +229,7 @@
         [self.gpsImgeV mas_makeConstraints:^(MASConstraintMaker *make) {
             _strong(self);
             make.left.centerY.equalTo(self.communityNameV);
-            make.width.equalTo(@(self.gpsImgeV.image.size.width));
-            make.height.equalTo(@(self.gpsImgeV.image.size.height));
+            make.size.mas_equalTo(CGSizeMake(24, 30));
         }];
     }
     
@@ -229,6 +250,15 @@
             make.bottom.equalTo(self.communityBgV).with.offset(-13);
             make.height.equalTo(@12);
             make.width.equalTo(@100);
+        }];
+    }
+    if (![self.weatherL superview]) {
+        [self.communityBgV addSubview:self.weatherL];
+        [self.weatherL mas_makeConstraints:^(MASConstraintMaker *make) {
+            _strong(self);
+            make.top.bottom.equalTo(self.checkInL);
+            make.left.equalTo(self.communityBgV).with.offset(15);
+            make.right.equalTo(self.checkInL.mas_left);
         }];
     }
 }
@@ -255,28 +285,37 @@
     
     [self startObserveObject:self forKeyPath:@"community" usingBlock:^(NSObject *target, NSString *keyPath, NSDictionary *change) {
         _strong(self);
-        NSMutableParagraphStyle *ps = [[NSMutableParagraphStyle alloc] init];
-        NSDictionary *att = @{NSFontAttributeName:self.communityNameL.font,
-                              NSForegroundColorAttributeName:self.communityNameL.textColor,
-                              NSBackgroundColorAttributeName:k_COLOR_CLEAR,
-                              NSParagraphStyleAttributeName:ps,};
-        CGRect nameRect = [self.community.name boundingRectWithSize:ccs(1000, 30) options:NSStringDrawingUsesLineFragmentOrigin attributes:att context:nil];
-        [self.communityNameV mas_remakeConstraints:^(MASConstraintMaker *make) {
-            _strong(self);
-            make.top.equalTo(self.communityBgV).with.offset(33);
-            make.width.equalTo(@(nameRect.size.width+30));
-            make.centerX.equalTo(self.communityBgV);
-            make.height.equalTo(@30);
-        }];
+        if (!self.community) {
+            return;
+        }
+        if (self.communityNameV.superview) {
+            NSMutableParagraphStyle *ps = [[NSMutableParagraphStyle alloc] init];
+            NSDictionary *att = @{NSFontAttributeName:self.communityNameL.font,
+                                  NSForegroundColorAttributeName:self.communityNameL.textColor,
+                                  NSBackgroundColorAttributeName:k_COLOR_CLEAR,
+                                  NSParagraphStyleAttributeName:ps,};
+            CGRect nameRect = [self.community.name boundingRectWithSize:ccs(1000, 30) options:NSStringDrawingUsesLineFragmentOrigin attributes:att context:nil];
+            [self.communityNameV mas_updateConstraints:^(MASConstraintMaker *make) {
+                make.width.equalTo(@(nameRect.size.width + 24));
+            }];
+        }
         self.communityNameL.text = self.community.name;
         
         self.checkInL.text = [NSString stringWithFormat:@"已有%@人入住", self.community.checkInUserCount];
+        [self _refreshWeatherInfo];
     }];
     
     [self startObserveObject:self forKeyPath:@"latestNoteInfo" usingBlock:^(NSObject *target, NSString *keyPath, NSDictionary *change) {
         _strong(self);
         NSString *title = self.latestNoteInfo ? self.latestNoteInfo.title : @"暂无最新公告";
         [self.latestNotifyB setTitle:title forState:UIControlStateNormal];
+    }];
+    
+    [self startObserveObject:self forKeyPath:@"weatherInfoDic" usingBlock:^(NSObject *target, NSString *keyPath, NSDictionary *change) {
+        _strong(self);
+        if (self.weatherL && [self.weatherInfoDic count] > 0 && ![MKWStringHelper isNilEmptyOrBlankString:[self.weatherInfoDic objectForKey:@"weather"]] && ![MKWStringHelper isNilEmptyOrBlankString:[self.weatherInfoDic objectForKey:@"l_tmp"]] && ![MKWStringHelper isNilEmptyOrBlankString:[self.weatherInfoDic objectForKey:@"h_tmp"]]) {
+            self.weatherL.text = [NSString stringWithFormat:@"%@ %@℃ ~ %@℃", [self.weatherInfoDic objectForKey:@"weather"], [self.weatherInfoDic objectForKey:@"l_tmp"], [self.weatherInfoDic objectForKey:@"h_tmp"]];
+        }
     }];
 }
 
@@ -287,7 +326,9 @@
         self.community = community;
     } remoteBlock:^(CommunityInfo *community, NSArray *buildList, NSError *error) {
         _strong(self);
-        self.community = community;
+        if (!error) {
+            self.community = community;
+        }
     }];
 }
 
@@ -296,6 +337,16 @@
     [[PropertyServiceModel sharedModel] asyncCommunityNoteListWithCommunityId:[[CommonModel sharedModel] currentCommunityId] pageIndex:@1 pageSize:@1 cacheBlock:nil remoteBlock:^(NSArray *list, NSNumber *cPage, NSError *error) {
         _strong(self);
         self.latestNoteInfo = !error && [list count] > 0 ? list[0] : nil;
+    }];
+}
+
+- (void)_refreshWeatherInfo {
+    _weak(self);
+    [MainModel asyncGetWeatherInfoWithCityName:[CommonModel sharedModel].currentCommunity.city remoteBlock:^(NSDictionary *info, NSError *error) {
+        _strong(self);
+        if (!error) {
+            self.weatherInfoDic = info;
+        }
     }];
 }
 

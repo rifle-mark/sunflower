@@ -16,6 +16,7 @@
 #import "CommonModel.h"
 #import "Community.h"
 #import "WeiCommentCell.h"
+#import "PictureShowVC.h"
 
 
 #pragma mark - FixEditPicCell
@@ -352,6 +353,10 @@
         clearBtn.frame = CGRectMake(0, 0, 30, 30);
         self.telT.rightView = clearBtn;
         self.telT.rightViewMode = UITextFieldViewModeAlways;
+        [self.telT withBlockForShouldReturn:^BOOL(UITextField *view) {
+            [view resignFirstResponder];
+            return NO;
+        }];
         [self.contentView addSubview:self.telT];
         _weak(editTitleL);
         [self.telT mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -387,13 +392,18 @@
         [self.saveBtn setEnabled:NO];
         [self.saveBtn addControlEvents:UIControlEventTouchUpInside action:^(UIControl *control, NSSet *touches) {
             _strong(self);
+            [self.telT resignFirstResponder];
             CommunityInfo *c = [CommonModel sharedModel].currentCommunity;
             [[PropertyServiceModel sharedModel] asyncUpdateCommunityInfoWithCommunityID:c.communityId name:c.name detail:c.communityDesc image:c.images tel:self.telT.text remoteBlock:^(BOOL isSuccess, NSString *msg, NSError *error) {
                 _strong(self);
                 if (!error) {
                     [SVProgressHUD showSuccessWithStatus:@"修改成功"];
-                    self.telL.text = [CommonModel sharedModel].currentCommunity.tel;
-                    self.telT.text = [CommonModel sharedModel].currentCommunity.tel;
+                    
+                    CommunityInfo *c = [CommonModel sharedModel].currentCommunity;
+                    c.tel = self.telT.text;
+                    [c saveToDb];
+                    
+                    self.telL.text = self.telT.text;
                     [self.contentView bringSubviewToFront:self.telL];
                     [self.telL setHidden:NO];
                     [self.telT setHidden:YES];
@@ -427,6 +437,7 @@
                 [self.telL setHidden:YES];
                 self.telT.text = [CommonModel sharedModel].currentCommunity.tel;
                 [self.contentView bringSubviewToFront:self.telT];
+                [self.telT becomeFirstResponder];
                 [self.editBtn setTitle:@"取消" forState:UIControlStateNormal];
                 [self.saveBtn setEnabled:YES];
             }
@@ -434,7 +445,7 @@
             {
                 [self.telT setHidden:YES];
                 [self.telL setHidden:NO];
-                [self.contentView bringSubviewToFront:self.telL];
+                [self.telT resignFirstResponder];
                 [self.editBtn setTitle:@"编辑" forState:UIControlStateNormal];
                 [self.saveBtn setEnabled:NO];
             }
@@ -686,7 +697,8 @@
             make.width.equalTo(@78);
         }];
         UILabel *picsubL = titleLabelBlock(@"可以将您遇到的问题拍照给我们，以便更快速解决问题");
-        picsubL.font = [UIFont boldSystemFontOfSize:11];
+        picsubL.font = [UIFont boldSystemFontOfSize:10];
+        picsubL.numberOfLines = 2;
         [self.contentView addSubview:picsubL];
         _weak(picL);
         [picsubL mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -695,7 +707,7 @@
             make.bottom.equalTo(picL);
             make.left.equalTo(picL.mas_right);
             make.right.equalTo(self.nameT);
-            make.height.equalTo(@11);
+            make.height.equalTo(@24);
         }];
         
         UICollectionViewFlowLayout *layout = [[UICollectionViewFlowLayout alloc] init];
@@ -747,7 +759,8 @@
                         _strong(self);
                         [self.vc dismissViewControllerAnimated:NO completion:^{
                             [SVProgressHUD showWithStatus:@"正在上传图片" maskType:SVProgressHUDMaskTypeClear];
-                            [[CommonModel sharedModel] uploadImage:thumbnail path:filePath progress:nil remoteBlock:^(NSString *url, NSError *error) {
+                            UIImage *newImage = [thumbnail adjustedToStandardSize];
+                            [[CommonModel sharedModel] uploadImage:newImage path:filePath progress:nil remoteBlock:^(NSString *url, NSError *error) {
                                 _strong(self);
                                 if (!error) {
                                     [SVProgressHUD showSuccessWithStatus:@"上传成功"];
@@ -772,14 +785,14 @@
                 
                 if ([EYImagePickerViewController isCameraPhotoAvailable]) {
                     [as addOtherButtonTitle:@"拍照" actionBlock:^{
-                        EYImagePickerViewController* picker = [EYImagePickerViewController imagePickerForCameraPhotoEditable:YES];
+                        EYImagePickerViewController* picker = [EYImagePickerViewController imagePickerForCameraPhotoEditable:NO];
                         SetupEYImagePicker(picker);
                     }];
                 }
                 
                 if ([EYImagePickerViewController isLibraryPhotoAvailable]) {
                     [as addOtherButtonTitle:@"手机相册" actionBlock:^{
-                        EYImagePickerViewController* picker = [EYImagePickerViewController imagePickerForLibraryPhotoEditable:YES];
+                        EYImagePickerViewController* picker = [EYImagePickerViewController imagePickerForLibraryPhotoEditable:NO];
                         SetupEYImagePicker(picker);
                     }];
                 }
@@ -892,6 +905,7 @@
 @property(nonatomic,strong)FixIssueInfo *fixIssue;
 @property(nonatomic,strong)NSArray      *picUrlVArray;
 @property(nonatomic,copy)void(^actionBlock)(FixIssueCell *cell);
+@property(nonatomic,copy)void(^picShowBlock)(NSArray *picUrlArray, NSInteger index);
 
 + (NSString *)reuseIdentify;
 + (CGFloat)heightOfSelf;
@@ -998,6 +1012,10 @@
             
             return cell;
         }];
+        [self.picsV withBlockForItemDidSelect:^(UICollectionView *view, NSIndexPath *path) {
+            _strong(self);
+            GCBlockInvoke(self.picShowBlock, self.picUrlVArray, path.item);
+        }];
         [self.contentV addSubview:self.picsV];
         
         [self _setupObserver];
@@ -1053,10 +1071,10 @@
                           NSBackgroundColorAttributeName:k_COLOR_CLEAR,
                           NSParagraphStyleAttributeName:ps};
     NSMutableString *infoStr = [@"" mutableCopy];
-    [infoStr appendFormat:@"姓名：%@\n",issue.userName];
-    [infoStr appendFormat:@"手机：%@\n",issue.userPhone];
-    [infoStr appendFormat:@"地址：%@\n",issue.address];
-    [infoStr appendFormat:@"描述：%@",issue.content];
+    [infoStr appendFormat:@"姓名：%@\n",issue.userName ?: @""];
+    [infoStr appendFormat:@"手机：%@\n",issue.userPhone ?: @""];
+    [infoStr appendFormat:@"地址：%@\n",issue.address ?: @""];
+    [infoStr appendFormat:@"描述：%@",issue.content ?: @""];
     NSAttributedString *str = [[NSAttributedString alloc] initWithString:infoStr attributes:att];
     return str;
 }
@@ -1276,7 +1294,7 @@
         [v registerClass:[FixTelEditCell class] forCellReuseIdentifier:[FixTelEditCell reuseIdentify]];
         [v registerClass:[FixIssueCell class] forCellReuseIdentifier:[FixIssueCell reuseIdentify]];
         [v registerClass:[FixOtherSuggestCell class] forCellReuseIdentifier:[FixOtherSuggestCell reuseIdentify]];
-
+        
         v.header = [MJRefreshNormalHeader headerWithRefreshingBlock:^{
             _strong(self);
             if ([UserModel sharedModel].isPropertyAdminLogined) {
@@ -1325,7 +1343,7 @@
             subtitleL.textColor = k_COLOR_GALLERY_F;
             subtitleL.font = [UIFont boldSystemFontOfSize:12];
             subtitleL.textAlignment = NSTextAlignmentCenter;
-            subtitleL.text = (section == 1?([UserModel sharedModel].isPropertyAdminLogined?@"以下是客户提出的维修事件，请及时处理":@"提交您的维修信息，我们会尽及时与您联系"):@"我们为您提供其他的维修产品体验");
+            subtitleL.text = (section == 1?([UserModel sharedModel].isPropertyAdminLogined?@"以下是客户提出的维修事件，请及时处理":@"提交您的维修信息，我们会及时与您联系"):@"我们为您提供其他的维修产品体验");
             [ret addSubview:titleL];
             _weak(ret);
             [titleL mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -1433,6 +1451,10 @@
                     }
                     
                     cell.fixIssue = self.fixIssueList[path.row];
+                    cell.picShowBlock = ^(NSArray *picUrlArray, NSInteger index){
+                        if (picUrlArray)
+                            [self performSegueWithIdentifier:@"Segue_PropertyFix_PictureShow" sender:@[picUrlArray, @(index)]];
+                    };
                     cell.actionBlock = ^(FixIssueCell *cell){
                         if ([UserModel sharedModel].isPropertyAdminLogined) {
                             _strong(self);
@@ -1516,7 +1538,7 @@
     self.actionV = [[UIImageView alloc] init];
     self.actionV.userInteractionEnabled = YES;
     self.actionV.image = [UIImage imageNamed:@"p_weicomment_action_btn"];
-
+    
     UIButton *deleteBtn = [[UIButton alloc] init];
     deleteBtn.titleLabel.font = [UIFont boldSystemFontOfSize:14];
     [deleteBtn setTitleColor:k_COLOR_WHITE forState:UIControlStateNormal];
@@ -1597,6 +1619,7 @@
 
 #pragma mark - Data
 - (void)_setupObserver {
+    [self.fixTableV handleKeyboard];
     _weak(self);
     [self startObserveObject:self forKeyPath:@"fixIssueList" usingBlock:^(NSObject *target, NSString *keyPath, NSDictionary *change) {
         _strong(self);
@@ -1683,7 +1706,15 @@
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     // Get the new view controller using [segue destinationViewController].
     // Pass the selected object to the new view controller.
+    if ([segue.identifier isEqualToString:@"Segue_PropertyFix_PictureShow"]) {
+        PictureShowVC *vc = segue.destinationViewController;
+        vc.picUrlArray = [sender objectAtIndex:0];
+        vc.currentIndex = [[sender objectAtIndex:1] unsignedIntegerValue];
+    }
 }
 
+- (void)unwindSegue:(UIStoryboardSegue *)segue {
+    
+}
 
 @end

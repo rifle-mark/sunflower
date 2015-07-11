@@ -19,6 +19,7 @@
 
 @interface PropertyEditVC ()
 
+@property(nonatomic,weak)IBOutlet UIScrollView  *scrollV;
 @property(nonatomic,weak)IBOutlet UIView        *contentV;
 
 @property(nonatomic,strong)UIImageView      *imageV;
@@ -53,6 +54,7 @@
     if (self.community) {
         self.imageUrl = self.community.images;
     }
+    [self.scrollV handleKeyboard];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -102,20 +104,21 @@
         l.text = str;
         return l;
     };
-    UIButton *(^picButtonBlock)(NSString *str, NSString *bgImg) = ^(NSString *str, NSString *bgImg) {
+    UIButton *(^picButtonBlock)(NSString *str, NSString *bgImg, NSString *icoImg) = ^(NSString *str, NSString *bgImg, NSString *icoImg) {
         UIButton *b = [[UIButton alloc] init];
         b.backgroundColor = k_COLOR_CLEAR;
         [b setBackgroundImage:[UIImage imageNamed:bgImg] forState:UIControlStateNormal];
+        [b setImage:[UIImage imageNamed:icoImg] forState:UIControlStateNormal];
         [b setTitle:str forState:UIControlStateNormal];
         [b setTitleColor:k_COLOR_WHITE forState:UIControlStateNormal];
         [b setTitleColor:k_COLOR_GALLERY forState:UIControlStateHighlighted];
-        [b setTitleEdgeInsets:UIEdgeInsetsMake(0, 22, 0, 0)];
+        [b setTitleEdgeInsets:UIEdgeInsetsMake(0, 5, 0, 0)];
         b.titleLabel.font = [UIFont systemFontOfSize:13];
         return b;
     };
     _weak(self);
     self.imageTitleL = titleLabelBlock(@"物业照片");
-    self.uploadBtn = picButtonBlock(@"上传照片", @"upload_btn");
+    self.uploadBtn = picButtonBlock(@"上传照片", @"btn_bg_blue", @"ico_photo");
     [self.uploadBtn addControlEvents:UIControlEventTouchUpInside action:^(UIControl *control, NSSet *touches) {
         _strong(self);
         //TODO
@@ -132,10 +135,11 @@
                 [self dismissViewControllerAnimated:NO completion:^{
                     _strong(self);
                     [SVProgressHUD showWithStatus:@"正在上传图片" maskType:SVProgressHUDMaskTypeClear];
-                    [[CommonModel sharedModel] uploadImage:thumbnail path:filePath progress:nil remoteBlock:^(NSString *url, NSError *error) {
+                    UIImage *newImage = [thumbnail adjustedToStandardSize];
+                    [[CommonModel sharedModel] uploadImage:newImage path:filePath progress:nil remoteBlock:^(NSString *url, NSError *error) {
                         if (!error) {
                             [SVProgressHUD showSuccessWithStatus:@"上传成功"];
-                            [self.imageV setImage:thumbnail];
+                            [self.imageV setImage:newImage];
                             self.imageUrl = url;
                         }
                         else {
@@ -151,7 +155,7 @@
         EYImagePickerViewController* picker = [EYImagePickerViewController imagePickerForLibraryPhotoEditable:NO];
         SetupEYImagePicker(picker);
     }];
-    self.camareBtn = picButtonBlock(@"立即拍照", @"camare_btn");
+    self.camareBtn = picButtonBlock(@"立即拍照", @"btn_bg_blue", @"ico_camera");
     [self.camareBtn addControlEvents:UIControlEventTouchUpInside action:^(UIControl *control, NSSet *touches) {
         _strong(self);
         if (![EYImagePickerViewController isCameraPhotoAvailable]) {
@@ -170,10 +174,11 @@
                 [self dismissViewControllerAnimated:NO completion:^{
                     _strong(self);
                     [SVProgressHUD showWithStatus:@"正在上传图片" maskType:SVProgressHUDMaskTypeClear];
-                    [[CommonModel sharedModel] uploadImage:thumbnail path:filePath progress:nil remoteBlock:^(NSString *url, NSError *error) {
+                    UIImage *newImage = [thumbnail adjustedToStandardSize];
+                    [[CommonModel sharedModel] uploadImage:newImage path:filePath progress:nil remoteBlock:^(NSString *url, NSError *error) {
                         if (!error) {
                             [SVProgressHUD showSuccessWithStatus:@"上传成功"];
-                            [self.imageV setImage:thumbnail];
+                            [self.imageV setImage:newImage];
                             self.imageUrl = url;
                         }
                         else {

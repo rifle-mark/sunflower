@@ -53,9 +53,9 @@
     if (userInfo) {
         NSLog(@"从消息启动:%@",userInfo);
         [BPush handleNotification:userInfo];
-        [[UIApplication sharedApplication] setApplicationIconBadgeNumber:0];
+        
     }
-    
+    [[UIApplication sharedApplication] setApplicationIconBadgeNumber:0];
     //角标清0
     
     

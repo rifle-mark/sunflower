@@ -29,7 +29,7 @@
 @implementation NormalUserInfoEditVC
 
 - (NSString *)umengPageName {
-    return @"个人资料编辑";
+    return self.isProperty?@"物业资料编辑":@"个人资料编辑";
 }
 
 - (NSString *)unwindSegueIdentify {
@@ -39,6 +39,8 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
+    
+    self.navigationItem.title = self.isProperty?@"物业信息":@"个人信息";
     
     UIBarButtonItem *saveBar = [[UIBarButtonItem alloc] initWithTitle:@"保存" style:UIBarButtonItemStyleDone target:self action:@selector(_saveUserInfo:)];
     saveBar.tintColor = k_COLOR_WHITE;
@@ -88,7 +90,12 @@
     self.avatarV = [[UIImageView alloc] init];
     self.avatarV.clipsToBounds = YES;
     self.avatarV.layer.cornerRadius = [[UIScreen mainScreen] bounds].size.width==320?40:53;
-    [self.avatarV setImageWithURL:[NSURL URLWithString:[UserModel sharedModel].currentNormalUser.avatar] placeholderImage:[UIImage imageNamed:@"default_avatar"]];
+    if (self.isProperty) {
+        [self.avatarV setImageWithURL:[NSURL URLWithString:[UserModel sharedModel].currentAdminUser.avatar] placeholderImage:[UIImage imageNamed:@"default_avatar"]];
+    }
+    else {
+        [self.avatarV setImageWithURL:[NSURL URLWithString:[UserModel sharedModel].currentNormalUser.avatar] placeholderImage:[UIImage imageNamed:@"default_avatar"]];
+    }
     [self.avatarEditV addSubview:self.avatarV];
     _weak(self);
     [self.avatarV mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -112,13 +119,14 @@
                 _strong(self);
                 [self dismissViewControllerAnimated:NO completion:^{
                     [SVProgressHUD showWithStatus:@"正在上传图片" maskType:SVProgressHUDMaskTypeClear];
-                    [[CommonModel sharedModel] uploadImage:thumbnail path:filePath progress:nil remoteBlock:^(NSString *url, NSError *error) {
+                    UIImage *newImage = [thumbnail adjustedToStandardSize];
+                    [[CommonModel sharedModel] uploadImage:newImage path:filePath progress:nil remoteBlock:^(NSString *url, NSError *error) {
                         _strong(self);
                         if (!error) {
                             [SVProgressHUD showSuccessWithStatus:@"上传成功"];
                             self.avatarUrl = url;
-                            self.avatarV.image = thumbnail;
-                            [[UserModel sharedModel] updateUserInfoWithNickName:[UserModel sharedModel].currentNormalUser.nickName avatar:url remoteBlock:nil];
+                            self.avatarV.image = newImage;
+//                            [[UserModel sharedModel] updateUserInfoWithNickName:[UserModel sharedModel].currentNormalUser.nickName avatar:url remoteBlock:nil];
                         }
                         else {
                             [SVProgressHUD showErrorWithStatus:@"上传失败"];
@@ -180,7 +188,12 @@
     self.nickNameT.textContainerInset = UIEdgeInsetsMake(5, 10, 5, 10);
     self.nickNameT.textColor = k_COLOR_GALLERY_F;
     self.nickNameT.font = [UIFont boldSystemFontOfSize:15];
-    self.nickNameT.text = [UserModel sharedModel].currentNormalUser.nickName;
+    if (self.isProperty) {
+        self.nickNameT.text = [UserModel sharedModel].currentAdminUser.realName;
+    }
+    else {
+        self.nickNameT.text = [UserModel sharedModel].currentNormalUser.nickName;
+    }
     UIButton *clearBtn = [[UIButton alloc] init];
     [clearBtn setBackgroundImage:[UIImage imageNamed:@"edit_clear_btn"] forState:UIControlStateNormal];
     [clearBtn addControlEvents:UIControlEventTouchUpInside action:^(UIControl *control, NSSet *touches) {
@@ -230,7 +243,7 @@
 
 #pragma mark - data
 - (void)_saveUserInfo:(id)sender {
-    UserInfo *cUser = [UserModel sharedModel].currentNormalUser;
+    
     NSString *nickname = [MKWStringHelper trimWithStr:self.nickNameT.text];
     if ([MKWStringHelper isNilEmptyOrBlankString:nickname] && [MKWStringHelper isNilEmptyOrBlankString:self.avatarUrl]) {
         [SVProgressHUD showErrorWithStatus:@"没有要保存的内容"];
@@ -242,15 +255,31 @@
         return;
     }
     
-    [[UserModel sharedModel] updateUserInfoWithNickName:nickname avatar:([MKWStringHelper isNilEmptyOrBlankString:self.avatarUrl]?(cUser.avatar?cUser.avatar:@""):self.avatarUrl) remoteBlock:^(UserInfo *user, NSError *error) {
-        if (error) {
-            [SVProgressHUD showErrorWithStatus:error.domain];
-            return;
-        }
-        
-        [SVProgressHUD showSuccessWithStatus:@"保存成功"];
-        [self performSegueWithIdentifier:@"UnSegue_NormalUserInfoEdit" sender:nil];
-    }];
+    if (!self.isProperty) {
+        UserInfo *cUser = [UserModel sharedModel].currentNormalUser;
+        [[UserModel sharedModel] updateUserInfoWithNickName:nickname avatar:([MKWStringHelper isNilEmptyOrBlankString:self.avatarUrl]?(cUser.avatar?cUser.avatar:@""):self.avatarUrl) remoteBlock:^(UserInfo *user, NSError *error) {
+            if (error) {
+                [SVProgressHUD showErrorWithStatus:error.domain];
+                return;
+            }
+            
+            [SVProgressHUD showSuccessWithStatus:@"保存成功"];
+            [self performSegueWithIdentifier:@"UnSegue_NormalUserInfoEdit" sender:nil];
+        }];
+    }
+    else {
+        AdminUserInfo *admin = [UserModel sharedModel].currentAdminUser;
+        [[UserModel sharedModel] updateAdminInfoWithNickName:nickname avatar:([MKWStringHelper isNilEmptyOrBlankString:self.avatarUrl]?(admin.avatar?admin.avatar:@""):self.avatarUrl) remoteBlock:^(BOOL isSuccess, NSError *error) {
+            if (error) {
+                [SVProgressHUD showErrorWithStatus:error.domain];
+                return;
+            }
+            
+            [SVProgressHUD showSuccessWithStatus:@"保存成功"];
+            [self performSegueWithIdentifier:@"UnSegue_NormalUserInfoEdit" sender:nil];
+        }];
+    }
+    
 }
 
 @end

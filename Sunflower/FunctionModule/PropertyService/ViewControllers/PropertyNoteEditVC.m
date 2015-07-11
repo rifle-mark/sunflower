@@ -18,21 +18,22 @@
 
 @interface PropertyNoteEditVC ()
 
-@property(nonatomic,weak)IBOutlet UIView    *contentV;
-@property(nonatomic,strong)UIImageView      *imageV;
-@property(nonatomic,strong)UILabel          *imageTitleL;
-@property(nonatomic,strong)UIButton         *uploadBtn;
-@property(nonatomic,strong)UIButton         *camareBtn;
-@property(nonatomic,strong)UIView           *separateV;
-@property(nonatomic,strong)UILabel          *nameTitleL;
-@property(nonatomic,strong)UITextField      *nameT;
-@property(nonatomic,strong)UILabel          *detailTitleL;
-@property(nonatomic,strong)UITextView       *detailT;
-@property(nonatomic,strong)UIButton         *delBtn;
-@property(nonatomic,strong)UIButton         *publicBtn;
+@property(nonatomic,weak)IBOutlet UIScrollView  *scrollV;
+@property(nonatomic,weak)IBOutlet UIView        *contentV;
+@property(nonatomic,strong)UIImageView          *imageV;
+@property(nonatomic,strong)UILabel              *imageTitleL;
+@property(nonatomic,strong)UIButton             *uploadBtn;
+@property(nonatomic,strong)UIButton             *camareBtn;
+@property(nonatomic,strong)UIView               *separateV;
+@property(nonatomic,strong)UILabel              *nameTitleL;
+@property(nonatomic,strong)UITextField          *nameT;
+@property(nonatomic,strong)UILabel              *detailTitleL;
+@property(nonatomic,strong)UITextView           *detailT;
+@property(nonatomic,strong)UIButton             *delBtn;
+@property(nonatomic,strong)UIButton             *publicBtn;
 
-@property(nonatomic,weak)UIView             *focusedV;
-@property(nonatomic,strong)NSString         *imageUrl;
+@property(nonatomic,weak)UIView                 *focusedV;
+@property(nonatomic,strong)NSString             *imageUrl;
 
 @end
 
@@ -53,6 +54,7 @@
     if (self.note) {
         self.imageUrl = self.note.image;
     }
+    [self.scrollV handleKeyboard];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -86,6 +88,7 @@
 - (void)_loadEditer {
     self.imageV = ({
         UIImageView *v = [[UIImageView alloc] init];
+        v.image = [UIImage imageNamed:@"default_top_width"];
         v;
     });
     if (self.note) {
@@ -100,20 +103,21 @@
         l.text = str;
         return l;
     };
-    UIButton *(^picButtonBlock)(NSString *str, NSString *bgImg) = ^(NSString *str, NSString *bgImg) {
+    UIButton *(^picButtonBlock)(NSString *str, NSString *bgImg, NSString *icoImg) = ^(NSString *str, NSString *bgImg, NSString *icoImg) {
         UIButton *b = [[UIButton alloc] init];
         b.backgroundColor = k_COLOR_CLEAR;
         [b setBackgroundImage:[UIImage imageNamed:bgImg] forState:UIControlStateNormal];
+        [b setImage:[UIImage imageNamed:icoImg] forState:UIControlStateNormal];
         [b setTitle:str forState:UIControlStateNormal];
         [b setTitleColor:k_COLOR_WHITE forState:UIControlStateNormal];
         [b setTitleColor:k_COLOR_GALLERY forState:UIControlStateHighlighted];
-        [b setTitleEdgeInsets:UIEdgeInsetsMake(0, 22, 0, 0)];
+        [b setTitleEdgeInsets:UIEdgeInsetsMake(0, 5, 0, 0)];
         b.titleLabel.font = [UIFont systemFontOfSize:13];
         return b;
     };
     _weak(self);
     self.imageTitleL = titleLabelBlock(@"物业照片");
-    self.uploadBtn = picButtonBlock(@"上传照片", @"upload_btn");
+    self.uploadBtn = picButtonBlock(@"上传照片", @"btn_bg_blue", @"ico_photo");
     [self.uploadBtn addControlEvents:UIControlEventTouchUpInside action:^(UIControl *control, NSSet *touches) {
         _strong(self);
         //TODO
@@ -130,10 +134,11 @@
                 [self dismissViewControllerAnimated:NO completion:^{
                     _strong(self);
                     [SVProgressHUD showWithStatus:@"正在上传图片" maskType:SVProgressHUDMaskTypeClear];
-                    [[CommonModel sharedModel] uploadImage:thumbnail path:filePath progress:nil remoteBlock:^(NSString *url, NSError *error) {
+                    UIImage *newImage = [thumbnail adjustedToStandardSize];
+                    [[CommonModel sharedModel] uploadImage:newImage path:filePath progress:nil remoteBlock:^(NSString *url, NSError *error) {
                         if (!error) {
                             [SVProgressHUD showSuccessWithStatus:@"上传成功"];
-                            [self.imageV setImage:thumbnail];
+                            [self.imageV setImage:newImage];
                             self.imageUrl = url;
                         }
                         else {
@@ -149,7 +154,7 @@
         EYImagePickerViewController* picker = [EYImagePickerViewController imagePickerForLibraryPhotoEditable:NO];
         SetupEYImagePicker(picker);
     }];
-    self.camareBtn = picButtonBlock(@"立即拍照", @"camare_btn");
+    self.camareBtn = picButtonBlock(@"立即拍照", @"btn_bg_blue", @"ico_camera");
     [self.camareBtn addControlEvents:UIControlEventTouchUpInside action:^(UIControl *control, NSSet *touches) {
         _strong(self);
         if (![EYImagePickerViewController isCameraPhotoAvailable]) {
@@ -168,10 +173,11 @@
                 [self dismissViewControllerAnimated:NO completion:^{
                     _strong(self);
                     [SVProgressHUD showWithStatus:@"正在上传图片" maskType:SVProgressHUDMaskTypeClear];
-                    [[CommonModel sharedModel] uploadImage:thumbnail path:filePath progress:nil remoteBlock:^(NSString *url, NSError *error) {
+                    UIImage *newImage = [thumbnail adjustedToStandardSize];
+                    [[CommonModel sharedModel] uploadImage:newImage path:filePath progress:nil remoteBlock:^(NSString *url, NSError *error) {
                         if (!error) {
                             [SVProgressHUD showSuccessWithStatus:@"上传成功"];
-                            [self.imageV setImage:thumbnail];
+                            [self.imageV setImage:newImage];
                             self.imageUrl = url;
                         }
                         else {

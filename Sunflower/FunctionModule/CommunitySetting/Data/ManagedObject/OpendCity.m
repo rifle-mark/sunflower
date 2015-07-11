@@ -29,6 +29,9 @@
 
 - (NSManagedObject *)getOrInsertManagedObject {
     OpendCity *obj = (OpendCity*)[[[MKWModelHandler defaultHandler] queryObjectsForEntity:k_ENTITY_OPENDCITY predicate:[NSPredicate predicateWithFormat:@"city=%@",self.city]] firstObject];
+    if (!obj) {
+        obj = [[MKWModelHandler defaultHandler] insertNewObjectForEntityForName:k_ENTITY_OPENDCITY];
+    }
     return obj;
 }
 

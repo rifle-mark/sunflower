@@ -18,6 +18,7 @@
 @property (nonatomic, retain) NSString * area;
 @property (nonatomic, retain) NSString * areaId;
 @property (nonatomic, retain) NSString * cityId;
+@property (nonatomic, retain) NSNumber * openCityId;
 
 @end
 
@@ -28,5 +29,6 @@
 @property (nonatomic, strong) NSString * area;
 @property (nonatomic, strong) NSString * areaId;
 @property (nonatomic, strong) NSString * cityId;
+@property (nonatomic, strong) NSNumber * openCityId;
 
 @end

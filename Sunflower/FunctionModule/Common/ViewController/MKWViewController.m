@@ -19,15 +19,18 @@
     // Do any additional setup after loading the view.
     
     _weak(self);
-    UISwipeGestureRecognizer *swip = [[UISwipeGestureRecognizer alloc] initWithActionBlock:^(UIGestureRecognizer *gesture) {
+    
+    UIPanGestureRecognizer *pan = [[UIPanGestureRecognizer alloc] initWithActionBlock:^(UIGestureRecognizer *gesture) {
         _strong(self);
-        if (![MKWStringHelper isNilEmptyOrBlankString:[self unwindSegueIdentify]]) {
-            [self performSegueWithIdentifier:[self unwindSegueIdentify] sender:nil];
+        if (gesture.state == UIGestureRecognizerStateRecognized) {
+            CGPoint offsetPoint = [(UIPanGestureRecognizer*)gesture translationInView:gesture.view];
+            if (offsetPoint.x > 50 && ![MKWStringHelper isNilEmptyOrBlankString:[self unwindSegueIdentify]]) {
+                [self performSegueWithIdentifier:[self unwindSegueIdentify] sender:nil];
+            }
         }
     }];
     
-    swip.direction = UISwipeGestureRecognizerDirectionRight;
-    [self.view addGestureRecognizer:swip];
+    [self.view addGestureRecognizer:pan];
 }
 
 - (void)didReceiveMemoryWarning {

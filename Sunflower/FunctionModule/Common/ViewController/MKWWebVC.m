@@ -8,29 +8,14 @@
 
 #import "MKWWebVC.h"
 
-#define k_IMAGE_WEBVIEW_BACK_NORMAL         @""
-#define k_IMAGE_WEBVIEW_BACK_HIGHLIGHT      @""
-
-#define k_IMAGE_WEBVIEW_FORWARD_NORMAL      @""
-#define k_IMAGE_WEBVIEW_FORWARD_HIGHLIGHT   @""
-
-#define k_IMAGE_WEBVIEW_CLOSE_NORMAL        @""
-#define k_IMAGE_WEBVIEW_CLOSE_HIGHLIGHT     @""
-
-#define k_IMAGE_WEBVIEW_STOP_NORMAL         @""
-#define k_IMAGE_WEBVIEW_STOP_HIGHLIGHT      @""
-
-#define k_IMAGE_WEBVIEW_RELOAD_NORMAL       @""
-#define k_IMAGE_WEBVIEW_RELOAD_HIGHLIGHT    @""
-
 @interface MKWWebVC () <UIWebViewDelegate>
 
-@property (nonatomic, weak)IBOutlet UIView      *contentV;
-@property (nonatomic, strong) UIToolbar         *controlV;
-@property (nonatomic, strong) UIButton          *backwardBtn;
-@property (nonatomic, strong) UIButton          *fowardBtn;
-@property (nonatomic, strong) UIButton          *refreshStopBtn;
-@property (nonatomic, strong) UIWebView         *webView;
+@property (nonatomic, weak)IBOutlet UIView              *contentV;
+@property (nonatomic, weak)IBOutlet UIBarButtonItem     *backItem;
+@property (nonatomic, strong) UIBarButtonItem           *closeItem;
+@property (nonatomic, strong) UIBarButtonItem           *refreshItem;
+@property (nonatomic, strong) UIBarButtonItem           *stopItem;
+@property (nonatomic, strong) UIWebView                 *webView;
 
 @end
 
@@ -58,9 +43,6 @@
     [super loadView];
     
     [self _loadCodingViews];
-    
-    [_backwardBtn setEnabled:[_webView canGoBack]];
-    [_fowardBtn setEnabled:[_webView canGoForward]];
 }
 
 - (void)viewDidLayoutSubviews {
@@ -74,6 +56,16 @@
     // Dispose of any resources that can be recreated.
 }
 
+#pragma mark - property
+- (void)setShowControl:(BOOL)showControl {
+    _showControl = showControl;
+    if (showControl) {
+        [self _showRefashOrStopControlButton];
+    }
+    else {
+        [self _hideControlButton];
+    }
+}
 
 #pragma mark - Navigation
 
@@ -85,45 +77,20 @@
 
 
 - (void)_loadCodingViews {
-    self.controlV = [[UIToolbar alloc] init];
-    _backwardBtn = [[UIButton alloc] init];
-    [_backwardBtn setImage:[UIImage imageNamed:k_IMAGE_WEBVIEW_BACK_NORMAL] forState:UIControlStateNormal];
-    [_backwardBtn setImage:[UIImage imageNamed:k_IMAGE_WEBVIEW_BACK_HIGHLIGHT] forState:UIControlStateHighlighted];
     
-    _fowardBtn = [[UIButton alloc] init];
-    [_fowardBtn setImage:[UIImage imageNamed:k_IMAGE_WEBVIEW_FORWARD_NORMAL] forState:UIControlStateNormal];
-    [_fowardBtn setImage:[UIImage imageNamed:k_IMAGE_WEBVIEW_FORWARD_HIGHLIGHT] forState:UIControlStateHighlighted];
-    
-    _refreshStopBtn = [[UIButton alloc] init];
-    [self _setStopButton];
-    
-    
-    [_fowardBtn addTarget:self action:@selector(_fowardBtnClick:) forControlEvents:UIControlEventTouchUpInside];
-    [_backwardBtn addTarget:self action:@selector(_backwardBtnClick:) forControlEvents:UIControlEventTouchUpInside];
-    [_refreshStopBtn addTarget:self action:@selector(_refreshStopBtnClick:) forControlEvents:UIControlEventTouchUpInside];
-    
-    _weak(self);
-    [self.controlV addSubview:self.backwardBtn];
-    [self.backwardBtn mas_makeConstraints:^(MASConstraintMaker *make) {
-        _strong(self);
-        make.left.top.bottom.equalTo(self.controlV);
-        make.width.equalTo(@56);
-    }];
-    [self.controlV addSubview:self.fowardBtn];
-    [self.fowardBtn mas_makeConstraints:^(MASConstraintMaker *make) {
-        _strong(self);
-        make.left.equalTo(self.backwardBtn.mas_right);
-        make.top.bottom.equalTo(self.controlV);
-        make.width.equalTo(self.backwardBtn);
-    }];
-    [self.controlV addSubview:self.refreshStopBtn];
-    [self.refreshStopBtn mas_makeConstraints:^(MASConstraintMaker *make) {
-        _strong(self);
-        make.left.equalTo(self.fowardBtn.mas_right);
-        make.top.bottom.equalTo(self.controlV);
-        make.width.equalTo(self.backwardBtn);
-    }];
-    
+    self.closeItem = [[UIBarButtonItem alloc] initWithTitle:@"关闭"
+                                                      style:UIBarButtonItemStyleDone
+                                                     target:self
+                                                     action:@selector(_closeAction:)];
+    self.refreshItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemRefresh
+                                                                     target:self
+                                                                     action:@selector(_refreshAction:)];
+    self.stopItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemStop
+                                                                  target:self
+                                                                  action:@selector(_stopAction:)];
+    self.closeItem.tintColor = k_COLOR_WHITE;
+    self.refreshItem.tintColor = k_COLOR_WHITE;
+    self.stopItem.tintColor = k_COLOR_WHITE;
     
     _webView = [[UIWebView alloc] init];
     [_webView setBackgroundColor:k_COLOR_TUATARA];
@@ -133,25 +100,7 @@
 
 - (void)_layoutCodingViews {
     _weak(self);
-    if (![self.controlV superview] && self.showControl) {
-        [self.contentV addSubview:self.controlV];
-        [self.controlV mas_makeConstraints:^(MASConstraintMaker *make) {
-            _strong(self);
-            make.bottom.left.right.equalTo(self.contentV);
-            make.height.equalTo(@46);
-        }];
-    }
-    
-    if (![self.webView superview] && self.showControl) {
-        [self.contentV addSubview:self.webView];
-        [self.webView mas_makeConstraints:^(MASConstraintMaker *make) {
-            _strong(self);
-            make.top.left.right.equalTo(self.contentV);
-            make.bottom.equalTo(self.controlV.mas_top);
-        }];
-    }
-    
-    if (!self.showControl) {
+    if (![self.webView superview]) {
         [self.contentV addSubview:self.webView];
         [self.webView mas_makeConstraints:^(MASConstraintMaker *make) {
             _strong(self);
@@ -172,32 +121,40 @@
 
 #pragma mark - Control Button click handler
 
-- (void)_backwardBtnClick:(id)sender {
-    [_webView goBack];
+- (void)_showCloseControlButton {
+    [self.navigationItem setLeftBarButtonItems:@[self.backItem, self.closeItem] animated:YES];
 }
 
-- (void)_fowardBtnClick:(id)sender {
-    [_webView goForward];
+- (void)_showRefashOrStopControlButton {
+    UIBarButtonItem *item = [_webView isLoading] ? self.stopItem : self.refreshItem;
+    [self.navigationItem setRightBarButtonItem:item animated:YES];
 }
 
-- (void)_refreshStopBtnClick:(id)sender {
-    if ([_webView isLoading]) {
-        [_webView stopLoading];
+- (void)_hideControlButton {
+    self.navigationItem.leftBarButtonItem = self.backItem;
+    self.navigationItem.rightBarButtonItem = nil;
+}
+
+- (IBAction)backAction:(id)sender {
+    if (self.showControl && [_webView canGoBack]) {
+        [self _showCloseControlButton];
+        [_webView goBack];
     }
     else {
-        [_webView reload];
+        [self.navigationController popViewControllerAnimated:YES];
     }
 }
 
-
-- (void)_setStopButton {
-    [_refreshStopBtn setImage:[UIImage imageNamed:k_IMAGE_WEBVIEW_STOP_NORMAL] forState:UIControlStateNormal];
-    [_refreshStopBtn setImage:[UIImage imageNamed:k_IMAGE_WEBVIEW_STOP_HIGHLIGHT] forState:UIControlStateHighlighted];
+- (void)_closeAction:(id)sender {
+    [self.navigationController popViewControllerAnimated:YES];
 }
 
-- (void)_setReloadButton {
-    [_refreshStopBtn setImage:[UIImage imageNamed:k_IMAGE_WEBVIEW_RELOAD_NORMAL] forState:UIControlStateNormal];
-    [_refreshStopBtn setImage:[UIImage imageNamed:k_IMAGE_WEBVIEW_RELOAD_HIGHLIGHT] forState:UIControlStateHighlighted];
+- (void)_refreshAction:(id)sender {
+    [_webView reload];
+}
+
+- (void)_stopAction:(id)sender {
+    [_webView stopLoading];
 }
 
 #pragma mark - UIWebViewDelegate
@@ -223,19 +180,13 @@
     return YES;
 }
 - (void)webViewDidStartLoad:(UIWebView *)webView {
-    [self _setStopButton];
-    [_backwardBtn setEnabled:[_webView canGoBack]];
-    [_fowardBtn setEnabled:[_webView canGoForward]];
+    if (self.showControl) [self _showRefashOrStopControlButton];
 }
 - (void)webViewDidFinishLoad:(UIWebView *)webView {
-    [self _setReloadButton];
-    [_backwardBtn setEnabled:[_webView canGoBack]];
-    [_fowardBtn setEnabled:[_webView canGoForward]];
+    if (self.showControl) [self _showRefashOrStopControlButton];
 }
 - (void)webView:(UIWebView *)webView didFailLoadWithError:(NSError *)error {
-    [self _setReloadButton];
-    [_backwardBtn setEnabled:[_webView canGoBack]];
-    [_fowardBtn setEnabled:[_webView canGoForward]];
+    if (self.showControl) [self _showRefashOrStopControlButton];
 }
 
 @end

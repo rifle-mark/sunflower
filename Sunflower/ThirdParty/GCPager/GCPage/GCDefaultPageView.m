@@ -55,8 +55,13 @@
         
         UIPanGestureRecognizer* pan = ({
             UIPanGestureRecognizer* pan = [[UIPanGestureRecognizer alloc] init];
+            [pan withBlockForShouldRequireFailureOf:^BOOL(UIGestureRecognizer *gesture, UIGestureRecognizer *otherGesture) {
+                if (weakSelf.pageScrollView.panGestureRecognizer && [otherGesture isEqual:weakSelf.pageScrollView.panGestureRecognizer] && weakSelf.pageScrollView.blockForPageViewCount(weakSelf.pageScrollView) > 1) {
+                    return YES;
+                }
+                return NO;
+            }];
             [pan addTarget:self action:@selector(_panGestureHandler:)];
-            [pan requireGestureRecognizerToFail:self.pageScrollView.panGestureRecognizer];
             pan;
         });
         [self addGestureRecognizer:pan];
@@ -155,7 +160,8 @@
 
 - (void)_panGestureHandler:(UIPanGestureRecognizer *)pan {
     if (pan.state == UIGestureRecognizerStateRecognized) {
-        CGPoint offsetPoint = [pan translationInView:pan.view];
+//        CGPoint offsetPoint = [pan translationInView:pan.view];
+        CGPoint offsetPoint = [pan translationInView:self];
         if (offsetPoint.x > 0 && self.leftBorderAction) {
             self.leftBorderAction();
         }

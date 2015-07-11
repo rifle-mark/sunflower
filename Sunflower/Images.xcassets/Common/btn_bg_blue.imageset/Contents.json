@@ -8,32 +8,20 @@
       "resizing" : {
         "mode" : "3-part-horizontal",
         "center" : {
-          "mode" : "stretch",
-          "width" : 99
+          "mode" : "fill",
+          "width" : 1
         },
         "capInsets" : {
           "right" : 8,
-          "left" : 93
+          "left" : 8
         }
       },
       "idiom" : "universal",
-      "filename" : "upload_btn@2.png",
+      "filename" : "btn_bg_blue.png",
       "scale" : "2x"
     },
     {
-      "resizing" : {
-        "mode" : "3-part-horizontal",
-        "center" : {
-          "mode" : "stretch",
-          "width" : 190
-        },
-        "capInsets" : {
-          "right" : 12,
-          "left" : 138
-        }
-      },
       "idiom" : "universal",
-      "filename" : "upload_btn@3.png",
       "scale" : "3x"
     }
   ],

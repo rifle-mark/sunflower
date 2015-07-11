@@ -13,7 +13,7 @@
 @property (nonatomic, assign) BOOL contentPagingEnabled;
 @property (nonatomic, assign) CGFloat contentMaximumZoomScale;
 @property (nonatomic, assign) CGFloat contentMinimumZoomScale;
-
+@property (nonatomic, copy) NSUInteger (^blockForPageViewCount)(GCPageScrollView* view);
 
 - (instancetype)withBlockForPageViewCount:(NSUInteger (^)(GCPageScrollView* view))block;
 - (instancetype)withBlockForPageViewForDisplay:(UIView* (^)(GCPageScrollView* view, NSUInteger index))block;

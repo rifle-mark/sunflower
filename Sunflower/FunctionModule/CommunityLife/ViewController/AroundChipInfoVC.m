@@ -1385,7 +1385,7 @@
                                 cell = [[CouponJudgeOptionCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:[CouponJudgeOptionCell reuseIdentify]];
                             }
                             cell.judge = self.judgeArray[path.row];
-                            cell.titleL.text = [NSString stringWithFormat:@"%ld.%@",path.row+1, cell.judge.title];
+                            cell.titleL.text = [NSString stringWithFormat:@"%ld.%@",(long)(path.row+1), cell.judge.title];
                             cell.chooseBlock = ^(CouponJudgeInfo *judge, NSNumber *points){
                                 _strong(self);
                                 if (![UserModel sharedModel].isNormalLogined) {
@@ -1406,7 +1406,7 @@
                                 cell = [[CouponJudgeResultCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:[CouponJudgeResultCell reuseIdentify]];
                             }
                             cell.judge = self.judgeArray[path.row];
-                            cell.titleL.text = [NSString stringWithFormat:@"%ld.%@",path.row+1, cell.judge.title];
+                            cell.titleL.text = [NSString stringWithFormat:@"%ld.%@",(long)(path.row+1), cell.judge.title];
                             return cell;
                         }
                     }

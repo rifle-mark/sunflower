@@ -16,6 +16,7 @@
 @dynamic area;
 @dynamic areaId;
 @dynamic cityId;
+@dynamic openCityId;
 
 @end
 

@@ -16,6 +16,7 @@
 
 @interface ShopStoreEditVC () <UITextFieldDelegate>
 
+@property(nonatomic,weak)IBOutlet UIScrollView   *scrollV;
 @property(nonatomic,weak)IBOutlet UIView         *contentV;
 
 @property(nonatomic,strong)UILabel               *nameL;
@@ -42,7 +43,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    // Do any additional setup after loading the view.
+    [self.scrollV handleKeyboard];
 }
 
 - (void)loadView {
@@ -240,6 +241,10 @@
             make.height.equalTo(@40);
         }];
     }
+    
+    [self.contentV mas_updateConstraints:^(MASConstraintMaker *make) {
+        make.width.equalTo(self.view);
+    }];
 }
 
 #pragma mark - UITextFieldDelegage

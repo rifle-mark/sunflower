@@ -74,8 +74,6 @@
 @property(nonatomic,strong)NSMutableArray               *soutImageArray;
 @property(nonatomic,strong)RentHouseInfo                *rinHouse;
 
-@property(nonatomic,weak)UIView                         *focusedControl;
-
 @end
 
 @implementation RentEditeVC
@@ -125,54 +123,14 @@
     [self.rentOutV withBlockForDidScroll:^(UIScrollView *view) {
         _strong(self);
         [self.selectionView removeFromSuperview];
-        [self.focusedControl resignFirstResponder];
     }];
     [self.sellOutV withBlockForDidScroll:^(UIScrollView *view) {
         _strong(self);
         [self.selectionView removeFromSuperview];
-        [self.focusedControl resignFirstResponder];
     }];
     [self.rentInV withBlockForDidScroll:^(UIScrollView *view) {
         _strong(self);
         [self.selectionView removeFromSuperview];
-        [self.focusedControl resignFirstResponder];
-    }];
-    
-    [self.nameT withBlockForDidBeginEditing:^(UITextField *view) {
-        self.focusedControl = view;
-    }];
-    [self.tellT withBlockForDidBeginEditing:^(UITextField *view) {
-        self.focusedControl = view;
-    }];
-    [self.routTitleT withBlockForDidBeginEditing:^(UITextField *view) {
-        self.focusedControl = view;
-    }];
-    [self.routSquareT withBlockForDidBeginEditing:^(UITextField *view) {
-        self.focusedControl = view;
-    }];
-    [self.routPriceT withBlockForDidBeginEditing:^(UITextField *view) {
-        self.focusedControl = view;
-    }];
-    [self.routDescT withBlockForDidBeginEditing:^(UITextView *view) {
-        self.focusedControl = view;
-    }];
-    [self.soutTitleT withBlockForDidBeginEditing:^(UITextField *view) {
-        self.focusedControl = view;
-    }];
-    [self.soutSquareT withBlockForDidBeginEditing:^(UITextField *view) {
-        self.focusedControl = view;
-    }];
-    [self.soutPriceT withBlockForDidBeginEditing:^(UITextField *view) {
-        self.focusedControl = view;
-    }];
-    [self.soutDescT withBlockForDidBeginEditing:^(UITextView *view) {
-        self.focusedControl = view;
-    }];
-    [self.rinTitleT withBlockForDidBeginEditing:^(UITextField *view) {
-        self.focusedControl = view;
-    }];
-    [self.rinDescT withBlockForDidBeginEditing:^(UITextView *view) {
-        self.focusedControl = view;
     }];
 }
 
@@ -455,11 +413,12 @@
                 _strong(btn);
 //                [SVProgressHUD showInfoWithStatus:@"正在上传图片" maskType:SVProgressHUDMaskTypeClear];
                 [SVProgressHUD showWithStatus:@"正在上传图片" maskType:SVProgressHUDMaskTypeClear];
-                [[CommonModel sharedModel] uploadImage:thumbnail path:filePath progress:nil remoteBlock:^(NSString *url, NSError *error) {
+                UIImage *newImage = [thumbnail adjustedToStandardSize];
+                [[CommonModel sharedModel] uploadImage:newImage path:filePath progress:nil remoteBlock:^(NSString *url, NSError *error) {
                     if (!error) {
                         [SVProgressHUD showSuccessWithStatus:@"上传成功"];
-                        [btn setBackgroundImage:thumbnail forState:UIControlStateNormal];
-                        [btn setBackgroundImage:thumbnail forState:UIControlStateHighlighted];
+                        [btn setBackgroundImage:newImage forState:UIControlStateNormal];
+                        [btn setBackgroundImage:newImage forState:UIControlStateHighlighted];
                         NSInteger idx = btn.tag - 1020101;
                         if (idx > 4) {
                             [self.soutImageArray setObject:url atIndexedSubscript:idx-4];
@@ -505,9 +464,7 @@
         return;
     }
     
-    if (self.focusedControl) {
-        [self.focusedControl resignFirstResponder];
-    }
+    [self.view endEditing:YES];
     
     if (btn == self.rentOutTypeBtn) {
         [self.sellOutTypeBtn setSelected:NO];
@@ -748,6 +705,9 @@
 
 - (void)_setupObserver {
     _weak(self);
+    [@[self.rentOutV, self.sellOutV, self.rentInV] enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+        [(UIScrollView *)obj handleKeyboard];
+    }];
     [self startObserveObject:self forKeyPath:@"selectionArray" usingBlock:^(NSObject *target, NSString *keyPath, NSDictionary *change) {
         _strong(self);
         [self.selectionView reloadData];

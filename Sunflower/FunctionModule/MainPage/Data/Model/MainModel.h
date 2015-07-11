@@ -15,4 +15,7 @@
 + (void)asyncGetCommunityInfoWithId:(NSNumber *)communityId
                          cacheBlock:(void(^)(CommunityInfo *community, NSArray *buildList))cache
                         remoteBlock:(void(^)(CommunityInfo *community, NSArray *buildList, NSError *error))remote;
+
++ (void)asyncGetWeatherInfoWithCityName:(NSString *)city
+                            remoteBlock:(void(^)(NSDictionary *info, NSError *error))remote;
 @end
