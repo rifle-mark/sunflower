@@ -7,12 +7,15 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "BPush.h"
 
 @interface MKWPushNotificationHandler : NSObject
 
+@property(nonatomic,weak)UIViewController *currentvc;
+
 + (instancetype)sharedHandler;
 
-- (void)setupPushWithLaunchOptions:(NSDictionary *)launchOptions;
+- (void)setupPushWithLaunchOptions:(NSDictionary *)launchOptions pushMode:(BPushMode)pushMode isDebug:(BOOL)isDebug;
 - (void)handlePushNotification:(NSDictionary *)pushNotiDic rootVC:(UIViewController *)vc;
 
 @end

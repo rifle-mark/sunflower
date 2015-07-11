@@ -288,6 +288,7 @@
         if (!self.community) {
             return;
         }
+        [self.communityBgV setImageWithURL:[NSURL URLWithString:self.community.images] placeholderImage:[UIImage imageNamed:@"communityBg"]];
         if (self.communityNameV.superview) {
             NSMutableParagraphStyle *ps = [[NSMutableParagraphStyle alloc] init];
             NSDictionary *att = @{NSFontAttributeName:self.communityNameL.font,
