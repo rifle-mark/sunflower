@@ -55,6 +55,7 @@
         
         CLGeocoder *geoCoder = [[CLGeocoder alloc] init];
         [geoCoder reverseGeocodeLocation:toLocation completionHandler:^(NSArray *placemarks, NSError *error) {
+            _strong(self);
             CLPlacemark *mark = [placemarks lastObject];
             self.locatedCity = [[mark addressDictionary] objectForKey:@"City"];
         }];
@@ -97,7 +98,9 @@
 #pragma mark - Private method
 
 - (void)_setupObserver {
+    _weak(self);
     [self startObserveObject:self forKeyPath:@"opendCityArray" usingBlock:^(NSObject *target, NSString *keyPath, NSDictionary *change) {
+        _strong(self);
         [self.cityTableView reloadData];
     }];
 }

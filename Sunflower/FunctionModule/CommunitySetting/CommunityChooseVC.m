@@ -68,7 +68,9 @@
 
 #pragma mark - private method
 - (void)_setupObserver {
+    _weak(self);
     [self startObserveObject:self forKeyPath:@"communityArray" usingBlock:^(NSObject *target, NSString *keyPath, NSDictionary *change) {
+        _strong(self);
         [self.communityTableView reloadData];
     }];
 }

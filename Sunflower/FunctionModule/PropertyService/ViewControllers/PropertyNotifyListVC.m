@@ -120,6 +120,7 @@
 
 @property(nonatomic,weak)IBOutlet UIView    *contentV;
 @property(nonatomic,strong)UITableView      *noteListTableV;
+@property(nonatomic,strong)UIView           *addNoteV;
 
 @property(nonatomic,strong)NSArray          *noteArray;
 @property(nonatomic,strong)NSNumber         *cPage;
@@ -236,38 +237,6 @@
             _strong(self);
             return [self.noteArray count];
         }];
-        [v withBlockForFooterHeight:^CGFloat(UITableView *view, NSInteger section) {
-            if ([[UserModel sharedModel] isPropertyAdminLogined]) {
-                return 45;
-            }
-            return 0;
-        }];
-        [v withBlockForFooterView:^UIView *(UITableView *view, NSInteger section) {
-            UIView *ret = [[UIView alloc] init];
-            UIButton *btn = [[UIButton alloc] init];
-            btn.backgroundColor = k_COLOR_BLUE;
-            btn.layer.cornerRadius = 4;
-            [btn setTitleColor:k_COLOR_WHITE forState:UIControlStateNormal];
-            [btn setTitleColor:k_COLOR_GALLERY forState:UIControlStateHighlighted];
-            [btn setTitle:@"发布新公告" forState:UIControlStateNormal];
-            btn.titleLabel.font = [UIFont systemFontOfSize:14];
-            [ret addSubview:btn];
-            _weak(ret);
-            [btn mas_makeConstraints:^(MASConstraintMaker *make) {
-                _strong(ret);
-                make.centerY.equalTo(ret);
-                make.left.equalTo(ret).with.offset(25);
-                make.right.equalTo(ret).with.offset(-25);
-                make.height.equalTo(@35);
-            }];
-            _weak(btn);
-            [btn addControlEvents:UIControlEventTouchUpInside action:^(UIControl *control, NSSet *touches) {
-                _strong(self);
-                _strong(btn);
-                [self performSegueWithIdentifier:@"Segue_NotifyList_NotifyEdit" sender:btn];
-            }];
-            return ret;
-        }];
         [v withBlockForRowHeight:^CGFloat(UITableView *view, NSIndexPath *path) {
             return 60;
         }];
@@ -301,6 +270,37 @@
         }];
         v;
     });
+    
+    if (!self.addNoteV) {
+        _addNoteV = ({
+            UIView *ret = [[UIView alloc] init];
+            ret.backgroundColor = k_COLOR_WHITE;
+            UIButton *btn = [[UIButton alloc] init];
+            btn.backgroundColor = k_COLOR_BLUE;
+            btn.layer.cornerRadius = 4;
+            [btn setTitleColor:k_COLOR_WHITE forState:UIControlStateNormal];
+            [btn setTitleColor:k_COLOR_GALLERY forState:UIControlStateHighlighted];
+            [btn setTitle:@"发布新公告" forState:UIControlStateNormal];
+            btn.titleLabel.font = [UIFont systemFontOfSize:14];
+            [ret addSubview:btn];
+            _weak(ret);
+            _weak(self);
+            [btn mas_makeConstraints:^(MASConstraintMaker *make) {
+                _strong(ret);
+                make.centerY.equalTo(ret);
+                make.left.equalTo(ret).with.offset(13);
+                make.right.equalTo(ret).with.offset(-13);
+                make.height.equalTo(@43);
+            }];
+            _weak(btn);
+            [btn addControlEvents:UIControlEventTouchUpInside action:^(UIControl *control, NSSet *touches) {
+                _strong(self);
+                _strong(btn);
+                [self performSegueWithIdentifier:@"Segue_NotifyList_NotifyEdit" sender:btn];
+            }];
+            ret;
+        });
+    }
 }
 
 - (void)_layoutNoteListTable {
@@ -318,11 +318,41 @@
         make.height.equalTo(@1);
     }];
     
-    [self.contentV addSubview:self.noteListTableV];
-    [self.noteListTableV mas_makeConstraints:^(MASConstraintMaker *make) {
+    UIView *botV = [[UIView alloc] init];
+    botV.backgroundColor = k_COLOR_CLEAR;
+    [self.contentV addSubview:botV];
+    [botV mas_makeConstraints:^(MASConstraintMaker *make) {
         _strong(self);
-        make.left.top.right.bottom.equalTo(self.contentV);
+        make.bottom.equalTo(self.contentV);
+        make.left.right.equalTo(self.contentV);
+        make.height.equalTo(@(self.bottomLayoutGuide.length));
     }];
+    
+    _weak(botV);
+    if ([[UserModel sharedModel] isPropertyAdminLogined] && [[UserModel sharedModel].currentAdminUser.communityId integerValue] == [[CommonModel sharedModel].currentCommunityId integerValue]) {
+        [self.contentV addSubview:self.addNoteV];
+        [self.addNoteV mas_makeConstraints:^(MASConstraintMaker *make) {
+            _strong(self);
+            make.bottom.equalTo(botV.mas_top);
+            make.left.right.equalTo(self.contentV);
+            make.height.equalTo(@53);
+        }];
+        [self.contentV addSubview:self.noteListTableV];
+        [self.noteListTableV mas_makeConstraints:^(MASConstraintMaker *make) {
+            _strong(self);
+            make.left.top.right.equalTo(self.contentV);
+            make.bottom.equalTo(self.addNoteV.mas_top);
+        }];
+    }
+    else {
+        [self.contentV addSubview:self.noteListTableV];
+        [self.noteListTableV mas_makeConstraints:^(MASConstraintMaker *make) {
+            _strong(self);
+            _strong(botV);
+            make.left.top.right.equalTo(self.contentV);
+            make.bottom.equalTo(botV.mas_top);
+        }];
+    }
 }
 
 @end

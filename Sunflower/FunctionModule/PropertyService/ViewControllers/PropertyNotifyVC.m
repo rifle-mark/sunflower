@@ -12,6 +12,7 @@
 #import <UIImageView+AFNetworking.h>
 #import "NSNumber+MKWDate.h"
 #import "UserModel.h"
+#import "CommonModel.h"
 #import "PropertyServiceModel.h"
 
 @interface PropertyNotifyVC ()
@@ -53,7 +54,7 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     
-    if ([[UserModel sharedModel] isPropertyAdminLogined]) {
+    if ([[UserModel sharedModel] isPropertyAdminLogined] && [[UserModel sharedModel].currentAdminUser.communityId integerValue] == [[CommonModel sharedModel].currentCommunityId integerValue]) {
         UIBarButtonItem *editItem = [[UIBarButtonItem alloc] initWithTitle:@"编辑" style:UIBarButtonItemStyleDone target:self action:@selector(editNotify:)];
         editItem.tintColor = k_COLOR_WHITE;
         self.navigationItem.rightBarButtonItem = editItem;

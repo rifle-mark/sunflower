@@ -63,6 +63,7 @@
     }
     
     self.communityBgV.contentMode = UIViewContentModeScaleAspectFill;
+    self.communityBgV.clipsToBounds = YES;
 }
 
 -(void)viewWillAppear:(BOOL)animated {

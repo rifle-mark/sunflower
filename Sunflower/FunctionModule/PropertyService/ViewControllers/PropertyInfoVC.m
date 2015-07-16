@@ -68,7 +68,7 @@
 - (void)viewDidLayoutSubviews {
     [super viewDidLayoutSubviews];
     
-    if ([[UserModel sharedModel] isPropertyAdminLogined]) {
+    if ([[UserModel sharedModel] isPropertyAdminLogined] && [[UserModel sharedModel].currentAdminUser.communityId integerValue] == [[CommonModel sharedModel].currentCommunityId integerValue]) {
         [self.editBtn setHidden:NO];
     }
     else {

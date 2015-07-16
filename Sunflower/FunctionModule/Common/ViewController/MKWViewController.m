@@ -32,6 +32,8 @@
     }];
     
     [self.view addGestureRecognizer:pan];
+    
+    NSLog(@"%p 加载view", self);
 }
 
 - (void)didReceiveMemoryWarning {
@@ -61,6 +63,10 @@
     if (![MKWStringHelper isNilEmptyOrBlankString:[self umengPageName]]) {
         [MobClick endLogPageView:[self umengPageName]];
     }
+}
+
+- (void)dealloc {
+    NSLog(@"%p 销毁了", self);
 }
 
 /*

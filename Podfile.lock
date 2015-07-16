@@ -20,6 +20,7 @@ PODS:
   - AFNetworking/UIKit (2.5.4):
     - AFNetworking/NSURLConnection
     - AFNetworking/NSURLSession
+  - Aspects (1.4.1)
   - Masonry (0.6.1)
   - MJRefresh (2.0.1)
   - SVProgressHUD (1.1.3)
@@ -27,6 +28,7 @@ PODS:
 
 DEPENDENCIES:
   - AFNetworking (~> 2.5)
+  - Aspects
   - Masonry
   - MJRefresh
   - SVProgressHUD
@@ -34,6 +36,7 @@ DEPENDENCIES:
 
 SPEC CHECKSUMS:
   AFNetworking: 05edc0ac4c4c8cf57bcf4b84be5b0744b6d8e71e
+  Aspects: 7595ba96a6727a58ebcbfc954497fc5d2fdde546
   Masonry: 4972309f2f134de9dd312f4dc4a21359b50e6caa
   MJRefresh: ba114191a0ce34bcc9c1853aa1d3781532c9bc3f
   SVProgressHUD: 748080e4f36e603f6c02aec292664239df5279c1

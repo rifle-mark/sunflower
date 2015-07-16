@@ -1297,7 +1297,7 @@
         
         v.header = [MJRefreshNormalHeader headerWithRefreshingBlock:^{
             _strong(self);
-            if ([UserModel sharedModel].isPropertyAdminLogined) {
+            if ([UserModel sharedModel].isPropertyAdminLogined && [[UserModel sharedModel].currentAdminUser.communityId integerValue] == [[CommonModel sharedModel].currentCommunityId integerValue]) {
                 [self _refreshIssueList];
             }
             else {
@@ -1306,7 +1306,7 @@
         }];
         v.footer = [MJRefreshAutoNormalFooter footerWithRefreshingBlock:^{
             _strong(self);
-            if ([UserModel sharedModel].isPropertyAdminLogined) {
+            if ([UserModel sharedModel].isPropertyAdminLogined && [[UserModel sharedModel].currentAdminUser.communityId integerValue] == [[CommonModel sharedModel].currentCommunityId integerValue]) {
                 [self _loadMoreIssueList];
             }
             else {
@@ -1315,7 +1315,7 @@
         }];
         
         [v withBlockForSectionNumber:^NSInteger(UITableView *view) {
-            if ([UserModel sharedModel].isPropertyAdminLogined) {
+            if ([UserModel sharedModel].isPropertyAdminLogined && [[UserModel sharedModel].currentAdminUser.communityId integerValue] == [[CommonModel sharedModel].currentCommunityId integerValue]) {
                 return 2;
             }
             else {
@@ -1343,7 +1343,7 @@
             subtitleL.textColor = k_COLOR_GALLERY_F;
             subtitleL.font = [UIFont boldSystemFontOfSize:12];
             subtitleL.textAlignment = NSTextAlignmentCenter;
-            subtitleL.text = (section == 1?([UserModel sharedModel].isPropertyAdminLogined?@"以下是客户提出的维修事件，请及时处理":@"提交您的维修信息，我们会及时与您联系"):@"我们为您提供其他的维修产品体验");
+            subtitleL.text = (section == 1?([UserModel sharedModel].isPropertyAdminLogined && [[UserModel sharedModel].currentAdminUser.communityId integerValue] == [[CommonModel sharedModel].currentCommunityId integerValue]?@"以下是客户提出的维修事件，请及时处理":@"提交您的维修信息，我们会及时与您联系"):@"我们为您提供其他的维修产品体验");
             [ret addSubview:titleL];
             _weak(ret);
             [titleL mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -1403,7 +1403,7 @@
                 return 1;
             }
             if (section == 1) {
-                if ([UserModel sharedModel].isPropertyAdminLogined) {
+                if ([UserModel sharedModel].isPropertyAdminLogined && [[UserModel sharedModel].currentAdminUser.communityId integerValue] == [[CommonModel sharedModel].currentCommunityId integerValue]) {
                     return [self.fixIssueList count];
                 }
                 else {
@@ -1411,7 +1411,7 @@
                 }
             }
             if (section == 2) {
-                if ([UserModel sharedModel].isPropertyAdminLogined) {
+                if ([UserModel sharedModel].isPropertyAdminLogined && [[UserModel sharedModel].currentAdminUser.communityId integerValue] == [[CommonModel sharedModel].currentCommunityId integerValue]) {
                     return 0;
                 }
                 else {
@@ -1424,7 +1424,7 @@
         [v withBlockForRowCell:^UITableViewCell *(UITableView *view, NSIndexPath *path) {
             _strong(self);
             if (path.section == 0) {
-                if ([UserModel sharedModel].isPropertyAdminLogined) {
+                if ([UserModel sharedModel].isPropertyAdminLogined && [[UserModel sharedModel].currentAdminUser.communityId integerValue] == [[CommonModel sharedModel].currentCommunityId integerValue]) {
                     FixTelEditCell *cell = [view dequeueReusableCellWithIdentifier:[FixTelEditCell reuseIdentify]];
                     if (!cell) {
                         cell = [[FixTelEditCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:[FixTelEditCell reuseIdentify]];
@@ -1444,7 +1444,7 @@
                 }
             }
             else if (path.section == 1) {
-                if ([UserModel sharedModel].isPropertyAdminLogined) {
+                if ([UserModel sharedModel].isPropertyAdminLogined && [[UserModel sharedModel].currentAdminUser.communityId integerValue] == [[CommonModel sharedModel].currentCommunityId integerValue]) {
                     FixIssueCell *cell = [view dequeueReusableCellWithIdentifier:[FixIssueCell reuseIdentify] forIndexPath:path];
                     if (!cell) {
                         cell = [[FixIssueCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:[FixIssueCell reuseIdentify]];
@@ -1456,7 +1456,7 @@
                             [self performSegueWithIdentifier:@"Segue_PropertyFix_PictureShow" sender:@[picUrlArray, @(index)]];
                     };
                     cell.actionBlock = ^(FixIssueCell *cell){
-                        if ([UserModel sharedModel].isPropertyAdminLogined) {
+                        if ([UserModel sharedModel].isPropertyAdminLogined && [[UserModel sharedModel].currentAdminUser.communityId integerValue] == [[CommonModel sharedModel].currentCommunityId integerValue]) {
                             _strong(self);
                             if ([self.actionV isHidden]) {
                                 self.actionIssue = cell.fixIssue;
@@ -1484,7 +1484,7 @@
                 }
             }
             else {
-                if ([UserModel sharedModel].isPropertyAdminLogined) {
+                if ([UserModel sharedModel].isPropertyAdminLogined && [[UserModel sharedModel].currentAdminUser.communityId integerValue] == [[CommonModel sharedModel].currentCommunityId integerValue]) {
                     return nil;
                 }
                 else {
@@ -1500,7 +1500,7 @@
         
         [v withBlockForRowHeight:^CGFloat(UITableView *view, NSIndexPath *path) {
             if (path.section == 0) {
-                if ([UserModel sharedModel].isPropertyAdminLogined) {
+                if ([UserModel sharedModel].isPropertyAdminLogined && [[UserModel sharedModel].currentAdminUser.communityId integerValue] == [[CommonModel sharedModel].currentCommunityId integerValue]) {
                     return [FixTelEditCell heightOfSelf];
                 }
                 else {
@@ -1508,7 +1508,7 @@
                 }
             }
             else if (path.section == 1) {
-                if ([UserModel sharedModel].isPropertyAdminLogined) {
+                if ([UserModel sharedModel].isPropertyAdminLogined && [[UserModel sharedModel].currentAdminUser.communityId integerValue] == [[CommonModel sharedModel].currentCommunityId integerValue]) {
                     return [FixIssueCell heightWithIssue:self.fixIssueList[path.row] screenWidth:V_W_(self.view)];
                 }
                 else {
@@ -1516,7 +1516,7 @@
                 }
             }
             else {
-                if ([UserModel sharedModel].isPropertyAdminLogined) {
+                if ([UserModel sharedModel].isPropertyAdminLogined && [[UserModel sharedModel].currentAdminUser.communityId integerValue] == [[CommonModel sharedModel].currentCommunityId integerValue]) {
                     return 0;
                 }
                 else {
@@ -1623,14 +1623,14 @@
     _weak(self);
     [self startObserveObject:self forKeyPath:@"fixIssueList" usingBlock:^(NSObject *target, NSString *keyPath, NSDictionary *change) {
         _strong(self);
-        if ([UserModel sharedModel].isPropertyAdminLogined) {
+        if ([UserModel sharedModel].isPropertyAdminLogined && [[UserModel sharedModel].currentAdminUser.communityId integerValue] == [[CommonModel sharedModel].currentCommunityId integerValue]) {
             [self.fixTableV reloadSections:[NSIndexSet indexSetWithIndex:1] withRowAnimation:UITableViewRowAnimationAutomatic];
         }
     }];
     
     [self startObserveObject:self forKeyPath:@"fixSuggestList" usingBlock:^(NSObject *target, NSString *keyPath, NSDictionary *change) {
         _strong(self);
-        if (![UserModel sharedModel].isPropertyAdminLogined) {
+        if (!([UserModel sharedModel].isPropertyAdminLogined && [[UserModel sharedModel].currentAdminUser.communityId integerValue] == [[CommonModel sharedModel].currentCommunityId integerValue])) {
             [self.fixTableV reloadSections:[NSIndexSet indexSetWithIndex:2] withRowAnimation:UITableViewRowAnimationAutomatic];
         }
     }];

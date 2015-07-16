@@ -53,8 +53,10 @@
     // 小区
     self.community = [OpendCommunityInfo infoObjFromManagedObj:[communityInfo getOrInsertManagedObject]];
     // 市
+    _weak(self);
     NSArray *cityList = [[CSSettingModel sharedModel] localOpendCitys];
     [cityList enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+        _strong(self);
         OpendCityInfo *city = [OpendCityInfo infoWithManagedObj:obj];
         if ([city.city isEqualToString:communityInfo.city]) {
             self.city = city;
@@ -65,6 +67,7 @@
     if (self.city) {
         NSArray *areaList = [[CSSettingModel sharedModel] localAreaWithCity:self.city];
         [areaList enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+            _strong(self);
             OpendAreaInfo *area = obj;
             if ([area.area isEqualToString:communityInfo.area]) {
                 self.area = area;
@@ -182,10 +185,12 @@
         [SVProgressHUD showErrorWithStatus:@"请选择完整的小区信息"];
         return;
     }
+    _weak(self);
     [SVProgressHUD showWithStatus:@"正在获取小区信息" maskType:SVProgressHUDMaskTypeClear];
     [MainModel asyncGetCommunityInfoWithId:self.community.communityId cacheBlock:^(CommunityInfo *community, NSArray *buildList) {
         
     } remoteBlock:^(CommunityInfo *community, NSArray *buildList, NSError *error) {
+        _strong(self);
         if (error) {
             [SVProgressHUD showErrorWithStatus:@"获取小区信息失败，请重试"];
             return;

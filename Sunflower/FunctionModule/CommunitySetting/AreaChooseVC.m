@@ -76,7 +76,9 @@
 
 #pragma mark - private method
 - (void)_setupObserver {
+    _weak(self);
     [self startObserveObject:self forKeyPath:@"areaArray" usingBlock:^(NSObject *target, NSString *keyPath, NSDictionary *change) {
+        _strong(self);
         [self.areaTableView reloadData];
     }];
 }

@@ -150,7 +150,7 @@
         
         [v withBlockForRowDidSelect:^(UITableView *view, NSIndexPath *path) {
             _strong(self);
-            if ([UserModel sharedModel].isPropertyAdminLogined) {
+            if ([UserModel sharedModel].isPropertyAdminLogined && [[UserModel sharedModel].currentAdminUser.communityId integerValue] == [[CommonModel sharedModel].currentCommunityId integerValue]) {
                 GuanJiaTableViewCell *cell = (GuanJiaTableViewCell*)[view cellForRowAtIndexPath:path];
                 [self performSegueWithIdentifier:@"Segue_GuanJIaList_GuanJiaEdit" sender:cell.guanjia];
             }
@@ -196,7 +196,7 @@
         _weak(toptmp);
         _weak(bottmp);
         
-        if ([UserModel sharedModel].isPropertyAdminLogined) {
+        if ([UserModel sharedModel].isPropertyAdminLogined && [[UserModel sharedModel].currentAdminUser.communityId integerValue] == [[CommonModel sharedModel].currentCommunityId integerValue]) {
             [self.view addSubview:self.addBtn];
             [self.addBtn mas_makeConstraints:^(MASConstraintMaker *make) {
                 _strong(self);
