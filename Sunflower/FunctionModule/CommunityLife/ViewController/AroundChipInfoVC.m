@@ -14,6 +14,7 @@
 
 #import "CommunityLifeModel.h"
 #import "UserModel.h"
+#import <UIImageView+WebCache.h>
 
 #pragma mark - CouponInfoCell
 
@@ -195,7 +196,7 @@
         if (!self.coupon) {
             return;
         }
-        [self.imageV setImageWithURL:[NSURL URLWithString:self.coupon.image] placeholderImage:[UIImage imageNamed:@"default_top_width"]];
+        [self.imageV sd_setImageWithURL:[APIGenerator urlOfPictureWith:[UIScreen mainScreen].bounds.size.width height:[UIScreen mainScreen].bounds.size.width/2 urlString:self.coupon.image] placeholderImage:[UIImage imageNamed:@"default_top_width"]];
         self.nameL.text = self.coupon.subTitle;
         self.gotL.text = [NSString stringWithFormat:@"已有%@人领取", self.coupon.useCount];
         self.endDateL.text = [NSString stringWithFormat:@"有效期：%@", [self.coupon.endDate dateSplitByChinese]];
@@ -866,7 +867,7 @@
         }
         self.nickNameL.text = self.comment.nickName;
         self.contentL.attributedText = [[self class] _attributeStringOfContentWithComment:self.comment];
-        [self.avatarV setImageWithURL:[NSURL URLWithString:self.comment.avatar] placeholderImage:[UIImage imageNamed:@"default_avatar"]];
+        [self.avatarV sd_setImageWithURL:[APIGenerator urlOfPictureWith:44 height:44 urlString:self.comment.avatar] placeholderImage:[UIImage imageNamed:@"default_avatar"]];
         self.timeL.text = [self.comment.createDate dateTimeByNow];
         if ([self.comment.isCommentDeleted boolValue]) {
             self.showHideBtn.backgroundColor = k_COLOR_BLUE;

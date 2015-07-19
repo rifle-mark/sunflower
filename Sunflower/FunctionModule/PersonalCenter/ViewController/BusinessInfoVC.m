@@ -74,7 +74,7 @@
         }
         if (path.row == 0) {
             ShopLogoCell *cell = [view dequeueReusableCellWithIdentifier:[ShopLogoCell reuseIdentify]];
-            [cell.logoV setImageWithURL:[NSURL URLWithString:self.shop.logo] placeholderImage:[UIImage imageNamed:@"default_avatar"]];
+            [cell.logoV sd_setImageWithURL:[APIGenerator urlOfPictureWith:64 height:64 urlString:self.shop.logo] placeholderImage:[UIImage imageNamed:@"default_avatar"]];
             return cell;
         }
         if (path.row == 1) {

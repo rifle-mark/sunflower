@@ -167,11 +167,13 @@
                 cell = [[WeiCommentPicCell alloc] init];
             }
             _weak(cell);
-            [cell.imgV setImageWithURLRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:self.picUrlVArray[path.row]]] placeholderImage:[UIImage imageNamed:@"default_avatar"] success:^(NSURLRequest *request, NSHTTPURLResponse *response, UIImage *image) {
+            
+            [cell.imgV sd_setImageWithURL:[NSURL URLWithString:self.picUrlVArray[path.row]] placeholderImage:[UIImage imageNamed:@"default_avatar"] completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
                 _strong(cell);
-                cell.imgV.contentMode = UIViewContentModeScaleToFill;
-                cell.imgV.image = image;
-            } failure:nil];
+                if (!error) {
+                    cell.imgV.image = image;
+                }
+            }];
             
             return cell;
         }];

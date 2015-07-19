@@ -125,7 +125,7 @@
     _weak(self);
     [self startObserveObject:self forKeyPath:@"comment" usingBlock:^(NSObject *target, NSString *keyPath, NSDictionary *change) {
         _strong(self);
-        [self.avatarV setImageWithURL:[NSURL URLWithString:self.comment.avatar] placeholderImage:[UIImage imageNamed:@"default_avatar"]];
+        [self.avatarV sd_setImageWithURL:[APIGenerator urlOfPictureWith:44 height:44 urlString:self.comment.avatar] placeholderImage:[UIImage imageNamed:@"default_avatar"]];
         self.nickNameL.text = self.comment.nickName;
         self.timeL.text = [self.comment.createDate dateTimeByNow];
         self.contentL.attributedText = [[self class] _contentAttributeStringWithComment:self.comment];

@@ -9,7 +9,7 @@
 #import "AroundChipAddressListVC.h"
 #import "ShopPicture.h"
 
-#import <UIImageView+AFNetworking.h>
+#import <UIImageView+WebCache.h>
 
 
 @interface CouponShopTableCell : UITableViewCell
@@ -106,7 +106,7 @@
     _weak(self);
     [self startObserveObject:self forKeyPath:@"shop" usingBlock:^(NSObject *target, NSString *keyPath, NSDictionary *change) {
         _strong(self);
-        [self.logoV setImageWithURL:[NSURL URLWithString:self.shop.image] placeholderImage:[UIImage imageNamed:@"default_avatar"]];
+        [self.logoV sd_setImageWithURL:[APIGenerator urlOfPictureWith:68 height:68 urlString:self.shop.image] placeholderImage:[UIImage imageNamed:@"default_avatar"]];
         self.nameL.text = self.shop.name;
         self.addL.text = self.shop.address;
     }];
@@ -195,7 +195,7 @@
                 _strong(cell);
                 [[UIApplication sharedApplication] openURL:[NSURL URLWithString:[NSString stringWithFormat:@"tel://%@",cell.shop.tel]]];
             };
-            [cell.logoV setImageWithURL:[NSURL URLWithString:self.logoUrlStr] placeholderImage:[UIImage imageNamed:@"default_avatar"]];
+            [cell.logoV sd_setImageWithURL:[APIGenerator urlOfPictureWith:68 height:68 urlString:self.logoUrlStr] placeholderImage:[UIImage imageNamed:@"default_avatar"]];
             return cell;
         }];
         v;

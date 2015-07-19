@@ -268,7 +268,8 @@
     
     [self addObserverForNotificationName:k_NOTIFY_NAME_USER_INFO_UPDATE usingBlock:^(NSNotification *notification) {
         _strong(self);
-        [self.avatarV setImageWithURL:[NSURL URLWithString:[UserModel sharedModel].currentNormalUser.avatar] placeholderImage:[UIImage imageNamed:@"default_avatar"]];
+        CGFloat screenWidth = [UIScreen mainScreen].bounds.size.width;
+        [self.avatarV sd_setImageWithURL:[APIGenerator urlOfPictureWith:screenWidth==320?80:106 height:screenWidth==320?80:106 urlString:[UserModel sharedModel].currentNormalUser.avatar] placeholderImage:[UIImage imageNamed:@"default_avatar"]];
         self.nickNameL.text = [UserModel sharedModel].currentNormalUser.nickName;
     }];
     [self startObserveObject:self forKeyPath:@"selectedBuild" usingBlock:^(NSObject *target, NSString *keyPath, NSDictionary *change) {
@@ -531,7 +532,7 @@
     CGFloat screenWidth = [[UIScreen mainScreen] bounds].size.width;
     self.avatarV.layer.cornerRadius = screenWidth==320?40:53;
     self.avatarV.clipsToBounds = YES;
-    [self.avatarV setImageWithURL:[NSURL URLWithString:cUser.avatar] placeholderImage:[UIImage imageNamed:@"default_avatar"]];
+    [self.avatarV sd_setImageWithURL:[APIGenerator urlOfPictureWith:screenWidth==320?80:106 height:screenWidth==320?80:106 urlString:cUser.avatar] placeholderImage:[UIImage imageNamed:@"default_avatar"]];
     [self.userInfoV addSubview:self.avatarV];
     [self.avatarV mas_makeConstraints:^(MASConstraintMaker *make) {
         _strong(self);

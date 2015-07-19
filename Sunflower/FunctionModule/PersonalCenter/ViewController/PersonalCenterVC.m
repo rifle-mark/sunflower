@@ -332,7 +332,7 @@
         _strong(self);
         self.normalUser = [[UserModel sharedModel] currentNormalUser];
         self.nickNameL.text = self.normalUser.nickName;
-        [self.avatarV setImageWithURL:[NSURL URLWithString:self.normalUser.avatar] placeholderImage:[UIImage imageNamed:@"default_avatar"]];
+        [self.avatarV sd_setImageWithURL:[APIGenerator urlOfPictureWith:80 height:80 urlString:self.normalUser.avatar] placeholderImage:[UIImage imageNamed:@"default_avatar"]];
         self.couponCountL.text = [self.normalUser.couponCount stringValue];
         self.userPointsL.text = [self.normalUser.points stringValue];
     }];
@@ -372,17 +372,17 @@
         if (!self.normalUser) {
             return;
         }
-        [self.avatarV setImageWithURL:[NSURL URLWithString:self.normalUser.avatar] placeholderImage:[UIImage imageNamed:@"default_avatar"]];
+        [self.avatarV sd_setImageWithURL:[APIGenerator urlOfPictureWith:80 height:80 urlString:self.normalUser.avatar] placeholderImage:[UIImage imageNamed:@"default_avatar"]];
         self.nickNameL.text = self.normalUser.nickName;
         self.timeL.text = [NSString stringWithFormat:@"邻里号: %@", self.normalUser.userId];
     }];
     [self startObserveObject:self forKeyPath:@"adminUser" usingBlock:^(NSObject *target, NSString *keyPath, NSDictionary *change) {
         if ([self.adminUser.adminType integerValue] == Business) {
-            [self.businessAvatarV setImageWithURL:[NSURL URLWithString:self.adminUser.avatar] placeholderImage:[UIImage imageNamed:@"default_avatar"]];
+            [self.businessAvatarV sd_setImageWithURL:[APIGenerator urlOfPictureWith:150 height:150 urlString:self.adminUser.avatar] placeholderImage:[UIImage imageNamed:@"default_avatar"]];
             self.businessNameL.text = self.adminUser.realName;
         }
         else {
-            [self.propertyAvatarV setImageWithURL:[NSURL URLWithString:self.adminUser.avatar] placeholderImage:[UIImage imageNamed:@"default_avatar"]];
+            [self.propertyAvatarV sd_setImageWithURL:[APIGenerator urlOfPictureWith:150 height:150 urlString:self.adminUser.avatar] placeholderImage:[UIImage imageNamed:@"default_avatar"]];
             self.propertyNameL.text = self.adminUser.realName;
         }
     }];

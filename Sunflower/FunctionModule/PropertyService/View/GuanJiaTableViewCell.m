@@ -7,8 +7,7 @@
 //
 
 #import "GuanJiaTableViewCell.h"
-#import "GCExtension.h"
-
+#import <UIImageView+WebCache.h>
 @interface GuanJiaTableViewCell ()
 
 @property(nonatomic,strong) UIImageView       *imageV;
@@ -125,7 +124,7 @@
 
 - (void)_setupObserver {
     [self startObserveObject:self forKeyPath:@"guanjia" usingBlock:^(NSObject *target, NSString *keyPath, NSDictionary *change) {
-        [self.imageV setImageWithURL:[NSURL URLWithString:self.guanjia.image] placeholderImage:[UIImage imageNamed:@"default_left_height"]];
+        [self.imageV sd_setImageWithURL:[APIGenerator urlOfPictureWith:64 height:79 urlString:self.guanjia.image] placeholderImage:[UIImage imageNamed:@"default_left_height"]];
         self.nameL.text = self.guanjia.name;
         self.titleL.text = self.guanjia.title;
         self.phoneL.text = self.guanjia.phone;

@@ -19,6 +19,7 @@ static CGFloat controlHeight = 47;
         self.imgV = [[UIImageView alloc] init];
         [self.contentView addSubview:self.imgV];
         _weak(self);
+        self.clipsToBounds = YES;
         [self.imgV mas_makeConstraints:^(MASConstraintMaker *make) {
             _strong(self);
             make.left.top.right.bottom.equalTo(self.contentView);
@@ -295,11 +296,13 @@ static CGFloat controlHeight = 47;
             cell = [[WeiCommentPicCell alloc] init];
         }
         _weak(cell);
-        [cell.imgV setImageWithURLRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:self.picUrlVArray[path.row]]] placeholderImage:[UIImage imageNamed:@"default_placeholder"] success:^(NSURLRequest *request, NSHTTPURLResponse *response, UIImage *image) {
-            _strong(cell);
-            cell.imgV.contentMode = UIViewContentModeScaleToFill;
-            cell.imgV.image = image;
-        } failure:nil];
+        [cell.imgV sd_setImageWithURL:[NSURL URLWithString:self.picUrlVArray[path.row]] placeholderImage:[UIImage imageNamed:@"default_placeholder"] completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
+            if (!error) {
+                _strong(cell);
+                cell.imgV.contentMode = UIViewContentModeScaleToFill;
+                cell.imgV.image = image;
+            }
+        }];
         
         return cell;
     }];
@@ -315,7 +318,7 @@ static CGFloat controlHeight = 47;
     _weak(self);
     [self startObserveObject:self forKeyPath:@"comment" usingBlock:^(NSObject *target, NSString *keyPath, NSDictionary *change) {
         _strong(self);
-        [self.avatarV setImageWithURL:[NSURL URLWithString:self.comment.avatar] placeholderImage:[UIImage imageNamed:@"default_avatar"]];
+        [self.avatarV sd_setImageWithURL:[APIGenerator urlOfPictureWith:44 height:44 urlString:self.comment.avatar] placeholderImage:[UIImage imageNamed:@"default_avatar"]];
         self.nameL.text = self.comment.nickName;
         self.timeL.text = [self.comment.createDate dateTimeByNow];
         self.time2L.text = [self.comment.createDate dateTimeSplitByMinus];

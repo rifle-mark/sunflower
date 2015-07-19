@@ -13,6 +13,8 @@
 #import "PropertyServiceModel.h"
 #import "CommonModel.h"
 
+#import <UIImageView+WebCache.h>
+
 @interface GuanJiaEditVC ()
 
 @property(nonatomic,strong)UIScrollView     *editScrolV;
@@ -464,7 +466,7 @@
 
 - (void)_loadData {
     if (self.guanjia) {
-        [self.imageV setImageWithURL:[NSURL URLWithString:self.guanjia.image] placeholderImage:[UIImage imageNamed:@"default_left_height"]];
+        [self.imageV sd_setImageWithURL:[APIGenerator urlOfPictureWith:131 height:161 urlString:self.guanjia.image] placeholderImage:[UIImage imageNamed:@"default_left_height"]];
         self.nameT.text = self.guanjia.name;
         self.titleT.text = self.guanjia.title;
         self.telT.text = self.guanjia.phone;

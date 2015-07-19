@@ -1004,11 +1004,13 @@
                 cell = [[WeiCommentPicCell alloc] init];
             }
             _weak(cell);
-            [cell.imgV setImageWithURLRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:self.picUrlVArray[path.row]]] placeholderImage:[UIImage imageNamed:@"default_placeholder"] success:^(NSURLRequest *request, NSHTTPURLResponse *response, UIImage *image) {
-                _strong(cell);
-                cell.imgV.contentMode = UIViewContentModeScaleToFill;
-                cell.imgV.image = image;
-            } failure:nil];
+            [cell.imgV sd_setImageWithURL:[NSURL URLWithString:self.picUrlVArray[path.row]] placeholderImage:[UIImage imageNamed:@"default_placeholder"] completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
+                if (!error) {
+                    _strong(cell);
+                    cell.imgV.contentMode = UIViewContentModeScaleToFill;
+                    cell.imgV.image = image;
+                }
+            }];
             
             return cell;
         }];
@@ -1213,7 +1215,7 @@
     _weak(self);
     [self startObserveObject:self forKeyPath:@"suggest" usingBlock:^(NSObject *target, NSString *keyPath, NSDictionary *change) {
         _strong(self);
-        [self.iconV setImageWithURL:[NSURL URLWithString:self.suggest.image] placeholderImage:[UIImage imageNamed:@"default_placeholder"]];
+        [self.iconV sd_setImageWithURL:[APIGenerator urlOfPictureWith:69 height:69 urlString:self.suggest.image] placeholderImage:[UIImage imageNamed:@"default_placeholder"]];
         self.titleL.text = self.suggest.title;
         self.subTitleL.text = self.suggest.subTitle;
         self.telL.text = self.suggest.tel;

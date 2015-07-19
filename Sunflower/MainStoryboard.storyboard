@@ -6475,11 +6475,11 @@
                                 <exclude reference="FbW-vN-itz"/>
                             </mask>
                             <mask key="constraints">
+                                <exclude reference="YHK-eg-Fwj"/>
                                 <exclude reference="Gsw-tR-c1x"/>
                                 <exclude reference="mG6-NY-9Ll"/>
                                 <exclude reference="mlh-LF-AJG"/>
                                 <exclude reference="uyC-Na-O9u"/>
-                                <exclude reference="YHK-eg-Fwj"/>
                             </mask>
                         </variation>
                         <variation key="heightClass=regular-widthClass=compact">
@@ -6487,11 +6487,11 @@
                                 <include reference="FbW-vN-itz"/>
                             </mask>
                             <mask key="constraints">
+                                <exclude reference="YHK-eg-Fwj"/>
                                 <include reference="Gsw-tR-c1x"/>
                                 <include reference="mG6-NY-9Ll"/>
                                 <include reference="mlh-LF-AJG"/>
                                 <include reference="uyC-Na-O9u"/>
-                                <exclude reference="YHK-eg-Fwj"/>
                             </mask>
                         </variation>
                     </view>

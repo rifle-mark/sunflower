@@ -94,7 +94,7 @@
         _strong(self);
         self.titleL.text = self.house.title;
         self.avataV.clipsToBounds = YES;
-        [self.avataV setImageWithURL:[NSURL URLWithString:self.house.userAvatar] placeholderImage:[UIImage imageNamed:@"default_avatar"]];
+        [self.avataV sd_setImageWithURL:[APIGenerator urlOfPictureWith:44 height:44 urlString:self.house.userAvatar] placeholderImage:[UIImage imageNamed:@"default_avatar"]];
         self.nameL.text = self.house.userName;
         self.timeL.text = [self.house.crateDate dateSplitBySplash];
         [self _setupDetailView];

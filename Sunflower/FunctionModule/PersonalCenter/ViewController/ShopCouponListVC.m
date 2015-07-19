@@ -143,7 +143,7 @@
     _weak(self);
     [self startObserveObject:self forKeyPath:@"coupon" usingBlock:^(NSObject *target, NSString *keyPath, NSDictionary *change) {
         _strong(self);
-        [self.couponImgV setImageWithURL:[NSURL URLWithString:self.coupon.image] placeholderImage:[UIImage imageNamed:@"default_top_width"]];
+        [self.couponImgV sd_setImageWithURL:[NSURL URLWithString:self.coupon.image] placeholderImage:[UIImage imageNamed:@"default_top_width"]];
         self.nameL.text = self.coupon.name;
         self.timeL.text = [NSString stringWithFormat:@"有效期:%@", [self.coupon.endDate dateSplitByChinese]];
         self.usedL.text = [NSString stringWithFormat:@"已有%@人领取", self.coupon.useCount];

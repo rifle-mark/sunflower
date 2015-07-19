@@ -28,9 +28,11 @@
 #import <MJRefresh.h>
 #import <MobClick.h>
 #import <SVProgressHUD.h>
+#import <UIImageView+WebCache.h>
 #import "MKWViewController.h"
 #import "UserPointHandler.h"
 #import "MKWTextField.h"
+#import "APIGenerator.h"
 
 #define _weak(x)    typeof(x) weak__MKW_##x = x
 #define _strong(x)  typeof(x) x = weak__MKW_##x

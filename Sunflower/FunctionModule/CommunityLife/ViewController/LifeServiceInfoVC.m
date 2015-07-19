@@ -38,11 +38,18 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
-    
+    self.serviceImageV.contentMode = UIViewContentModeScaleToFill;
+    self.serviceImageV.clipsToBounds = YES;
     [self _setupObserver];
     
     [CommunityLifeModel sharedModel] ;
+    self.navigationItem.title = self.lifeServer.title;
 }
+
+- (void)loadView {
+    [super loadView];
+}
+
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
@@ -54,7 +61,7 @@
     
     [super viewWillAppear:animated];
     
-    [self.serviceImageV setImageWithURL:[NSURL URLWithString:self.lifeServer.image] placeholderImage:[UIImage imageNamed:@"default_top_width"]];
+    [self.serviceImageV sd_setImageWithURL:[NSURL URLWithString:self.lifeServer.banner] placeholderImage:[UIImage imageNamed:@"default_top_width"]];
     self.serviceNameL.text = self.lifeServer.title;
     self.serviceSubTitleL.text = self.lifeServer.subTitle;
     self.serviceDesTitleL.text = [NSString stringWithFormat:@"%@服务介绍", self.lifeServer.title];
@@ -79,7 +86,7 @@
     _weak(self);
     [self startObserveObject:self forKeyPath:@"lifeServer" usingBlock:^(NSObject *target, NSString *keyPath, NSDictionary *change) {
         _strong(self);
-        [self.serviceImageV setImageWithURL:[NSURL URLWithString:self.lifeServer.image] placeholderImage:[UIImage imageNamed:@"default_top_width"]];
+        [self.serviceImageV sd_setImageWithURL:[NSURL URLWithString:self.lifeServer.banner] placeholderImage:[UIImage imageNamed:@"default_top_width"]];
         self.serviceNameL.text = self.lifeServer.title;
         self.serviceSubTitleL.text = self.lifeServer.subTitle;
         NSMutableParagraphStyle *ps = [[NSMutableParagraphStyle alloc] init];

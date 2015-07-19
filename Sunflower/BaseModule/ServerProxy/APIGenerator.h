@@ -24,4 +24,6 @@
 
 + (NSString *)urlAddWithoutHTTP:(NSString *)suffix;
 
++ (NSURL*)urlOfPictureWith:(CGFloat)width height:(CGFloat)height urlString:(NSString*)urlStr;
+
 @end

@@ -90,10 +90,11 @@
 - (void)_loadEditer {
     self.imageV = ({
         UIImageView *v = [[UIImageView alloc] init];
+        v.clipsToBounds = YES;
         v;
     });
     if (self.community) {
-        [self.imageV setImageWithURL:[NSURL URLWithString:self.community.images] placeholderImage:[UIImage imageNamed:@"default_top_width"]];
+        [self.imageV sd_setImageWithURL:[APIGenerator urlOfPictureWith:[UIScreen mainScreen].bounds.size.width height:[UIScreen mainScreen].bounds.size.width/2 urlString:self.community.images] placeholderImage:[UIImage imageNamed:@"default_top_width"]];
     }
     
     UILabel *(^titleLabelBlock)(NSString *str) = ^(NSString *str){

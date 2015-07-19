@@ -91,7 +91,9 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     LifeServerTableCell *cell = [self.serverTableView dequeueReusableCellWithIdentifier:[LifeServerTableCell reuseIdentify] forIndexPath:indexPath];
     LifeServerInfo *server = self.serverArray[indexPath.row];
-    [cell.logoV setImageWithURL:[NSURL URLWithString:server.image] placeholderImage:[UIImage imageNamed:@"default_avatar"]];
+    cell.logoV.contentMode = UIViewContentModeScaleToFill;
+    cell.logoV.clipsToBounds = YES;
+    [cell.logoV sd_setImageWithURL:[APIGenerator urlOfPictureWith:77 height:77 urlString:server.image] placeholderImage:[UIImage imageNamed:@"default_avatar"]];
     cell.nameL.text = server.title;
     cell.subTitleL.text = server.subTitle;
     cell.telL.text = server.tel;

@@ -91,10 +91,10 @@
     self.avatarV.clipsToBounds = YES;
     self.avatarV.layer.cornerRadius = [[UIScreen mainScreen] bounds].size.width==320?40:53;
     if (self.isProperty) {
-        [self.avatarV setImageWithURL:[NSURL URLWithString:[UserModel sharedModel].currentAdminUser.avatar] placeholderImage:[UIImage imageNamed:@"default_avatar"]];
+        [self.avatarV sd_setImageWithURL:[APIGenerator urlOfPictureWith:[[UIScreen mainScreen] bounds].size.width==320?110:136 height:[[UIScreen mainScreen] bounds].size.width==320?110:136 urlString:[UserModel sharedModel].currentAdminUser.avatar] placeholderImage:[UIImage imageNamed:@"default_avatar"]];
     }
     else {
-        [self.avatarV setImageWithURL:[NSURL URLWithString:[UserModel sharedModel].currentNormalUser.avatar] placeholderImage:[UIImage imageNamed:@"default_avatar"]];
+        [self.avatarV sd_setImageWithURL:[APIGenerator urlOfPictureWith:[[UIScreen mainScreen] bounds].size.width==320?110:136 height:[[UIScreen mainScreen] bounds].size.width==320?110:136 urlString:[UserModel sharedModel].currentNormalUser.avatar] placeholderImage:[UIImage imageNamed:@"default_avatar"]];
     }
     [self.avatarEditV addSubview:self.avatarV];
     _weak(self);

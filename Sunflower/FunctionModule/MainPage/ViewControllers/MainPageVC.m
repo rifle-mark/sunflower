@@ -291,7 +291,7 @@
         if (!self.community) {
             return;
         }
-        [self.communityBgV setImageWithURL:[NSURL URLWithString:self.community.images]];
+        [self.communityBgV sd_setImageWithURL:[NSURL URLWithString:self.community.images]];
         if (self.communityNameV.superview) {
             NSMutableParagraphStyle *ps = [[NSMutableParagraphStyle alloc] init];
             NSDictionary *att = @{NSFontAttributeName:self.communityNameL.font,
