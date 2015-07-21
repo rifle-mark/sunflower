@@ -50,7 +50,6 @@ static CGFloat controlHeight = 47;
 @property(nonatomic,strong)UILabel      *time2L;
 @property(nonatomic,strong)UIView       *contentV;
 @property(nonatomic,strong)UILabel      *contentL;
-@property(nonatomic,strong)UIView       *pictureV;
 @property(nonatomic,strong)UICollectionView *picsV;
 @property(nonatomic,strong)UIView       *controlV;
 @property(nonatomic,strong)UIButton     *upBtn;
@@ -327,7 +326,7 @@ static CGFloat controlHeight = 47;
             _strong(self);
             make.top.equalTo(self.contentV).with.offset(10);
             make.left.right.equalTo(self.contentV);
-            make.height.equalTo(@([[self class] _contentHeightWithComment:self.comment screenWidth:V_W_(self)]));
+            make.height.equalTo(@([[self class] _contentHeightWithComment:self.comment screenWidth:V_W_([UIApplication sharedApplication].keyWindow)]));
         }];
         
         self.picUrlVArray = [[self class] _picUrlArrayWithComment:self.comment];
@@ -337,7 +336,7 @@ static CGFloat controlHeight = 47;
             make.top.equalTo(self.contentL.mas_bottom).with.offset(10);
             make.left.right.equalTo(self.contentV);
             NSInteger picRowNumber = [WeiCommentCell _picRowNumberWithComment:self.comment];
-            CGFloat picHeight = [WeiCommentCell _picHeightWithScreenWidth:V_W_(self)];
+            CGFloat picHeight = [WeiCommentCell _picHeightWithScreenWidth:V_W_([UIApplication sharedApplication].keyWindow)];
             make.height.equalTo(@((picRowNumber==0?0:picRowNumber*(5+picHeight)+15)));
         }];
         
