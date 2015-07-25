@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7706" systemVersion="14E46" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="dtT-5x-8e6">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7706" systemVersion="14D136" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="dtT-5x-8e6">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
@@ -54,8 +54,12 @@
                             </connections>
                         </barButtonItem>
                     </navigationItem>
+                    <connections>
+                        <segue destination="G5z-g4-BL8" kind="show" identifier="Segue_About_FeedList" id="adc-R7-1PF"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Rh9-SZ-ucJ" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <exit id="BZk-cY-J9a" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
             <point key="canvasLocation" x="7480.5" y="1541.25"/>
         </scene>
@@ -9223,6 +9227,58 @@
             </objects>
             <point key="canvasLocation" x="5734.5" y="3836.25"/>
         </scene>
+        <!--反馈详情-->
+        <scene sceneID="q25-7D-4f9">
+            <objects>
+                <viewController id="j9E-gk-cef" userLabel="反馈详情" customClass="FeedInfoVC" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="8kP-l3-1bu"/>
+                        <viewControllerLayoutGuide type="bottom" id="2uQ-gQ-MZG"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="gXA-AM-dd5">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                    <navigationItem key="navigationItem" title="反馈详情" id="xqp-jQ-cqI" userLabel="反馈详情">
+                        <barButtonItem key="leftBarButtonItem" image="back" id="mle-2l-ygp">
+                            <color key="tintColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                            <connections>
+                                <segue destination="xvw-6B-ukv" kind="unwind" identifier="UnSegue_FeedInfo" unwindAction="unwindSegue:" id="yb8-WT-cfS"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="cmi-SB-heH" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="6802.5" y="3875.25"/>
+        </scene>
+        <!--意见反馈-->
+        <scene sceneID="Cv6-yA-2g6">
+            <objects>
+                <viewController id="EV4-p2-dkf" userLabel="意见反馈" customClass="FeedEditVC" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="E4S-dW-Xbw"/>
+                        <viewControllerLayoutGuide type="bottom" id="yyB-4b-zdI"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="h3N-1I-Jmc">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                    <navigationItem key="navigationItem" title="意见反馈" id="W8o-s4-5fT" userLabel="意见反馈">
+                        <barButtonItem key="leftBarButtonItem" image="back" id="qt4-NI-1nY">
+                            <color key="tintColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                            <connections>
+                                <segue destination="xvw-6B-ukv" kind="unwind" identifier="UnSegue_FeedEdit" unwindAction="unwindSegue:" id="oKC-Wy-xIn"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="6J8-oe-wNN" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="7596" y="3875.25"/>
+        </scene>
         <!--查看图片-->
         <scene sceneID="vBn-cx-BMt">
             <objects>
@@ -16385,6 +16441,37 @@
             </objects>
             <point key="canvasLocation" x="1687.5" y="-900.75"/>
         </scene>
+        <!--帮助与反馈-->
+        <scene sceneID="Jv9-TZ-iY0">
+            <objects>
+                <viewController id="G5z-g4-BL8" userLabel="帮助与反馈" customClass="FeedListVC" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="3Ql-G2-RyC"/>
+                        <viewControllerLayoutGuide type="bottom" id="w4r-rZ-nRy"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="rER-hc-4bg">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                    <navigationItem key="navigationItem" title="帮助与反馈" id="4Ty-9S-530">
+                        <barButtonItem key="leftBarButtonItem" image="back" id="poK-xt-atX">
+                            <color key="tintColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                            <connections>
+                                <segue destination="BZk-cY-J9a" kind="unwind" identifier="UnSegue_FeedList" unwindAction="unwindSegue:" id="EbA-22-QcI"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                    <connections>
+                        <segue destination="j9E-gk-cef" kind="show" identifier="Segue_FeedList_FeedInfo" id="pLq-ia-4WR"/>
+                        <segue destination="EV4-p2-dkf" kind="show" identifier="Segue_FeedList_FeedEdit" id="1j3-ue-Akv"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="lJU-8t-bKa" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <exit id="xvw-6B-ukv" userLabel="Exit" sceneMemberID="exit"/>
+            </objects>
+            <point key="canvasLocation" x="7225.5" y="3165"/>
+        </scene>
     </scenes>
     <resources>
         <image name="CityBg" width="375" height="375"/>
@@ -16448,24 +16535,24 @@
         <image name="znmj" width="40" height="40"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="Kev-8d-YJN"/>
-        <segue reference="C0G-o1-knm"/>
         <segue reference="9Qn-Ef-wx3"/>
-        <segue reference="JvK-HF-8Js"/>
-        <segue reference="YRR-in-NRb"/>
-        <segue reference="MP3-vb-YSL"/>
-        <segue reference="aUW-he-JIX"/>
-        <segue reference="1Se-RM-Pj9"/>
-        <segue reference="KDL-iw-rz2"/>
-        <segue reference="wqP-zY-FUh"/>
-        <segue reference="gSS-48-SZG"/>
-        <segue reference="yli-Jp-NAd"/>
-        <segue reference="t3E-K7-JpC"/>
+        <segue reference="C0G-o1-knm"/>
         <segue reference="H5L-QS-jcp"/>
         <segue reference="eZI-At-RQh"/>
+        <segue reference="t3E-K7-JpC"/>
         <segue reference="FMP-zl-Y9S"/>
+        <segue reference="gSS-48-SZG"/>
+        <segue reference="Kev-8d-YJN"/>
+        <segue reference="wqP-zY-FUh"/>
+        <segue reference="yli-Jp-NAd"/>
         <segue reference="9zu-t1-uZZ"/>
         <segue reference="OVy-Pr-4D6"/>
-        <segue reference="Zam-LA-Mfg"/>
+        <segue reference="ESf-nn-0d6"/>
+        <segue reference="MP3-vb-YSL"/>
+        <segue reference="aUW-he-JIX"/>
+        <segue reference="YRR-in-NRb"/>
+        <segue reference="JvK-HF-8Js"/>
+        <segue reference="1Se-RM-Pj9"/>
+        <segue reference="KDL-iw-rz2"/>
     </inferredMetricsTieBreakers>
 </document>

@@ -11,6 +11,7 @@
 @interface AboutVC ()
 @property(nonatomic,strong)UIImageView          *iconV;
 @property(nonatomic,strong)UILabel              *titleL;
+@property(nonatomic,strong)UIButton             *feedB;
 
 @end
 
@@ -54,11 +55,24 @@
     // Pass the selected object to the new view controller.
 }
 
+- (void)unwindSegue:(UIStoryboardSegue *)segue {
+}
+
 #pragma mark - Coding Views
 - (void)_loadCodingViews {
     if (!self.iconV) {
         self.iconV = [[UIImageView alloc] init];
         self.iconV.image = [UIImage imageNamed:@"about"];
+    }
+    
+    if (!self.feedB) {
+        self.feedB = [UIButton buttonWithType:UIButtonTypeSystem];
+        [self.feedB setTitle:@"帮助与反馈" forState:UIControlStateNormal];
+        [self.feedB setTitleColor:k_COLOR_GALLERY_F forState:UIControlStateNormal];
+        self.feedB.layer.borderColor = k_COLOR_GALLERY_F.CGColor;
+        self.feedB.layer.borderWidth = 1;
+        self.feedB.layer.cornerRadius = 14;
+        [self.feedB addTarget:self action:@selector(_feedAction) forControlEvents:UIControlEventTouchUpInside];
     }
     
     if (!self.titleL) {
@@ -92,6 +106,19 @@
             make.height.equalTo(@14);
         }];
     }
+    if (![self.feedB superview]) {
+        [self.view addSubview:self.feedB];
+        [self.feedB mas_makeConstraints:^(MASConstraintMaker *make) {
+            _strong(self);
+            make.bottom.equalTo(self.titleL.mas_top).offset(-30);
+            make.centerX.equalTo(@0);
+            make.size.mas_equalTo(CGSizeMake(100, 30));
+        }];
+    }
+}
+
+- (void)_feedAction {
+    [self performSegueWithIdentifier:@"Segue_About_FeedList" sender:nil];
 }
 
 @end

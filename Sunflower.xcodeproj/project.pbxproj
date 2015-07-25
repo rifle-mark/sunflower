@@ -9,6 +9,9 @@
 /* Begin PBXBuildFile section */
 		2409AE881B48EF2C00506D0A /* UIScrollView+Keyboard.m in Sources */ = {isa = PBXBuildFile; fileRef = 2409AE871B48EF2C00506D0A /* UIScrollView+Keyboard.m */; };
 		245D909A1B634C2C00BA57C9 /* Feed.m in Sources */ = {isa = PBXBuildFile; fileRef = 245D90991B634C2C00BA57C9 /* Feed.m */; };
+		245D909D1B6353EA00BA57C9 /* FeedListVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 245D909C1B6353EA00BA57C9 /* FeedListVC.m */; };
+		245D90A01B6353FD00BA57C9 /* FeedInfoVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 245D909F1B6353FC00BA57C9 /* FeedInfoVC.m */; };
+		245D90A31B63541400BA57C9 /* FeedEditVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 245D90A21B63541400BA57C9 /* FeedEditVC.m */; };
 		24CDF48D1B4D616D00D01469 /* CityList.plist in Resources */ = {isa = PBXBuildFile; fileRef = 24CDF48C1B4D616D00D01469 /* CityList.plist */; };
 		24FBC6311B47C3A2006A2601 /* UIImage+AdjustmentSize.m in Sources */ = {isa = PBXBuildFile; fileRef = 24FBC6301B47C3A2006A2601 /* UIImage+AdjustmentSize.m */; };
 		4D092D1E1B3160010083DC9F /* MKWViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4D092D1D1B3160010083DC9F /* MKWViewController.m */; };
@@ -298,6 +301,12 @@
 		2409AE871B48EF2C00506D0A /* UIScrollView+Keyboard.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIScrollView+Keyboard.m"; sourceTree = "<group>"; };
 		245D90981B634C2C00BA57C9 /* Feed.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Feed.h; sourceTree = "<group>"; };
 		245D90991B634C2C00BA57C9 /* Feed.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Feed.m; sourceTree = "<group>"; };
+		245D909B1B6353EA00BA57C9 /* FeedListVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FeedListVC.h; sourceTree = "<group>"; };
+		245D909C1B6353EA00BA57C9 /* FeedListVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FeedListVC.m; sourceTree = "<group>"; };
+		245D909E1B6353FC00BA57C9 /* FeedInfoVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FeedInfoVC.h; sourceTree = "<group>"; };
+		245D909F1B6353FC00BA57C9 /* FeedInfoVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FeedInfoVC.m; sourceTree = "<group>"; };
+		245D90A11B63541400BA57C9 /* FeedEditVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FeedEditVC.h; sourceTree = "<group>"; };
+		245D90A21B63541400BA57C9 /* FeedEditVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FeedEditVC.m; sourceTree = "<group>"; };
 		24CDF48C1B4D616D00D01469 /* CityList.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = CityList.plist; sourceTree = "<group>"; };
 		24FBC62F1B47C3A2006A2601 /* UIImage+AdjustmentSize.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+AdjustmentSize.h"; sourceTree = "<group>"; };
 		24FBC6301B47C3A2006A2601 /* UIImage+AdjustmentSize.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+AdjustmentSize.m"; sourceTree = "<group>"; };
@@ -1243,6 +1252,12 @@
 				4DA5783A1B2684150081B93A /* NormalUserInfoEditVC.m */,
 				4D092D4C1B3A48B20083DC9F /* MyFixRecordVC.h */,
 				4D092D4D1B3A48B20083DC9F /* MyFixRecordVC.m */,
+				245D909B1B6353EA00BA57C9 /* FeedListVC.h */,
+				245D909C1B6353EA00BA57C9 /* FeedListVC.m */,
+				245D909E1B6353FC00BA57C9 /* FeedInfoVC.h */,
+				245D909F1B6353FC00BA57C9 /* FeedInfoVC.m */,
+				245D90A11B63541400BA57C9 /* FeedEditVC.h */,
+				245D90A21B63541400BA57C9 /* FeedEditVC.m */,
 			);
 			name = Personal;
 			sourceTree = "<group>";
@@ -2489,6 +2504,7 @@
 				FA2C19891AF4E64A007B7D16 /* RentListVC.m in Sources */,
 				FA5800FA1AEA92C9002FD43C /* LocationModule.m in Sources */,
 				FADB6B5B1AE6B02000D0D3C8 /* NSObject+GCAccessor.m in Sources */,
+				245D90A31B63541400BA57C9 /* FeedEditVC.m in Sources */,
 				4DCFEE731B0761300097CA19 /* EYImagePickerViewController.m in Sources */,
 				4D092DDA1B3D69270083DC9F /* NSDataEx.m in Sources */,
 				FADB6B371AE6B02000D0D3C8 /* UIWebViewDelegateImplementationProxy.m in Sources */,
@@ -2575,6 +2591,7 @@
 				4D092DD81B3D69270083DC9F /* DataVerifier.m in Sources */,
 				FA8200461B0253180064B38C /* ShopInfoCell.m in Sources */,
 				FADB6B4A1AE6B02000D0D3C8 /* UICollectionView+GCDelegateAndDataSource.m in Sources */,
+				245D90A01B6353FD00BA57C9 /* FeedInfoVC.m in Sources */,
 				FADB6B341AE6B02000D0D3C8 /* UITextFieldDelegateImplementationProxy.m in Sources */,
 				4D9E25E61B119D7800074AE2 /* CouponUser.m in Sources */,
 				FA2C19AC1AF610D0007B7D16 /* Guanjia.m in Sources */,
@@ -2639,6 +2656,7 @@
 				4DFF54F11B1FF94D009126E4 /* WeiComment.m in Sources */,
 				FA2C197D1AF4D858007B7D16 /* AroundChipInfoVC.m in Sources */,
 				FADB6B5E1AE6B02000D0D3C8 /* NSObject+GCNotificationObserver.m in Sources */,
+				245D909D1B6353EA00BA57C9 /* FeedListVC.m in Sources */,
 				4D4577BB1B0654EA0094675F /* SMPageControl.m in Sources */,
 				FAC7D1A71AFA60CA004BB38F /* GCPageScrollView.m in Sources */,
 				4DCBCABC1B1D829C003E9676 /* WeCommentListVC.m in Sources */,
