@@ -17,6 +17,7 @@
 #import "RentList.h"
 #import "UserPoint.h"
 #import "PointRuler.h"
+#import "Feed.h"
 #import <ShareSDK/ShareSDK.h>
 
 typedef NS_ENUM(NSUInteger, UserRegisterType) {
@@ -124,6 +125,14 @@ typedef NS_ENUM(NSUInteger, UserRegisterType) {
                               remoteBlock:(void(^)(UserInfo *user, NSError *error))remote;
 
 - (void)asyncUserPointRuleListWithRemoteBlock:(void(^)(NSArray *list, NSError *error))remote;
+
+- (void)asyncAddFeedWithContent:(NSString *)content
+                      imageUrls:(NSArray *)imageUrls
+                    remoteBlock:(void(^)(BOOL isSuccess, NSError *error))remote;
+
+- (void)asyncFeedListWithWithPage:(NSNumber *)page
+                         pageSize:(NSNumber *)pageSize
+                      remoteBlock:(void(^)(NSArray *list, NSNumber *page, NSError *error))remote;
 
 #pragma mark - Admin User
 - (BOOL)isBusinessAdminLogined;

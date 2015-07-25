@@ -480,6 +480,35 @@
     }];
 }
 
+- (void)asyncAddFeedWithContent:(NSString *)content
+                      imageUrls:(NSArray *)imageUrls
+                    remoteBlock:(void(^)(BOOL isSuccess, NSError *error))remote {
+    [JSONServerProxy postJSONWithUrl:k_API_P_FEED_ADD
+                          parameters:@{@"feed":@{@"Content":content,@"Images":[imageUrls componentsJoinedByString:@","]}}
+                             success:^(NSDictionary *responseJSON) {
+                                 if (![[responseJSON objectForKey:@"isSuc"] boolValue]) {
+                                     GCBlockInvoke(remote, NO, [NSError errorWithDomain:[responseJSON objectForKey:@"message"] code:[[responseJSON objectForKey:@"code"] integerValue] userInfo:nil]);
+                                     return;
+                                 }
+                                 GCBlockInvoke(remote, YES, nil);
+                             } failed:^(NSError *error) {
+                                 GCBlockInvoke(remote, NO, error);
+                             }];
+}
+
+- (void)asyncFeedListWithWithPage:(NSNumber *)page
+                         pageSize:(NSNumber *)pageSize
+                      remoteBlock:(void(^)(NSArray *list, NSNumber *page, NSError *error))remote {
+    [JSONServerProxy getWithUrl:[NSString stringWithFormat:@"%@%@/%@", k_API_P_FEED_LIST, page, pageSize] params:nil success:^(NSDictionary *responseJSON) {
+        if (![[responseJSON objectForKey:@"isSuc"] boolValue]) {
+            GCBlockInvoke(remote, nil, page, [[NSError alloc] initWithDomain:[responseJSON objectForKey:@"message"] code:[[responseJSON objectForKey:@"code"] integerValue] userInfo:nil]);
+            return;
+        }
+        GCBlockInvoke(remote, [FeedInfo infoArrayWithJSONArray:[[responseJSON objectForKey:@"result"] objectForKey:@"Items"]], page, nil);
+    } failed:^(NSError *error) {
+        GCBlockInvoke(remote, nil, page, error);
+    }];
+}
 
 #pragma mark - Admin User
 

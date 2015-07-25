@@ -189,6 +189,12 @@
 // 我的缴费列表
 #define k_API_P_CHARGE_QUERY            @"charge/mypaylist/"
 
+// 添加用户反馈
+#define k_API_P_FEED_ADD                @"feed/add"
+// 用户反馈列表
+#define k_API_P_FEED_LIST               @"ask/list/"
+
+
 // 第三方登录
 #define k_API_P_USER_LOGIN_SOCIAL       @"user/social/login"
 

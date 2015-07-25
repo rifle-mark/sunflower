@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		2409AE881B48EF2C00506D0A /* UIScrollView+Keyboard.m in Sources */ = {isa = PBXBuildFile; fileRef = 2409AE871B48EF2C00506D0A /* UIScrollView+Keyboard.m */; };
+		245D909A1B634C2C00BA57C9 /* Feed.m in Sources */ = {isa = PBXBuildFile; fileRef = 245D90991B634C2C00BA57C9 /* Feed.m */; };
 		24CDF48D1B4D616D00D01469 /* CityList.plist in Resources */ = {isa = PBXBuildFile; fileRef = 24CDF48C1B4D616D00D01469 /* CityList.plist */; };
 		24FBC6311B47C3A2006A2601 /* UIImage+AdjustmentSize.m in Sources */ = {isa = PBXBuildFile; fileRef = 24FBC6301B47C3A2006A2601 /* UIImage+AdjustmentSize.m */; };
 		4D092D1E1B3160010083DC9F /* MKWViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4D092D1D1B3160010083DC9F /* MKWViewController.m */; };
@@ -295,6 +296,8 @@
 		0F0907FFB0DC5B57820A255D /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		2409AE861B48EF2C00506D0A /* UIScrollView+Keyboard.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIScrollView+Keyboard.h"; sourceTree = "<group>"; };
 		2409AE871B48EF2C00506D0A /* UIScrollView+Keyboard.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIScrollView+Keyboard.m"; sourceTree = "<group>"; };
+		245D90981B634C2C00BA57C9 /* Feed.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Feed.h; sourceTree = "<group>"; };
+		245D90991B634C2C00BA57C9 /* Feed.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Feed.m; sourceTree = "<group>"; };
 		24CDF48C1B4D616D00D01469 /* CityList.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = CityList.plist; sourceTree = "<group>"; };
 		24FBC62F1B47C3A2006A2601 /* UIImage+AdjustmentSize.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+AdjustmentSize.h"; sourceTree = "<group>"; };
 		24FBC6301B47C3A2006A2601 /* UIImage+AdjustmentSize.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+AdjustmentSize.m"; sourceTree = "<group>"; };
@@ -1886,6 +1889,8 @@
 				4D092D321B331CB60083DC9F /* UserPoint.m */,
 				4D854DCD1B476694008A7F39 /* PointRuler.h */,
 				4D854DCE1B476694008A7F39 /* PointRuler.m */,
+				245D90981B634C2C00BA57C9 /* Feed.h */,
+				245D90991B634C2C00BA57C9 /* Feed.m */,
 			);
 			path = ManagedObject;
 			sourceTree = "<group>";
@@ -2609,6 +2614,7 @@
 				FADB6B431AE6B02000D0D3C8 /* UITableView+GCDelegateAndDataSourceBlock.m in Sources */,
 				FADB6B481AE6B02000D0D3C8 /* AVAudioPlayer+GCDelegate.m in Sources */,
 				4D092DEE1B3F8B5F0083DC9F /* PropertyPayVC.m in Sources */,
+				245D909A1B634C2C00BA57C9 /* Feed.m in Sources */,
 				FAC7D1AD1AFA60CA004BB38F /* GCPageViewController.m in Sources */,
 				4DA28B521B0CE152006D6094 /* ShopStore.m in Sources */,
 				FADB6B571AE6B02000D0D3C8 /* UITextView+GCDelegate.m in Sources */,
