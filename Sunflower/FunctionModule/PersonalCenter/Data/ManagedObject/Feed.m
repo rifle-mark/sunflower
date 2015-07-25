@@ -33,9 +33,9 @@
 }
 
 -(NSManagedObject *)getOrInsertManagedObject {
-    Feed *feed = (Feed *)[[MKWModelHandler defaultHandler] queryObjectsForEntity:k_ENTITY_POINTRULER predicate:[NSPredicate predicateWithFormat:@"askId=%@", self.askId]];
+    Feed *feed = (Feed *)[[MKWModelHandler defaultHandler] queryObjectsForEntity:k_ENTITY_FEED predicate:[NSPredicate predicateWithFormat:@"askId=%@", self.askId]];
     if (!feed) {
-        feed = (Feed *)[[MKWModelHandler defaultHandler] insertNewObjectForEntityForName:k_ENTITY_POINTRULER];
+        feed = (Feed *)[[MKWModelHandler defaultHandler] insertNewObjectForEntityForName:k_ENTITY_FEED];
     }
     return feed;
 }

@@ -134,6 +134,9 @@ typedef NS_ENUM(NSUInteger, UserRegisterType) {
                          pageSize:(NSNumber *)pageSize
                       remoteBlock:(void(^)(NSArray *list, NSNumber *page, NSError *error))remote;
 
+- (void)asyncgetFeedInfoWithFeedId:(NSNumber *)feedId
+                       remoteBlock:(void(^)(FeedInfo *feed, NSError *error))remote;
+
 #pragma mark - Admin User
 - (BOOL)isBusinessAdminLogined;
 - (BOOL)isPropertyAdminLogined;

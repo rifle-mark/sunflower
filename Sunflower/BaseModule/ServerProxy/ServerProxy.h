@@ -193,6 +193,8 @@
 #define k_API_P_FEED_ADD                @"feed/add"
 // 用户反馈列表
 #define k_API_P_FEED_LIST               @"ask/list/"
+// 用户反馈详情
+#define k_API_P_FEED_INFO               @"ask/detail/"
 
 
 // 第三方登录

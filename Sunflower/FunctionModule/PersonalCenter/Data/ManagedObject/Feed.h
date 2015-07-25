@@ -11,7 +11,7 @@
 
 #import "MKWInfoObject.h"
 
-#define k_ENTITY_POINTRULER     @"Feed"
+#define k_ENTITY_FEED     @"Feed"
 
 @interface Feed : NSManagedObject
 

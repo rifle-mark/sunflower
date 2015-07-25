@@ -510,6 +510,20 @@
     }];
 }
 
+- (void)asyncgetFeedInfoWithFeedId:(NSNumber *)feedId
+                       remoteBlock:(void(^)(FeedInfo *feed, NSError *error))remote {
+    [JSONServerProxy getWithUrl:[NSString stringWithFormat:@"%@%@", k_API_P_FEED_INFO, feedId] params:nil success:^(NSDictionary *responseJSON) {
+        if (![[responseJSON objectForKey:@"isSuc"] boolValue]) {
+            GCBlockInvoke(remote, nil, [[NSError alloc] initWithDomain:[responseJSON objectForKey:@"message"] code:[[responseJSON objectForKey:@"code"] integerValue] userInfo:nil]);
+            return;
+        }
+        FeedInfo *info = [[FeedInfo alloc] init];
+        GCBlockInvoke(remote, [info infoWithJSONDic:[responseJSON objectForKey:@"result"]], nil);
+    } failed:^(NSError *error) {
+        GCBlockInvoke(remote, nil, error);
+    }];
+}
+
 #pragma mark - Admin User
 
 - (void)adminLoginWithUserName:(NSString *)phoneNumber
