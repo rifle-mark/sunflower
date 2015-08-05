@@ -163,6 +163,7 @@
     self.checkCodeBtn = buttonBlock(@"获取验证码", k_COLOR_BLUE);
     [self.checkCodeBtn addControlEvents:UIControlEventTouchUpInside action:^(UIControl *control, NSSet *touches) {
         _strong(self);
+        __block NSInteger second = 20;
         NSString *phoneNum = [self.phoneNumbT.text stringByReplacingOccurrencesOfString:@" " withString:@""];
         if ([MKWStringHelper isVAlidatePhoneNumber:phoneNum]) {
             [[UserModel sharedModel] asyncCheckCodeWithPhoneNumber:phoneNum remoteBlock:^(NSString *code, NSString *msg, NSError *error) {
@@ -171,8 +172,23 @@
                     [SVProgressHUD showSuccessWithStatus:@"验证码发送成功"];
                     self.checkCode = code;
                     [self.checkCodeBtn setEnabled:NO];
+                    [self.checkCodeBtn setTitle:@"(20)秒后再次获取" forState:UIControlStateDisabled];
+                    
+                    self.checkCodeBtn.backgroundColor = [k_COLOR_BLUE colorWithAlphaComponent:0.8];
                     // start timing after 1 minuts enable again.
-                    return;
+                    NSTimer *timer = [NSTimer scheduledTimerWithTimeInterval:1 repeats:YES action:^(NSTimer *timer) {
+                        _strong(self);
+                        if (second > 0) {
+                            [self.checkCodeBtn setTitle:[NSString stringWithFormat:@"(%ld)秒后再次获取", (long)second] forState:UIControlStateDisabled];
+                            second -= 1;
+                        }
+                        else {
+                            [self.checkCodeBtn setEnabled:YES];
+                            [self.checkCodeBtn setTitle:@"获取验证码" forState:UIControlStateNormal];
+                            self.checkCodeBtn.backgroundColor = k_COLOR_BLUE;
+                            [timer invalidate];
+                        }
+                    }];
                 }
                 [SVProgressHUD showErrorWithStatus:@"网络错误"];
             }];

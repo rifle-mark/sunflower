@@ -50,7 +50,7 @@
             _strong(self);
             make.centerY.equalTo(self.contentView).with.offset(-8);
             make.left.equalTo(self.contentView).with.offset(25);
-            make.right.equalTo(self.contentView).with.offset(-40);
+            make.right.equalTo(self.contentView).with.offset(-80);
             make.height.equalTo(@14);
         }];
         

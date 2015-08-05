@@ -192,6 +192,7 @@
 @property(nonatomic,strong)UIButton         *auditSexBtn;
 @property(nonatomic,strong)UITextField      *auditTelT;
 @property(nonatomic,strong)UITextField      *auditVerifyT;
+@property(nonatomic,strong)UIButton         *getVerifyBtn;
 
 @property(nonatomic,strong)UITableView      *selectionView;
 @property(nonatomic,weak)UIView             *focusedT;
@@ -1605,29 +1606,45 @@
         make.height.equalTo(@35);
     }];
     _weak(phoneL);
-    UIButton *getVerifyBtn = [[UIButton alloc] init];
-    getVerifyBtn.backgroundColor = k_COLOR_BLUE;
-    getVerifyBtn.layer.cornerRadius = 4;
-    [getVerifyBtn setTitleColor:k_COLOR_WHITE forState:UIControlStateNormal];
-    [getVerifyBtn setTitleColor:k_COLOR_GALLERY forState:UIControlStateHighlighted];
-    [getVerifyBtn setTitle:@"获取验证码" forState:UIControlStateNormal];
-    getVerifyBtn.titleLabel.font = [UIFont boldSystemFontOfSize:14];
-    [getVerifyBtn addControlEvents:UIControlEventTouchUpInside action:^(UIControl *control, NSSet *touches) {
+    _getVerifyBtn = [[UIButton alloc] init];
+    _getVerifyBtn.backgroundColor = k_COLOR_BLUE;
+    _getVerifyBtn.layer.cornerRadius = 4;
+    [_getVerifyBtn setTitleColor:k_COLOR_WHITE forState:UIControlStateNormal];
+    [_getVerifyBtn setTitleColor:k_COLOR_GALLERY forState:UIControlStateHighlighted];
+    [_getVerifyBtn setTitle:@"获取验证码" forState:UIControlStateNormal];
+    _getVerifyBtn.titleLabel.font = [UIFont boldSystemFontOfSize:14];
+    [_getVerifyBtn addControlEvents:UIControlEventTouchUpInside action:^(UIControl *control, NSSet *touches) {
         _strong(self);
         NSString *phoneNum = [MKWStringHelper trimWithStr:self.auditTelT.text];
         if ([MKWStringHelper isNilEmptyOrBlankString:phoneNum]) {
             phoneNum = [UserModel sharedModel].currentNormalUser.userName;
         }
         _weak(self);
+        __block NSInteger second = 20;
         if ([MKWStringHelper isVAlidatePhoneNumber:phoneNum]) {
             [[UserModel sharedModel] asyncCheckCodeWithPhoneNumber:phoneNum remoteBlock:^(NSString *code, NSString *msg, NSError *error) {
                 _strong(self);
                 if (!error) {
                     [SVProgressHUD showSuccessWithStatus:@"验证码发送成功"];
                     self.checkCode = code;
-                    // TODO:
+                    [self.getVerifyBtn setEnabled:NO];
+                    [self.getVerifyBtn setTitle:@"(20)秒后再次获取" forState:UIControlStateDisabled];
+                    
+                    self.getVerifyBtn.backgroundColor = [k_COLOR_BLUE colorWithAlphaComponent:0.8];
                     // start timing after 1 minuts enable again.
-                    return;
+                    NSTimer *timer = [NSTimer scheduledTimerWithTimeInterval:1 repeats:YES action:^(NSTimer *timer) {
+                        _strong(self);
+                        if (second > 0) {
+                            [self.getVerifyBtn setTitle:[NSString stringWithFormat:@"(%ld)秒后再次获取", (long)second] forState:UIControlStateDisabled];
+                            second -= 1;
+                        }
+                        else {
+                            [self.getVerifyBtn setEnabled:YES];
+                            [self.getVerifyBtn setTitle:@"获取验证码" forState:UIControlStateNormal];
+                            self.getVerifyBtn.backgroundColor = k_COLOR_BLUE;
+                            [timer invalidate];
+                        }
+                    }];
                 }
                 [SVProgressHUD showErrorWithStatus:@"网络错误"];
             }];
@@ -1636,8 +1653,8 @@
             [SVProgressHUD showErrorWithStatus:@"手机号码错误"];
         }
     }];
-    [self.confirmStep3V addSubview:getVerifyBtn];
-    [getVerifyBtn mas_makeConstraints:^(MASConstraintMaker *make) {
+    [self.confirmStep3V addSubview:_getVerifyBtn];
+    [_getVerifyBtn mas_makeConstraints:^(MASConstraintMaker *make) {
         _strong(self);
         _strong(phoneL);
         make.top.bottom.equalTo(phoneL);
@@ -1646,13 +1663,12 @@
     }];
     self.auditTelT = textFiledBlock([UserModel sharedModel].currentNormalUser.userName);
     [self.confirmStep3V addSubview:self.auditTelT];
-    _weak(getVerifyBtn);
     [self.auditTelT mas_makeConstraints:^(MASConstraintMaker *make) {
         _strong(phoneL);
-        _strong(getVerifyBtn);
+        _strong(self);
         make.top.bottom.equalTo(phoneL);
         make.left.equalTo(phoneL.mas_right);
-        make.right.equalTo(getVerifyBtn.mas_left).with.offset(-2);
+        make.right.equalTo(self.getVerifyBtn.mas_left).with.offset(-2);
     }];
     
     UILabel *verifyL = labelBlock(@"请输入手机验证码", 14);

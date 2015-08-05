@@ -64,6 +64,7 @@
 #pragma mark - UI Control Action
 - (IBAction)checkCodeTap:(id)sender {
     NSString *phoneNum = [self.phoneNumbT.text stringByReplacingOccurrencesOfString:@" " withString:@""];
+    __block NSInteger second = 20;
     _weak(self);
     if ([MKWStringHelper isVAlidatePhoneNumber:phoneNum]) {
         [[UserModel sharedModel] asyncCheckCodeWithPhoneNumber:phoneNum remoteBlock:^(NSString *code, NSString *msg, NSError *error) {
@@ -72,7 +73,23 @@
                 [SVProgressHUD showSuccessWithStatus:@"验证码发送成功"];
                 self.checkCode = code;
                 [self.checkCodeBtn setEnabled:NO];
+                [self.checkCodeBtn setTitle:@"(20)秒后再次获取" forState:UIControlStateDisabled];
+                
+                self.checkCodeBtn.backgroundColor = [k_COLOR_BLUE colorWithAlphaComponent:0.8];
                 // start timing after 1 minuts enable again.
+                NSTimer *timer = [NSTimer scheduledTimerWithTimeInterval:1 repeats:YES action:^(NSTimer *timer) {
+                    _strong(self);
+                    if (second > 0) {
+                        [self.checkCodeBtn setTitle:[NSString stringWithFormat:@"(%ld)秒后再次获取", (long)second] forState:UIControlStateDisabled];
+                        second -= 1;
+                    }
+                    else {
+                        [self.checkCodeBtn setEnabled:YES];
+                        [self.checkCodeBtn setTitle:@"获取验证码" forState:UIControlStateNormal];
+                        self.checkCodeBtn.backgroundColor = k_COLOR_BLUE;
+                        [timer invalidate];
+                    }
+                }];
                 return;
             }
             [SVProgressHUD showErrorWithStatus:@"网络错误"];
