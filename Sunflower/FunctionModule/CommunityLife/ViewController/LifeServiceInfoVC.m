@@ -12,6 +12,7 @@
 
 #import "CommunityLifeModel.h"
 #import "MKWColorHelper.h"
+#import "MKWWebVC.h"
 
 @interface LifeServiceInfoVC ()
 
@@ -71,15 +72,24 @@
     ps.paragraphSpacingBefore = 4;
     self.serviceDetailT.attributedText = [[NSAttributedString alloc] initWithString:self.lifeServer.serverDesc attributes:@{NSFontAttributeName:[UIFont systemFontOfSize:14], NSForegroundColorAttributeName:RGB(78, 78, 78), NSParagraphStyleAttributeName:ps}];
 }
-/*
+
 #pragma mark - Navigation
 
 // In a storyboard-based application, you will often want to do a little preparation before navigation
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     // Get the new view controller using [segue destinationViewController].
     // Pass the selected object to the new view controller.
+    if ([segue.identifier isEqualToString:@"Segue_LifeService_Web"]) {
+        NSString *url = sender;
+        MKWWebVC *webVC = (MKWWebVC*)segue.destinationViewController;
+        webVC.url = [NSURL URLWithString:url];
+    }
 }
-*/
+
+- (void)unwindSegue:(UIStoryboardSegue *)segue {
+    
+}
+
 
 #pragma mark - Business Logic
 - (void)_setupObserver {
@@ -99,7 +109,8 @@
 
 #pragma mark - UI Control Action
 - (IBAction)orderBtnTap:(id)sender {
-    [[UIApplication sharedApplication] openURL:[NSURL URLWithString:self.lifeServer.url]];
+//    [[UIApplication sharedApplication] openURL:[NSURL URLWithString:self.lifeServer.url]];
+    [self performSegueWithIdentifier:@"Segue_LifeService_Web" sender:self.lifeServer.url];
 }
 
 - (IBAction)callBtnTap:(id)sender {

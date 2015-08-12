@@ -217,6 +217,21 @@
             cell.shop = self.shopList[path.row];
             return cell;
         }];
+        
+        [v withBlockForRowDidSelect:^(UITableView *view, NSIndexPath *path) {
+            _strong(self);
+            if (path.row < 0 || path.row >= [self.shopList count]) {
+                return;
+            }
+            
+            PropertyShopInfo *shop = self.shopList[path.row];
+            if ([MKWStringHelper isNilEmptyOrBlankString:shop.tel]) {
+                [SVProgressHUD showErrorWithStatus:@"服务电话为空！"];
+                return;
+            }
+            
+            [[UIApplication sharedApplication] openURL:[NSURL URLWithString:[NSString stringWithFormat:@"tel://%@", shop.tel]]];
+        }];
         v;
     });
 }
