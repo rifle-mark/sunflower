@@ -50,6 +50,7 @@
     self.currentPage = @0;
     
     [self _setupObserver];
+    [self.commentTableV.header beginRefreshing];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -65,8 +66,6 @@
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
-    
-    [self.commentTableV.header beginRefreshing];
 }
 
 - (void)viewDidLayoutSubviews {
