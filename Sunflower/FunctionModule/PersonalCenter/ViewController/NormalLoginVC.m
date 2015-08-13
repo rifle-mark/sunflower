@@ -21,6 +21,10 @@
 @property(nonatomic,weak)IBOutlet UIView            *contentV;
 @property(nonatomic,weak)IBOutlet UITextField       *phoneNumbT;
 @property(nonatomic,weak)IBOutlet UITextField       *passwordT;
+@property(nonatomic,strong)UIButton                 *qqLoginBtn;
+@property(nonatomic,strong)UIButton                 *wxLoginBtn;
+@property(nonatomic,strong)UILabel                  *qqLoginLbl;
+@property(nonatomic,strong)UILabel                  *wxLoginLbl;
 
 @property(nonatomic,weak)UITextField                *focusedField;
 
@@ -78,6 +82,50 @@
     [self.contentV mas_updateConstraints:^(MASConstraintMaker *make) {
         make.width.equalTo(self.view);
     }];
+    
+    if (![WXApi isWXAppInstalled]) {
+        if (![self.wxLoginLbl superview]) {
+            [self.contentV addSubview:self.wxLoginLbl];
+            [self.wxLoginLbl mas_makeConstraints:^(MASConstraintMaker *make) {
+                make.left.right.equalTo(self.contentV);
+                make.height.equalTo(@43);
+                make.top.equalTo(self.passwordT.mas_bottom).with.offset(150);
+            }];
+        }
+    }
+    else {
+        if (![self.wxLoginBtn superview]) {
+            [self.contentV addSubview:self.wxLoginBtn];
+            [self.wxLoginBtn mas_makeConstraints:^(MASConstraintMaker *make) {
+                make.left.equalTo(self.contentV).with.offset(26);
+                make.right.equalTo(self.contentV).with.offset(-26);
+                make.top.equalTo(self.passwordT.mas_bottom).with.offset(150);
+                make.height.equalTo(@43);
+            }];
+        }
+    }
+    
+    if (![QQApi isQQInstalled]) {
+        if (![self.qqLoginLbl superview]) {
+            [self.contentV addSubview:self.qqLoginLbl];
+            [self.qqLoginLbl mas_makeConstraints:^(MASConstraintMaker *make) {
+                make.left.right.equalTo(self.contentV);
+                make.height.equalTo(@43);
+                make.top.equalTo(self.passwordT.mas_bottom).with.offset(203);
+            }];
+        }
+    }
+    else {
+        if (![self.qqLoginBtn superview]) {
+            [self.contentV addSubview:self.qqLoginBtn];
+            [self.qqLoginBtn mas_makeConstraints:^(MASConstraintMaker *make) {
+                make.left.equalTo(self.contentV).with.offset(26);
+                make.right.equalTo(self.contentV).with.offset(-26);
+                make.height.equalTo(@43);
+                make.top.equalTo(self.passwordT.mas_bottom).with.offset(203);
+            }];
+        }
+    }
 }
 
 - (void)_login {
@@ -113,50 +161,13 @@
     }
 }
 
-- (IBAction)weiXinBtnTap:(id)sender {
-    if (![WXApi isWXAppInstalled]) {
-        [SVProgressHUD showErrorWithStatus:@"请安装微信或选择其它登录方式"];
-        return;
-    }
-    
-    [SVProgressHUD showWithStatus:@"正在登录" maskType:SVProgressHUDMaskTypeClear];
-    [[UserModel sharedModel] asyncThirdPartyLoginWithShareType:ShareTypeWeixiSession remoteBlock:^(UserInfo *user, NSError *error) {
-        if (!error) {
-            [SVProgressHUD showSuccessWithStatus:@"登录成功"];
-            if (self.enterVC) {
-                [self.navigationController popToViewController:self.enterVC animated:YES];
-            }
-            else {
-                [self.navigationController popViewControllerAnimated:YES];
-            }
-        }
-        else {
-            [SVProgressHUD showErrorWithStatus:error.domain];
-        }
-    }];
-}
+
 
 - (IBAction)qqBtnTap:(id)sender {
     if (![QQApi isQQInstalled]) {
         [SVProgressHUD showErrorWithStatus:@"请安装QQ或选择其它登录方式"];
         return;
     }
-    
-    [SVProgressHUD showWithStatus:@"正在登录" maskType:SVProgressHUDMaskTypeClear];
-    [[UserModel sharedModel] asyncThirdPartyLoginWithShareType:ShareTypeQQSpace remoteBlock:^(UserInfo *user, NSError *error) {
-        if (!error) {
-            [SVProgressHUD showSuccessWithStatus:@"登录成功"];
-            if (self.enterVC) {
-                [self.navigationController popToViewController:self.enterVC animated:YES];
-            }
-            else {
-                [self.navigationController popViewControllerAnimated:YES];
-            }
-        }
-        else {
-            [SVProgressHUD showErrorWithStatus:error.domain];
-        }
-    }];
 }
 
 - (IBAction)weiBoBtnTap:(id)sender {
@@ -215,5 +226,96 @@
 //        
 //    }
 //}
+
+- (UIButton*)qqLoginBtn {
+    if (!_qqLoginBtn) {
+        _qqLoginBtn = [[UIButton alloc] init];
+        _qqLoginBtn.backgroundColor = RGB(67, 116, 198);
+        [_qqLoginBtn setTitle:@"QQ帐号登录" forState:UIControlStateNormal];
+        [_qqLoginBtn setTitleColor:k_COLOR_WHITE forState:UIControlStateNormal];
+        _qqLoginBtn.layer.cornerRadius = 3;
+        _qqLoginBtn.titleLabel.font = [UIFont systemFontOfSize:14];
+        
+        _weak(self);
+        [_qqLoginBtn addControlEvents:UIControlEventTouchUpInside action:^(UIControl *control, NSSet *touches) {
+            [SVProgressHUD showWithStatus:@"正在登录" maskType:SVProgressHUDMaskTypeClear];
+            [[UserModel sharedModel] asyncThirdPartyLoginWithShareType:ShareTypeQQSpace remoteBlock:^(UserInfo *user, NSError *error) {
+                _strong(self);
+                if (!error) {
+                    [SVProgressHUD showSuccessWithStatus:@"登录成功"];
+                    if (self.enterVC) {
+                        [self.navigationController popToViewController:self.enterVC animated:YES];
+                    }
+                    else {
+                        [self.navigationController popViewControllerAnimated:YES];
+                    }
+                }
+                else {
+                    [SVProgressHUD showErrorWithStatus:error.domain];
+                }
+            }];
+        }];
+    }
+    return _qqLoginBtn;
+}
+
+- (UIButton *)wxLoginBtn {
+    if (!_wxLoginBtn) {
+        _wxLoginBtn = [[UIButton alloc] init];
+        _wxLoginBtn.backgroundColor = RGB(51, 166, 70);
+        [_wxLoginBtn setTitle:@"微信帐号登录" forState:UIControlStateNormal];
+        [_wxLoginBtn setTitleColor:k_COLOR_WHITE forState:UIControlStateNormal];
+        _wxLoginBtn.layer.cornerRadius = 3;
+        _wxLoginBtn.titleLabel.font = [UIFont boldSystemFontOfSize:14];
+        
+        _weak(self);
+        [_wxLoginBtn addControlEvents:UIControlEventTouchUpInside action:^(UIControl *control, NSSet *touches) {
+            [SVProgressHUD showWithStatus:@"正在登录" maskType:SVProgressHUDMaskTypeClear];
+            [[UserModel sharedModel] asyncThirdPartyLoginWithShareType:ShareTypeWeixiSession remoteBlock:^(UserInfo *user, NSError *error) {
+                _strong(self);
+                if (!error) {
+                    [SVProgressHUD showSuccessWithStatus:@"登录成功"];
+                    if (self.enterVC) {
+                        [self.navigationController popToViewController:self.enterVC animated:YES];
+                    }
+                    else {
+                        [self.navigationController popViewControllerAnimated:YES];
+                    }
+                }
+                else {
+                    [SVProgressHUD showErrorWithStatus:error.domain];
+                }
+            }];
+        }];
+    }
+    
+    return _wxLoginBtn;
+}
+
+- (UILabel *)qqLoginLbl {
+    if (!_qqLoginLbl) {
+        _qqLoginLbl = [[UILabel alloc] init];
+        _qqLoginLbl.backgroundColor = k_COLOR_CLEAR;
+        _qqLoginLbl.textColor = k_COLOR_BON_JOUR;
+        _qqLoginLbl.textAlignment = NSTextAlignmentCenter;
+        _qqLoginLbl.text = @"安装QQ体验一键登录!";
+        _qqLoginLbl.font = [UIFont boldSystemFontOfSize:14];
+    }
+    
+    return _qqLoginLbl;
+}
+
+- (UILabel *)wxLoginLbl {
+    if (!_wxLoginLbl) {
+        _wxLoginLbl = [[UILabel alloc] init];
+        _wxLoginLbl.backgroundColor = k_COLOR_CLEAR;
+        _wxLoginLbl.textColor = k_COLOR_BON_JOUR;
+        _wxLoginLbl.textAlignment = NSTextAlignmentCenter;
+        _wxLoginLbl.text = @"安装微信体验一键登录!";
+        _wxLoginLbl.font = [UIFont systemFontOfSize:14];
+    }
+    
+    return _wxLoginLbl;
+}
 
 @end

@@ -3556,70 +3556,6 @@
                                                     <action selector="registTap:" destination="gmW-ZF-zdi" eventType="touchUpInside" id="yfr-wH-Aff"/>
                                                 </connections>
                                             </button>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="iOY-mO-FZn">
-                                                <rect key="frame" x="-23" y="-15" width="46" height="30"/>
-                                                <color key="backgroundColor" red="0.20000000000000001" green="0.65098039215686276" blue="0.27450980392156865" alpha="1" colorSpace="calibratedRGB"/>
-                                                <constraints>
-                                                    <constraint firstAttribute="height" constant="45" id="oCs-aa-p2w"/>
-                                                    <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="45" id="sHt-Ig-xnd"/>
-                                                </constraints>
-                                                <state key="normal" title="微信帐号登录">
-                                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                                </state>
-                                                <userDefinedRuntimeAttributes>
-                                                    <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
-                                                        <integer key="value" value="4"/>
-                                                    </userDefinedRuntimeAttribute>
-                                                </userDefinedRuntimeAttributes>
-                                                <variation key="default">
-                                                    <mask key="constraints">
-                                                        <exclude reference="oCs-aa-p2w"/>
-                                                        <exclude reference="sHt-Ig-xnd"/>
-                                                    </mask>
-                                                </variation>
-                                                <variation key="heightClass=regular-widthClass=compact">
-                                                    <mask key="constraints">
-                                                        <include reference="oCs-aa-p2w"/>
-                                                        <include reference="sHt-Ig-xnd"/>
-                                                    </mask>
-                                                </variation>
-                                                <connections>
-                                                    <action selector="weiXinBtnTap:" destination="gmW-ZF-zdi" eventType="touchUpInside" id="p7C-cv-3QR"/>
-                                                </connections>
-                                            </button>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vdf-Gg-hZc">
-                                                <rect key="frame" x="-23" y="-15" width="46" height="30"/>
-                                                <color key="backgroundColor" red="0.2627450980392157" green="0.45490196078431372" blue="0.77647058823529413" alpha="1" colorSpace="calibratedRGB"/>
-                                                <constraints>
-                                                    <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="45" id="8Uw-JO-WIf"/>
-                                                    <constraint firstAttribute="height" constant="45" id="r1n-f1-eFL"/>
-                                                </constraints>
-                                                <state key="normal" title="QQ帐号登录">
-                                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                                </state>
-                                                <userDefinedRuntimeAttributes>
-                                                    <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
-                                                        <integer key="value" value="4"/>
-                                                    </userDefinedRuntimeAttribute>
-                                                </userDefinedRuntimeAttributes>
-                                                <variation key="default">
-                                                    <mask key="constraints">
-                                                        <exclude reference="8Uw-JO-WIf"/>
-                                                        <exclude reference="r1n-f1-eFL"/>
-                                                    </mask>
-                                                </variation>
-                                                <variation key="heightClass=regular-widthClass=compact">
-                                                    <mask key="constraints">
-                                                        <include reference="8Uw-JO-WIf"/>
-                                                        <include reference="r1n-f1-eFL"/>
-                                                    </mask>
-                                                </variation>
-                                                <connections>
-                                                    <action selector="qqBtnTap:" destination="gmW-ZF-zdi" eventType="touchUpInside" id="kg3-uU-SX8"/>
-                                                </connections>
-                                            </button>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="快捷登录" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wd1-w7-qmQ">
                                                 <rect key="frame" x="0.0" y="-21" width="42" height="21"/>
                                                 <constraints>
@@ -3690,12 +3626,8 @@
                                                 <variation key="heightClass=regular-widthClass=compact" constant="2"/>
                                             </constraint>
                                             <constraint firstItem="LK5-DJ-N9y" firstAttribute="leading" secondItem="aQl-si-alf" secondAttribute="leading" constant="25" id="DEX-ta-bVQ"/>
-                                            <constraint firstAttribute="trailing" secondItem="vdf-Gg-hZc" secondAttribute="trailing" constant="25" id="DcH-E8-Cyi"/>
-                                            <constraint firstItem="iOY-mO-FZn" firstAttribute="leading" secondItem="aQl-si-alf" secondAttribute="leading" constant="25" id="GcO-hr-Urp"/>
                                             <constraint firstItem="MsT-0c-KTV" firstAttribute="top" secondItem="ZEg-tP-Iy4" secondAttribute="bottom" constant="15" id="Kqg-iO-y8U"/>
                                             <constraint firstAttribute="trailing" secondItem="ZEg-tP-Iy4" secondAttribute="trailing" constant="25" id="Okb-bw-bCE"/>
-                                            <constraint firstAttribute="trailing" secondItem="iOY-mO-FZn" secondAttribute="trailing" constant="25" id="QFY-Ss-kfQ"/>
-                                            <constraint firstItem="iOY-mO-FZn" firstAttribute="top" secondItem="wd1-w7-qmQ" secondAttribute="bottom" constant="15" id="UhO-EC-8TA"/>
                                             <constraint firstAttribute="trailing" secondItem="LK5-DJ-N9y" secondAttribute="trailing" constant="25" id="WhF-aL-BH5"/>
                                             <constraint firstItem="k6g-fL-MrC" firstAttribute="top" secondItem="MsT-0c-KTV" secondAttribute="bottom" constant="6" id="eKv-rW-1Cx"/>
                                             <constraint firstItem="MsT-0c-KTV" firstAttribute="leading" secondItem="aQl-si-alf" secondAttribute="leading" constant="25" id="fBC-Hk-agR"/>
@@ -3705,7 +3637,6 @@
                                             <constraint firstAttribute="height" constant="269" id="giT-ec-ioV">
                                                 <variation key="heightClass=regular-widthClass=compact" constant="395"/>
                                             </constraint>
-                                            <constraint firstItem="vdf-Gg-hZc" firstAttribute="top" secondItem="iOY-mO-FZn" secondAttribute="bottom" constant="15" id="hhA-Hb-SFT"/>
                                             <constraint firstItem="KQd-ez-CfP" firstAttribute="centerY" secondItem="wd1-w7-qmQ" secondAttribute="centerY" constant="14.5" id="j5J-2c-zUD">
                                                 <variation key="heightClass=regular-widthClass=compact" constant="0.0"/>
                                             </constraint>
@@ -3715,7 +3646,6 @@
                                             <constraint firstAttribute="trailing" secondItem="KQd-ez-CfP" secondAttribute="trailing" constant="25" id="mdA-qK-mxL"/>
                                             <constraint firstItem="LK5-DJ-N9y" firstAttribute="top" secondItem="wkg-jY-a6z" secondAttribute="bottom" constant="5" id="pGL-g7-CzY"/>
                                             <constraint firstItem="wkg-jY-a6z" firstAttribute="top" secondItem="MsT-0c-KTV" secondAttribute="bottom" constant="6" id="pzi-vn-7Kf"/>
-                                            <constraint firstItem="vdf-Gg-hZc" firstAttribute="leading" secondItem="aQl-si-alf" secondAttribute="leading" constant="25" id="wqw-4Q-ViN"/>
                                         </constraints>
                                         <variation key="default">
                                             <mask key="subviews">
@@ -3724,8 +3654,6 @@
                                                 <exclude reference="MsT-0c-KTV"/>
                                                 <exclude reference="k6g-fL-MrC"/>
                                                 <exclude reference="wkg-jY-a6z"/>
-                                                <exclude reference="iOY-mO-FZn"/>
-                                                <exclude reference="vdf-Gg-hZc"/>
                                                 <exclude reference="wd1-w7-qmQ"/>
                                                 <exclude reference="rna-HM-rB5"/>
                                                 <exclude reference="KQd-ez-CfP"/>
@@ -3744,14 +3672,8 @@
                                                 <exclude reference="DEX-ta-bVQ"/>
                                                 <exclude reference="WhF-aL-BH5"/>
                                                 <exclude reference="pGL-g7-CzY"/>
-                                                <exclude reference="GcO-hr-Urp"/>
-                                                <exclude reference="QFY-Ss-kfQ"/>
-                                                <exclude reference="UhO-EC-8TA"/>
                                                 <exclude reference="6AS-rV-Nhi"/>
                                                 <exclude reference="eKv-rW-1Cx"/>
-                                                <exclude reference="DcH-E8-Cyi"/>
-                                                <exclude reference="hhA-Hb-SFT"/>
-                                                <exclude reference="wqw-4Q-ViN"/>
                                                 <exclude reference="gLZ-9B-o6C"/>
                                                 <exclude reference="pzi-vn-7Kf"/>
                                                 <exclude reference="Apf-HY-MGg"/>
@@ -3768,8 +3690,6 @@
                                                 <include reference="MsT-0c-KTV"/>
                                                 <include reference="k6g-fL-MrC"/>
                                                 <include reference="wkg-jY-a6z"/>
-                                                <include reference="iOY-mO-FZn"/>
-                                                <include reference="vdf-Gg-hZc"/>
                                                 <include reference="wd1-w7-qmQ"/>
                                                 <include reference="rna-HM-rB5"/>
                                                 <include reference="KQd-ez-CfP"/>
@@ -3788,14 +3708,8 @@
                                                 <include reference="DEX-ta-bVQ"/>
                                                 <include reference="WhF-aL-BH5"/>
                                                 <include reference="pGL-g7-CzY"/>
-                                                <include reference="GcO-hr-Urp"/>
-                                                <include reference="QFY-Ss-kfQ"/>
-                                                <include reference="UhO-EC-8TA"/>
                                                 <include reference="6AS-rV-Nhi"/>
                                                 <include reference="eKv-rW-1Cx"/>
-                                                <include reference="DcH-E8-Cyi"/>
-                                                <include reference="hhA-Hb-SFT"/>
-                                                <include reference="wqw-4Q-ViN"/>
                                                 <include reference="gLZ-9B-o6C"/>
                                                 <include reference="pzi-vn-7Kf"/>
                                                 <include reference="Apf-HY-MGg"/>
@@ -16536,24 +16450,24 @@
         <image name="znmj" width="40" height="40"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="9Qn-Ef-wx3"/>
-        <segue reference="C0G-o1-knm"/>
         <segue reference="gSS-48-SZG"/>
-        <segue reference="t3E-K7-JpC"/>
-        <segue reference="FMP-zl-Y9S"/>
-        <segue reference="eZI-At-RQh"/>
-        <segue reference="Kev-8d-YJN"/>
-        <segue reference="H5L-QS-jcp"/>
-        <segue reference="wqP-zY-FUh"/>
-        <segue reference="ESf-nn-0d6"/>
-        <segue reference="9zu-t1-uZZ"/>
-        <segue reference="OVy-Pr-4D6"/>
-        <segue reference="yJU-OV-N09"/>
-        <segue reference="aUW-he-JIX"/>
         <segue reference="YRR-in-NRb"/>
-        <segue reference="MP3-vb-YSL"/>
-        <segue reference="JvK-HF-8Js"/>
+        <segue reference="aUW-he-JIX"/>
         <segue reference="1Se-RM-Pj9"/>
         <segue reference="KDL-iw-rz2"/>
+        <segue reference="gt6-KE-Nk0"/>
+        <segue reference="Fgf-l2-77f"/>
+        <segue reference="9Qn-Ef-wx3"/>
+        <segue reference="C0G-o1-knm"/>
+        <segue reference="t3E-K7-JpC"/>
+        <segue reference="H5L-QS-jcp"/>
+        <segue reference="eZI-At-RQh"/>
+        <segue reference="wqP-zY-FUh"/>
+        <segue reference="Kev-8d-YJN"/>
+        <segue reference="FMP-zl-Y9S"/>
+        <segue reference="yJU-OV-N09"/>
+        <segue reference="OVy-Pr-4D6"/>
+        <segue reference="9zu-t1-uZZ"/>
+        <segue reference="ESf-nn-0d6"/>
     </inferredMetricsTieBreakers>
 </document>
