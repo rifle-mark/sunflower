@@ -21,10 +21,9 @@
 @property(nonatomic,weak)IBOutlet UIView            *contentV;
 @property(nonatomic,weak)IBOutlet UITextField       *phoneNumbT;
 @property(nonatomic,weak)IBOutlet UITextField       *passwordT;
+@property(nonatomic,weak)IBOutlet UIView            *quickLogV;
 @property(nonatomic,strong)UIButton                 *qqLoginBtn;
 @property(nonatomic,strong)UIButton                 *wxLoginBtn;
-@property(nonatomic,strong)UILabel                  *qqLoginLbl;
-@property(nonatomic,strong)UILabel                  *wxLoginLbl;
 
 @property(nonatomic,weak)UITextField                *focusedField;
 
@@ -42,7 +41,8 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
+    [self.contentV addSubview:self.wxLoginBtn];
+    [self.contentV addSubview:self.qqLoginBtn];
     [self.scrollV handleKeyboard];
 }
 
@@ -83,48 +83,47 @@
         make.width.equalTo(self.view);
     }];
     
-    if (![WXApi isWXAppInstalled]) {
-        if (![self.wxLoginLbl superview]) {
-            [self.contentV addSubview:self.wxLoginLbl];
-            [self.wxLoginLbl mas_makeConstraints:^(MASConstraintMaker *make) {
-                make.left.right.equalTo(self.contentV);
-                make.height.equalTo(@43);
-                make.top.equalTo(self.passwordT.mas_bottom).with.offset(150);
-            }];
-        }
+    if (![WXApi isWXAppInstalled] && ![QQApi isQQInstalled]) {
+        self.quickLogV.hidden = YES;
+        self.wxLoginBtn.hidden = YES;
+        self.qqLoginBtn.hidden = YES;
+    }
+    else if ([WXApi isWXAppInstalled]) {
+        self.quickLogV.hidden = NO;
+        self.wxLoginBtn.hidden = NO;
+        [self.wxLoginBtn mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.left.equalTo(self.contentV).with.offset(26);
+            make.right.equalTo(self.contentV).with.offset(-26);
+            make.top.equalTo(self.passwordT.mas_bottom).with.offset(150);
+            make.height.equalTo(@43);
+        }];
+    }
+    else if ([QQApi isQQInstalled]) {
+        self.quickLogV.hidden = NO;
+        self.qqLoginBtn.hidden = NO;
+        [self.qqLoginBtn mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.left.equalTo(self.contentV).with.offset(26);
+            make.right.equalTo(self.contentV).with.offset(-26);
+            make.height.equalTo(@43);
+            make.top.equalTo(self.passwordT.mas_bottom).with.offset(150);
+        }];
     }
     else {
-        if (![self.wxLoginBtn superview]) {
-            [self.contentV addSubview:self.wxLoginBtn];
-            [self.wxLoginBtn mas_makeConstraints:^(MASConstraintMaker *make) {
-                make.left.equalTo(self.contentV).with.offset(26);
-                make.right.equalTo(self.contentV).with.offset(-26);
-                make.top.equalTo(self.passwordT.mas_bottom).with.offset(150);
-                make.height.equalTo(@43);
-            }];
-        }
-    }
-    
-    if (![QQApi isQQInstalled]) {
-        if (![self.qqLoginLbl superview]) {
-            [self.contentV addSubview:self.qqLoginLbl];
-            [self.qqLoginLbl mas_makeConstraints:^(MASConstraintMaker *make) {
-                make.left.right.equalTo(self.contentV);
-                make.height.equalTo(@43);
-                make.top.equalTo(self.passwordT.mas_bottom).with.offset(203);
-            }];
-        }
-    }
-    else {
-        if (![self.qqLoginBtn superview]) {
-            [self.contentV addSubview:self.qqLoginBtn];
-            [self.qqLoginBtn mas_makeConstraints:^(MASConstraintMaker *make) {
-                make.left.equalTo(self.contentV).with.offset(26);
-                make.right.equalTo(self.contentV).with.offset(-26);
-                make.height.equalTo(@43);
-                make.top.equalTo(self.passwordT.mas_bottom).with.offset(203);
-            }];
-        }
+        self.quickLogV.hidden = NO;
+        self.wxLoginBtn.hidden = NO;
+        self.qqLoginBtn.hidden = NO;
+        [self.wxLoginBtn mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.left.equalTo(self.contentV).with.offset(26);
+            make.right.equalTo(self.contentV).with.offset(-26);
+            make.top.equalTo(self.passwordT.mas_bottom).with.offset(150);
+            make.height.equalTo(@43);
+        }];
+        [self.qqLoginBtn mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.left.equalTo(self.contentV).with.offset(26);
+            make.right.equalTo(self.contentV).with.offset(-26);
+            make.height.equalTo(@43);
+            make.top.equalTo(self.passwordT.mas_bottom).with.offset(203);
+        }];
     }
 }
 
@@ -290,32 +289,6 @@
     }
     
     return _wxLoginBtn;
-}
-
-- (UILabel *)qqLoginLbl {
-    if (!_qqLoginLbl) {
-        _qqLoginLbl = [[UILabel alloc] init];
-        _qqLoginLbl.backgroundColor = k_COLOR_CLEAR;
-        _qqLoginLbl.textColor = k_COLOR_BON_JOUR;
-        _qqLoginLbl.textAlignment = NSTextAlignmentCenter;
-        _qqLoginLbl.text = @"安装QQ体验一键登录!";
-        _qqLoginLbl.font = [UIFont boldSystemFontOfSize:14];
-    }
-    
-    return _qqLoginLbl;
-}
-
-- (UILabel *)wxLoginLbl {
-    if (!_wxLoginLbl) {
-        _wxLoginLbl = [[UILabel alloc] init];
-        _wxLoginLbl.backgroundColor = k_COLOR_CLEAR;
-        _wxLoginLbl.textColor = k_COLOR_BON_JOUR;
-        _wxLoginLbl.textAlignment = NSTextAlignmentCenter;
-        _wxLoginLbl.text = @"安装微信体验一键登录!";
-        _wxLoginLbl.font = [UIFont systemFontOfSize:14];
-    }
-    
-    return _wxLoginLbl;
 }
 
 @end

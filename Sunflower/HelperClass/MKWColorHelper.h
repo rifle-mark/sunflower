@@ -36,7 +36,6 @@
 @class UIColor;
 @interface MKWColorHelper : NSObject
 
-+ (UIColor*)monthColor;
 + (UIColor *)colorWithHexString:(NSString *)stringToConvert;
 + (UIColor *)colorWithHexString:(NSString *)stringToConvert withAlpha:(float)alpha;
 + (UIColor *)ipsHTMLColorToColor:(NSString *)string;

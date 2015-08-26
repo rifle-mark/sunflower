@@ -11,52 +11,6 @@
 
 @implementation MKWColorHelper
 
-+ (UIColor*)monthColor{
-    NSDateComponents *components = [[NSCalendar currentCalendar] components:NSDayCalendarUnit | NSMonthCalendarUnit | NSYearCalendarUnit fromDate:[NSDate date]];
-    NSInteger month= [components month];
-    switch (month) {
-        case 1:
-            return [MKWColorHelper colorWithHexString:@"#d2b40c"];
-            break;
-        case 2:
-            return [MKWColorHelper colorWithHexString:@"#8dd39c"];
-            break;
-        case 3:
-            return [MKWColorHelper colorWithHexString:@"#0dbc62"];
-            break;
-        case 4:
-            return [MKWColorHelper colorWithHexString:@"#d248a1"];
-            break;
-        case 5:
-            return [MKWColorHelper colorWithHexString:@"#d248a1"];//#d1d30a
-            break;
-        case 6:
-            return [MKWColorHelper colorWithHexString:@"#07d3d6"];
-            break;
-        case 7:
-            return [MKWColorHelper colorWithHexString:@"#472dc9"];
-            break;
-        case 8:
-            return [MKWColorHelper colorWithHexString:@"#06c665"];
-            break;
-        case 9:
-            return [MKWColorHelper colorWithHexString:@"#a1d30a"];
-            break;
-        case 10:
-            return [MKWColorHelper colorWithHexString:@"#d75427"];
-            break;
-        case 11:
-            return [MKWColorHelper colorWithHexString:@"#d2b40b"];
-            break;
-        case 12:
-            return [MKWColorHelper colorWithHexString:@"#d1d30a"];
-            break;
-        default:
-            return [MKWColorHelper colorWithHexString:@"#ffd802"];
-            break;
-    }
-}
-
 + (UIColor *)colorWithHexString:(NSString *)stringToConvert withAlpha:(float)alpha{
     NSString *cString = [[stringToConvert stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]] uppercaseString];
     

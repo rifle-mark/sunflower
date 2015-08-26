@@ -351,7 +351,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
-    UIBarButtonItem *editItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"navi_edit_btn"] style:UIBarButtonItemStyleBordered target:self action:@selector(_issueEditTap:)];
+    UIBarButtonItem *editItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"navi_edit_btn"] style:UIBarButtonItemStylePlain target:self action:@selector(_issueEditTap:)];
     editItem.tintColor = k_COLOR_WHITE;
     self.navigationItem.rightBarButtonItem = editItem;
     [self.navigationItem.rightBarButtonItem setEnabled:YES];

@@ -48,7 +48,7 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     
-    self.tabBarController.tabBar.selectedImageTintColor = k_COLOR_BLUE;
+    self.tabBarController.tabBar.tintColor = k_COLOR_BLUE;
     
     self.latestNoteInfo = nil;
     

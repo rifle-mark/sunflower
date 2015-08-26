@@ -343,7 +343,7 @@ static NSInteger    c_PageSize = 10;
 - (void)loadView {
     [super loadView];
     
-    UIBarButtonItem *editItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"navi_edit_btn"] style:UIBarButtonItemStyleBordered target:self action:@selector(_couponEditTap:)];
+    UIBarButtonItem *editItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"navi_edit_btn"] style:UIBarButtonItemStylePlain target:self action:@selector(_couponEditTap:)];
     editItem.tintColor = k_COLOR_WHITE;
     self.navigationItem.rightBarButtonItem = editItem;
     
