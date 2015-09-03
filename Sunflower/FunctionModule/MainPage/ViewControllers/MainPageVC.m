@@ -191,20 +191,6 @@
 
 - (void)_layoutCodingViews {
     _weak(self);
-//    if (![self.avatarV superview]) {
-//        if ([[UserModel sharedModel] isNormalLogined]) {
-//            UserInfo *cUser = [[UserModel sharedModel] currentNormalUser];
-//            [self.communityBgV addSubview:self.avatarV];
-//            [self.avatarV setImageWithURL:[NSURL URLWithString:cUser.avatar] placeholderImage:[UIImage imageNamed:@"default_avatar"]];
-//            [self.avatarV mas_makeConstraints:^(MASConstraintMaker *make) {
-//                _strong(self);
-//                make.right.equalTo(self.communityBgV).with.offset(-13);
-//                make.top.equalTo(self.communityBgV).with.offset(25);
-//                make.width.height.equalTo(@60);
-//            }];
-//            self.avatarV.layer.cornerRadius = 30;
-//        }
-//    }
     
     if (![self.communityNameV superview]) {
         [self.communityBgV addSubview:self.communityNameV];
