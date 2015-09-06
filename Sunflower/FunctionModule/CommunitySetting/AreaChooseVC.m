@@ -33,16 +33,11 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
+    self.automaticallyAdjustsScrollViewInsets = NO;
     
     [self.okBtn setEnabled:NO];
     [self _setupAreaTableView];
     _weak(self);
-    [self.areaTableView mas_makeConstraints:^(MASConstraintMaker *make) {
-        _strong(self);
-        make.top.equalTo(self.view);
-        make.left.right.equalTo(self.view);
-        make.bottom.equalTo(self.view).with.offset(-70);
-    }];
     
     [self _setupObserver];
     
@@ -58,7 +53,16 @@
         }
     }];
 }
-
+- (void)updateViewConstraints {
+    [super updateViewConstraints];
+    _weak(self);
+    [self.areaTableView mas_makeConstraints:^(MASConstraintMaker *make) {
+        _strong(self);
+        make.top.equalTo(self.view).with.offset(self.topLayoutGuide.length);
+        make.left.right.equalTo(self.view);
+        make.bottom.equalTo(self.view).with.offset(-70);
+    }];
+}
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.

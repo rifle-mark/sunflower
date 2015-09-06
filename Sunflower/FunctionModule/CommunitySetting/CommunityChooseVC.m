@@ -35,22 +35,25 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
-    
+    self.automaticallyAdjustsScrollViewInsets = NO;
     [self.okBtn setEnabled:NO];
     [self _setupCommunityTableView];
-    _weak(self);
-    [self.communityTableView mas_makeConstraints:^(MASConstraintMaker *make) {
-        _strong(self);
-        make.top.equalTo(self.view);
-        make.left.right.equalTo(self.view);
-        make.bottom.equalTo(self.view).with.offset(-70);
-    }];
+
     
     [self _setupObserver];
     
     [self _getCommunityList];
 }
-
+- (void)updateViewConstraints {
+    [super updateViewConstraints];
+    _weak(self);
+    [self.communityTableView mas_makeConstraints:^(MASConstraintMaker *make) {
+        _strong(self);
+        make.top.equalTo(self.view).with.offset(self.topLayoutGuide.length);
+        make.left.right.equalTo(self.view);
+        make.bottom.equalTo(self.view).with.offset(-70);
+    }];
+}
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
