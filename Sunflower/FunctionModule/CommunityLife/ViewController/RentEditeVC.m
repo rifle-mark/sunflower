@@ -132,6 +132,8 @@
         _strong(self);
         [self.selectionView removeFromSuperview];
     }];
+    
+    FixesViewDidLayoutSubviewsiOS7Error;
 }
 
 -(void)viewDidAppear:(BOOL)animated {

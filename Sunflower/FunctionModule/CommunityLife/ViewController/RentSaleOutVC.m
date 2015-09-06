@@ -84,6 +84,7 @@
     }];
     [self.imagesV setSize:ccs(V_W_(self.view), V_H_(self.imageContainerV)) position:ccp(0, 0) anchor:ccp(0, 0)];
     [self.imageContainerV addSubview:self.imagesV];
+    FixesViewDidLayoutSubviewsiOS7Error;
 }
 /*
 #pragma mark - Navigation

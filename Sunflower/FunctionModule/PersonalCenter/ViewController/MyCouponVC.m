@@ -355,6 +355,7 @@ static NSInteger    c_PageSize = 10;
     [super viewDidLayoutSubviews];
     
     [self _layoutCodingSubviews];
+    FixesViewDidLayoutSubviewsiOS7Error;
 }
 
 #pragma mark - Navigation

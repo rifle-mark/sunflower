@@ -201,6 +201,7 @@
     [super viewDidLayoutSubviews];
     
     [self _layoutCouponTableV];
+    FixesViewDidLayoutSubviewsiOS7Error;
 }
 
 - (void)didReceiveMemoryWarning {

@@ -153,6 +153,7 @@ static NSString *const kContentHint = @"请输入反馈，我们将为您不断�
     [super viewDidLayoutSubviews];
     
     [self _layoutCodingViews];
+    FixesViewDidLayoutSubviewsiOS7Error;
 }
 
 #pragma mark - Coding Views

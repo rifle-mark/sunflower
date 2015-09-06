@@ -280,6 +280,7 @@ static NSArray *hilightImages;
     }
     
     [self _layoutCouponTableV];
+    FixesViewDidLayoutSubviewsiOS7Error;
 }
 
 - (void)didReceiveMemoryWarning {

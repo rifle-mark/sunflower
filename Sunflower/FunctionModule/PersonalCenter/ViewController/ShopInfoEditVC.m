@@ -201,6 +201,7 @@
         [self.navigationItem setRightBarButtonItem:nil];
         [self _layoutStore];
     }
+    FixesViewDidLayoutSubviewsiOS7Error;
 //    [self.view setNeedsUpdateConstraints];
 }
 

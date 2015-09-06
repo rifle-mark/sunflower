@@ -41,6 +41,7 @@
     [super viewDidLayoutSubviews];
     
     [self _layoutCodingViews];
+    FixesViewDidLayoutSubviewsiOS7Error;
 }
 
 #pragma mark - Coding Views

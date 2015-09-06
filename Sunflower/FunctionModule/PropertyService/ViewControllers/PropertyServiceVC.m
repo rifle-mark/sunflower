@@ -48,6 +48,7 @@
     [super viewDidLayoutSubviews];
     
     [self _layoutCodingViews];
+    FixesViewDidLayoutSubviewsiOS7Error;
 }
 
 - (void)viewWillAppear:(BOOL)animated {

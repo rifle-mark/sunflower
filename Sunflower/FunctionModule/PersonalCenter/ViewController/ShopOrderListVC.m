@@ -185,6 +185,7 @@
     [super viewDidLayoutSubviews];
     
     [self _layoutOrderTableV];
+    FixesViewDidLayoutSubviewsiOS7Error;
 }
 
 /*

@@ -64,6 +64,7 @@
     [super viewDidLayoutSubviews];
     
     [self _layoutCodingViews];
+    FixesViewDidLayoutSubviewsiOS7Error;
 }
 
 - (void)didReceiveMemoryWarning {

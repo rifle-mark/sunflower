@@ -83,6 +83,7 @@
     
     //layour self subview;
     [self _layoutEditor];
+    FixesViewDidLayoutSubviewsiOS7Error;
 }
 
 /*

@@ -137,6 +137,7 @@
     }];
     
     [self _layoutPCSubViews];
+    FixesViewDidLayoutSubviewsiOS7Error;
 }
 
 #pragma mark - Navigation

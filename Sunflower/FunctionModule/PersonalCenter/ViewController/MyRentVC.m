@@ -305,6 +305,7 @@ static NSInteger    c_PageSize = 10;
     [super viewDidLayoutSubviews];
     
     [self _layoutRentTableV];
+    FixesViewDidLayoutSubviewsiOS7Error;
 }
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

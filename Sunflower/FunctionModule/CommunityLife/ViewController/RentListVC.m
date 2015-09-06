@@ -75,6 +75,7 @@ static NSArray *hilightImages;
 
 - (void)viewDidLayoutSubviews {
     [super viewDidLayoutSubviews];
+    FixesViewDidLayoutSubviewsiOS7Error;
 }
 
 - (void)didReceiveMemoryWarning {

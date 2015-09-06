@@ -66,6 +66,7 @@
         _strong(self);
         make.width.equalTo(self.view);
     }];
+    FixesViewDidLayoutSubviewsiOS7Error;
 }
 
 /*

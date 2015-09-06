@@ -50,6 +50,7 @@
     [self.contentV mas_updateConstraints:^(MASConstraintMaker *make) {
         make.width.equalTo(self.view);
     }];
+    FixesViewDidLayoutSubviewsiOS7Error;
 }
 
 - (void)didReceiveMemoryWarning {

@@ -75,6 +75,7 @@
 - (void)viewDidLayoutSubviews {
     [super viewDidLayoutSubviews];
     [self _layoutContent];
+    FixesViewDidLayoutSubviewsiOS7Error;
 }
 
 #pragma mark - Navigation

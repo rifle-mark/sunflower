@@ -156,6 +156,7 @@
     [super viewDidLayoutSubviews];
     
     [self _layoutNoteListTable];
+    FixesViewDidLayoutSubviewsiOS7Error;
 }
 
 - (void)didReceiveMemoryWarning {

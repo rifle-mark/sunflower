@@ -53,7 +53,7 @@
     self.latestNoteInfo = nil;
     
     if (![[CommonModel sharedModel] currentCommunityId]) {
-        [self _showCommunitySettingVC];
+        [self performSelectorOnMainThread:@selector(_showCommunitySettingVC) withObject:nil waitUntilDone:YES];
     }
     
     [self _setupObserver];
@@ -94,6 +94,7 @@
     [super viewDidLayoutSubviews];
     
     [self _layoutCodingViews];
+    FixesViewDidLayoutSubviewsiOS7Error;
 }
 
 #pragma mark - Navigation
@@ -151,7 +152,7 @@
         _weak(self);
         UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithActionBlock:^(UIGestureRecognizer *gesture) {
             _strong(self);
-            [self _showCommunitySettingVC];
+            [self performSelectorOnMainThread:@selector(_showCommunitySettingVC) withObject:nil waitUntilDone:YES ];
         }];
         [v addGestureRecognizer:tap];
         v;

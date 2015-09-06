@@ -72,6 +72,7 @@
     [super viewDidLayoutSubviews];
     
     [self _layoutEditer];
+    FixesViewDidLayoutSubviewsiOS7Error;
 }
 
 

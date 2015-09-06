@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7706" systemVersion="14F27" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="dtT-5x-8e6">
     <dependencies>
+        <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
         <capability name="Alignment constraints to the first baseline" minToolsVersion="6.0"/>
         <capability name="Alignment constraints with different attributes" minToolsVersion="5.1"/>
@@ -3651,11 +3652,6 @@
                                                     </mask>
                                                     <mask key="constraints">
                                                         <exclude reference="LJp-mY-h8f"/>
-                                                        <exclude reference="bLz-KE-kOp"/>
-                                                        <exclude reference="iAm-0H-bKm"/>
-                                                        <exclude reference="kbo-WR-zOG"/>
-                                                        <exclude reference="FWz-UB-tvv"/>
-                                                        <exclude reference="LNi-gO-M23"/>
                                                         <exclude reference="1IL-ud-6GW"/>
                                                         <exclude reference="2tF-68-M8R"/>
                                                         <exclude reference="81t-bB-sd5"/>
@@ -3663,6 +3659,11 @@
                                                         <exclude reference="eDT-St-31n"/>
                                                         <exclude reference="ivf-co-aib"/>
                                                         <exclude reference="vWq-Sj-R14"/>
+                                                        <exclude reference="bLz-KE-kOp"/>
+                                                        <exclude reference="iAm-0H-bKm"/>
+                                                        <exclude reference="kbo-WR-zOG"/>
+                                                        <exclude reference="FWz-UB-tvv"/>
+                                                        <exclude reference="LNi-gO-M23"/>
                                                     </mask>
                                                 </variation>
                                                 <variation key="heightClass=regular-widthClass=compact">
@@ -3673,11 +3674,6 @@
                                                     </mask>
                                                     <mask key="constraints">
                                                         <include reference="LJp-mY-h8f"/>
-                                                        <include reference="bLz-KE-kOp"/>
-                                                        <include reference="iAm-0H-bKm"/>
-                                                        <include reference="kbo-WR-zOG"/>
-                                                        <include reference="FWz-UB-tvv"/>
-                                                        <include reference="LNi-gO-M23"/>
                                                         <include reference="1IL-ud-6GW"/>
                                                         <exclude reference="2tF-68-M8R"/>
                                                         <exclude reference="81t-bB-sd5"/>
@@ -3685,6 +3681,11 @@
                                                         <exclude reference="eDT-St-31n"/>
                                                         <include reference="ivf-co-aib"/>
                                                         <include reference="vWq-Sj-R14"/>
+                                                        <include reference="bLz-KE-kOp"/>
+                                                        <include reference="iAm-0H-bKm"/>
+                                                        <include reference="kbo-WR-zOG"/>
+                                                        <include reference="FWz-UB-tvv"/>
+                                                        <include reference="LNi-gO-M23"/>
                                                     </mask>
                                                 </variation>
                                             </view>
@@ -3721,20 +3722,20 @@
                                             </mask>
                                             <mask key="constraints">
                                                 <exclude reference="giT-ec-ioV"/>
-                                                <exclude reference="8LP-Hq-83A"/>
-                                                <exclude reference="APl-le-wdO"/>
-                                                <exclude reference="Okb-bw-bCE"/>
                                                 <exclude reference="Kqg-iO-y8U"/>
                                                 <exclude reference="fBC-Hk-agR"/>
                                                 <exclude reference="g0f-Uv-8xn"/>
-                                                <exclude reference="6AS-rV-Nhi"/>
-                                                <exclude reference="eKv-rW-1Cx"/>
+                                                <exclude reference="8LP-Hq-83A"/>
+                                                <exclude reference="APl-le-wdO"/>
+                                                <exclude reference="Okb-bw-bCE"/>
                                                 <exclude reference="DEX-ta-bVQ"/>
                                                 <exclude reference="VaG-Tc-J7Q"/>
                                                 <exclude reference="WhF-aL-BH5"/>
                                                 <exclude reference="fLy-eM-HTc"/>
                                                 <exclude reference="pGL-g7-CzY"/>
                                                 <exclude reference="t4F-oP-XYd"/>
+                                                <exclude reference="6AS-rV-Nhi"/>
+                                                <exclude reference="eKv-rW-1Cx"/>
                                                 <exclude reference="gLZ-9B-o6C"/>
                                                 <exclude reference="pzi-vn-7Kf"/>
                                             </mask>
@@ -3750,20 +3751,20 @@
                                             </mask>
                                             <mask key="constraints">
                                                 <include reference="giT-ec-ioV"/>
-                                                <include reference="8LP-Hq-83A"/>
-                                                <include reference="APl-le-wdO"/>
-                                                <include reference="Okb-bw-bCE"/>
                                                 <include reference="Kqg-iO-y8U"/>
                                                 <include reference="fBC-Hk-agR"/>
                                                 <include reference="g0f-Uv-8xn"/>
-                                                <include reference="6AS-rV-Nhi"/>
-                                                <include reference="eKv-rW-1Cx"/>
+                                                <include reference="8LP-Hq-83A"/>
+                                                <include reference="APl-le-wdO"/>
+                                                <include reference="Okb-bw-bCE"/>
                                                 <include reference="DEX-ta-bVQ"/>
                                                 <include reference="VaG-Tc-J7Q"/>
                                                 <include reference="WhF-aL-BH5"/>
                                                 <include reference="fLy-eM-HTc"/>
                                                 <include reference="pGL-g7-CzY"/>
                                                 <include reference="t4F-oP-XYd"/>
+                                                <include reference="6AS-rV-Nhi"/>
+                                                <include reference="eKv-rW-1Cx"/>
                                                 <include reference="gLZ-9B-o6C"/>
                                                 <include reference="pzi-vn-7Kf"/>
                                             </mask>
@@ -14684,6 +14685,7 @@
                     </navigationBar>
                     <connections>
                         <segue destination="fXH-ZX-oH2" kind="relationship" relationship="rootViewController" id="wDg-W0-1p4"/>
+                        <segue destination="3cf-Vw-oJ5" kind="presentation" identifier="Segue_Main_CSSetting" id="ffw-Vm-PvV"/>
                     </connections>
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="yWS-lD-Pm5" userLabel="First Responder" sceneMemberID="firstResponder"/>

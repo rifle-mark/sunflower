@@ -128,4 +128,19 @@
 // 微信授权
 #define k_NOTIFY_NAME_WXAUTH_SUCCESS                @"WXAuth_Success"
 #define k_NOTIFY_NAME_WXAUTH_FAILED                 @"WXAuth_Failed"
+
+
+/**
+ *  设备版本号 < v
+ *
+ *  @param v 版本号字符串
+ *
+ *  @return BOOL
+ */
+#define SYSTEM_VERSION_LESS_THAN(v)                 ([[[UIDevice currentDevice] systemVersion] compare:v options:NSNumericSearch] == NSOrderedAscending)
+
+#define FixesViewDidLayoutSubviewsiOS7Error \
+if (SYSTEM_VERSION_LESS_THAN(@"8")) {\
+[self.view layoutSubviews];\
+}
 #endif

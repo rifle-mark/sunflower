@@ -87,6 +87,7 @@ static NSString *const kCellIdentify = @"MYCELL";
     [super viewDidLayoutSubviews];
     
     [self _layoutCodingViews];
+    FixesViewDidLayoutSubviewsiOS7Error;
 }
 
 - (void)viewWillAppear:(BOOL)animated {

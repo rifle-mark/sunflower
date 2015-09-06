@@ -74,6 +74,7 @@
     else {
         [self.editBtn setHidden:YES];
     }
+    FixesViewDidLayoutSubviewsiOS7Error;
 }
 
 #pragma mark - Navigation
