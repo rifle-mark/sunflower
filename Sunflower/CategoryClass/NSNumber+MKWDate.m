@@ -61,7 +61,7 @@
         return [NSString stringWithFormat:@"%ld周前", (long)interval/(7*24*60*60)];
     }
     
-    return [self dateTimeSplitByChinese];
+    return [self dateSplitByChinese];
 }
 
 - (NSString*)dateTimeYear {

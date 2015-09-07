@@ -20,6 +20,7 @@
 
 @interface MainPageBtnCell : UICollectionViewCell
 
+@property(nonatomic,strong)UIImageView      *coverV;
 @property(nonatomic,strong)UIImageView      *imageV;
 @property(nonatomic,strong)UILabel          *titleL;
 
@@ -36,6 +37,7 @@
     if (self = [super initWithFrame:frame]) {
         [self.contentView addSubview:self.imageV];
         [self.contentView addSubview:self.titleL];
+        [self.contentView addSubview:self.coverV];
         
         [self.titleL mas_remakeConstraints:^(MASConstraintMaker *make) {
             make.bottom.equalTo(self.titleL.superview).with.offset(-8);
@@ -48,8 +50,24 @@
             make.width.equalTo(self.imageV.mas_height);
             make.centerX.equalTo(self.imageV.superview);
         }];
+        [self.coverV mas_remakeConstraints:^(MASConstraintMaker *make) {
+            make.top.right.bottom.equalTo(self.coverV.superview);
+            make.width.equalTo(self.coverV.superview.mas_height);
+        }];
+        
+        self.coverV.hidden = YES;
     }
     return self;
+}
+
+- (UIImageView *)coverV {
+    if (!_coverV) {
+        _coverV = [[UIImageView alloc] init];
+        _coverV.contentMode = UIViewContentModeScaleAspectFit;
+        _coverV.clipsToBounds = YES;
+    }
+    
+    return _coverV;
 }
 
 - (UIImageView *)imageV {
@@ -63,7 +81,7 @@
 - (UILabel *)titleL {
     if (!_titleL) {
         _titleL = [[UILabel alloc] init];
-        _titleL.font = [UIFont boldSystemFontOfSize:14];
+        _titleL.font = [UIFont boldSystemFontOfSize:12];
         _titleL.textColor = k_COLOR_GALLERY_F;
     }
     return _titleL;
@@ -75,6 +93,7 @@
 
 @property(nonatomic,strong)UIImageView   *communityBgV;
 @property(nonatomic,strong)UIView        *noteV;
+@property(nonatomic,strong)UIImageView   *noteIcon;
 @property(nonatomic,strong)UIButton      *latestNotifyB;
 @property(nonatomic,strong)UICollectionView *collectionView;
 
@@ -113,6 +132,9 @@
     [self.communityNameV addSubview:self.communityNameL];
     [self.communityBgV addSubview:self.checkInL];
     [self.communityBgV addSubview:self.weatherL];
+    
+    [self.noteV addSubview:self.noteIcon];
+    [self.noteV addSubview:self.latestNotifyB];
 
     [self _setupObserver];
     if ([[CommonModel sharedModel] currentCommunityId]) {
@@ -211,6 +233,20 @@
         make.left.equalTo(self.communityBgV).with.offset(15);
         make.right.equalTo(self.checkInL.mas_left);
     }];
+    
+    [self.noteIcon mas_remakeConstraints:^(MASConstraintMaker *make) {
+        _strong(self);
+        make.left.equalTo(self.noteIcon.superview).with.offset(15);
+        make.centerY.equalTo(self.noteIcon.superview);
+        make.width.height.equalTo(@20);
+    }];
+    
+    [self.latestNotifyB mas_remakeConstraints:^(MASConstraintMaker *make) {
+        _strong(self);
+        make.left.equalTo(self.noteIcon.mas_right).with.offset(15);
+        make.right.equalTo(self.latestNotifyB.superview).with.offset(-30);
+        make.centerY.equalTo(self.latestNotifyB.superview);
+    }];
     [super updateViewConstraints];
 }
 
@@ -252,12 +288,6 @@
 
 - (void)unwindSegue:(UIStoryboardSegue *)segue {
     
-}
-
-- (IBAction)latestNotifyButtonOnClick:(UIButton *)sender {
-    if (self.latestNoteInfo) {
-        [self performSegueWithIdentifier:@"Segue_MainPage_NotifyInfo" sender:self.latestNoteInfo];
-    }
 }
 
 #pragma mark - coding Views
@@ -330,10 +360,29 @@
     }
     return _LimitedL;
 }
+
+- (UIImageView *)noteIcon {
+    if (!_noteIcon) {
+        _noteIcon = [[UIImageView alloc] init];
+        _noteIcon.image = [UIImage imageNamed:@"xlb"];
+        _noteIcon.contentMode = UIViewContentModeScaleAspectFit;
+        _noteIcon.clipsToBounds = YES;
+    }
+    return _noteIcon;
+}
 - (UIButton *)latestNotifyB {
     if (!_latestNotifyB) {
         _latestNotifyB = [UIButton buttonWithType:UIButtonTypeSystem];
         [_latestNotifyB setTitleColor:k_COLOR_COUPON_TEXT forState:UIControlStateNormal];
+        _latestNotifyB.titleLabel.font = [UIFont systemFontOfSize:12];
+        _latestNotifyB.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
+        _weak(self);
+        [_latestNotifyB addControlEvents:UIControlEventTouchUpInside action:^(UIControl *control, NSSet *touches) {
+            _strong(self);
+            if (self.latestNoteInfo) {
+                [self performSegueWithIdentifier:@"Segue_MainPage_NotifyInfo" sender:self.latestNoteInfo];
+            }
+        }];
     }
     return _latestNotifyB;
 }
@@ -377,6 +426,8 @@
             if (path.item == 2) {
                 cell.imageV.image = [UIImage imageNamed:@"znmj"];
                 cell.titleL.text = @"智能门禁";
+                cell.coverV.image = [UIImage imageNamed:@"coming_soon_icon"];
+                cell.coverV.hidden = NO;
             }
             
             if (path.item == 3) {
@@ -413,7 +464,12 @@
             bgV.backgroundColor = k_COLOR_GRAY_BG;
             cell.backgroundView = bgV;
             UIView *sbgV = [[UIView alloc] initWithFrame:cell.bounds];
-            sbgV.backgroundColor = k_COLOR_BON_JOUR;
+            if (path.item == 2) {
+                sbgV.backgroundColor = k_COLOR_GRAY_BG;
+            }
+            else {
+                sbgV.backgroundColor = k_COLOR_BON_JOUR;
+            }
             cell.selectedBackgroundView = sbgV;
             cell.clipsToBounds = YES;
             cell.layer.cornerRadius = 4;
